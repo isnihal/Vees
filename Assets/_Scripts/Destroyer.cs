@@ -7,9 +7,4 @@ public class Destroyer : MonoBehaviour {
     {
         Destroy(collider.gameObject);
     }
-
-    void Update()
-    {
-        Debug.Log("Screen width " + Screen.width);
-    }
 }

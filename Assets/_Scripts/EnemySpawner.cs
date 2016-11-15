@@ -5,24 +5,33 @@ public class EnemySpawner : MonoBehaviour {
 
     public GameObject enemyFormationPrefab;
     GameObject enemyFormation;
-    public float minX,maxX;
     float enemySpawningPositionX;
     Vector3 enemySpawningPosition;
     float probability, spawnRate, formationVelocity;
     Rigidbody2D formationRigidBody;
+    //Boundary variables
+    Vector3 leftBounday, rightBoundary;
+    float leftX, rightX,padding;
 
-	// Use this for initialization
-	void Start () {
-        spawnRate = 0.1f;
+
+    // Use this for initialization
+    void Start () {
+        spawnRate = 0.5f;
         formationVelocity = 10f;
-	}
+        leftBounday = Camera.main.ViewportToWorldPoint(new Vector3(0, 1, 0));
+        rightBoundary = Camera.main.ViewportToWorldPoint(new Vector3(1, 0, 0));
+        padding = 0.5f;
+        leftX = leftBounday.x+padding;
+        rightX = rightBoundary.x-padding;
+    }
 	
 	// Update is called once per frame
 	void Update () {
         probability = spawnRate * Time.deltaTime;
         if(probability>Random.value)
         {
-            enemySpawningPositionX = Random.Range(minX, maxX);
+            Debug.Log("Enemy Spawned");
+            enemySpawningPositionX = Random.Range(leftX, rightX);
             enemySpawningPosition = new Vector3(enemySpawningPositionX, transform.position.y, 0);
             enemyFormation=Instantiate(enemyFormationPrefab,enemySpawningPosition,Quaternion.identity) as GameObject;
             formationRigidBody = enemyFormation.GetComponent<Rigidbody2D>();
