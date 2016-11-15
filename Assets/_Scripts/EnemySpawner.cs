@@ -5,6 +5,9 @@ public class EnemySpawner : MonoBehaviour {
 
     public GameObject enemyFormationPrefab;
     GameObject enemyFormation;
+    public float minX,maxX;
+    float enemySpawningPositionX;
+    Vector3 enemySpawningPosition;
     float probability, spawnRate, formationVelocity;
     Rigidbody2D formationRigidBody;
 
@@ -19,7 +22,9 @@ public class EnemySpawner : MonoBehaviour {
         probability = spawnRate * Time.deltaTime;
         if(probability>Random.value)
         {
-            enemyFormation=Instantiate(enemyFormationPrefab,transform.position,Quaternion.identity) as GameObject;
+            enemySpawningPositionX = Random.Range(minX, maxX);
+            enemySpawningPosition = new Vector3(enemySpawningPositionX, transform.position.y, 0);
+            enemyFormation=Instantiate(enemyFormationPrefab,enemySpawningPosition,Quaternion.identity) as GameObject;
             formationRigidBody = enemyFormation.GetComponent<Rigidbody2D>();
             formationRigidBody.velocity = Vector3.down*formationVelocity;
         }
