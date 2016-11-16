@@ -3,13 +3,10 @@ using System.Collections;
 
 public class PlayerSpawner : MonoBehaviour {
 
-	// Use this for initialization
-	void Start () {
-	
-	}
-	
-	// Update is called once per frame
-	void Update () {
-	
-	}
+    public GameObject playerFormation;
+
+    public void spawnPlayer(Vector3 spawningPosition)
+    {
+        Instantiate(playerFormation,spawningPosition, Quaternion.identity);
+    }
 }
