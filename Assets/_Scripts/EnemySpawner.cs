@@ -26,6 +26,7 @@ public class EnemySpawner : MonoBehaviour {
             enemySpawningPositionX = Random.Range(ScreenManager.getLeftBoundary(), ScreenManager.getRightBoundary());
             enemySpawningPosition = new Vector3(enemySpawningPositionX, transform.position.y, 0);
             enemyFormation=Instantiate(enemyFormationPrefab,enemySpawningPosition,Quaternion.identity) as GameObject;
+            enemyFormation.transform.parent = transform;
             formationRigidBody = enemyFormation.GetComponent<Rigidbody2D>();
             formationRigidBody.velocity = Vector3.down*formationVelocity;
         }

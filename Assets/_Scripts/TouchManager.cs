@@ -22,7 +22,9 @@ public class TouchManager : MonoBehaviour {
         //Spawn a player formation start
         //Calculate X velocity
         xVelocity = (endPosition.x - startPositon.x) / (endTime - startTime);
-        xVelocity /= 10;
+        if (xVelocity < 10)
+            xVelocity = 10;
+        xVelocity=Mathf.Clamp(xVelocity, 10,20);
 
         //Vector refactoring
         Vector3 playerPosition = new Vector3(0, 0, 0);

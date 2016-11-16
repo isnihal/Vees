@@ -11,6 +11,7 @@ public class PlayerSpawner : MonoBehaviour {
     {
         spawningPosition.x = transform.position.x;
         spawnedPlayer = Instantiate(playerFormation, spawningPosition, Quaternion.Euler(new Vector3(0,0,90))) as GameObject;
+        spawnedPlayer.transform.parent = transform;
         spawnedPlayerRigidBody = spawnedPlayer.GetComponent<Rigidbody2D>();
         spawnedPlayerRigidBody.velocity = playerVelocity;
     }
