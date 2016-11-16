@@ -26,13 +26,16 @@ public class TouchManager : MonoBehaviour {
             xVelocity = 10;
         xVelocity=Mathf.Clamp(xVelocity, 10,20);
 
-        //Vector refactoring
-        Vector3 playerPosition = new Vector3(0, 0, 0);
-        Debug.Log("Y pos" + startPositon.y);
-        Vector3 playerVelocity = new Vector3(xVelocity, 0, 0);
-        //Spawn player after swipe
+        //Convert start pos to world unit
+        startPositon = Camera.main.ScreenToWorldPoint(startPositon);
 
+        //Vector refactoring
+        Vector3 playerPosition = new Vector3(0,Mathf.Clamp(startPositon.y,-5,5), 0);
+        Vector3 playerVelocity = new Vector3(xVelocity, 0, 0);
+
+        //Spawn player after swipe
         playerSpawner.spawnPlayer(playerPosition,playerVelocity);
+
         //Spawn a player formation end
     }
 }
