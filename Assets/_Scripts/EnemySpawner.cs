@@ -9,6 +9,7 @@ public class EnemySpawner : MonoBehaviour {
     Vector3 enemySpawningPosition;
     float probability, spawnRate, formationVelocity;
     Rigidbody2D formationRigidBody;
+    public AudioClip enemyClip;
 
 
     // Use this for initialization
@@ -29,6 +30,7 @@ public class EnemySpawner : MonoBehaviour {
             enemyFormation.transform.parent = transform;
             formationRigidBody = enemyFormation.GetComponent<Rigidbody2D>();
             formationRigidBody.velocity = Vector3.down*formationVelocity;
+            AudioSource.PlayClipAtPoint(enemyClip, enemyFormation.transform.position);
         }
 	}
 

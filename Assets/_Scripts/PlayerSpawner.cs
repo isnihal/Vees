@@ -6,6 +6,7 @@ public class PlayerSpawner : MonoBehaviour {
     public GameObject playerFormation;
     GameObject spawnedPlayer;
     Rigidbody2D spawnedPlayerRigidBody;
+    public AudioClip playerClip;
 
     public void spawnPlayer(Vector3 spawningPosition,Vector3 playerVelocity)
     {
@@ -14,5 +15,6 @@ public class PlayerSpawner : MonoBehaviour {
         spawnedPlayer.transform.parent = transform;
         spawnedPlayerRigidBody = spawnedPlayer.GetComponent<Rigidbody2D>();
         spawnedPlayerRigidBody.velocity = playerVelocity;
+        AudioSource.PlayClipAtPoint(playerClip, spawnedPlayer.transform.position);
     }
 }
