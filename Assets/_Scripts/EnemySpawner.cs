@@ -30,7 +30,7 @@ public class EnemySpawner : MonoBehaviour {
             enemyFormation.transform.parent = transform;
             formationRigidBody = enemyFormation.GetComponent<Rigidbody2D>();
             formationRigidBody.velocity = Vector3.down*formationVelocity;
-            AudioSource.PlayClipAtPoint(enemyClip, enemyFormation.transform.position);
+            AudioSource.PlayClipAtPoint(enemyClip, enemyFormation.transform.position,1);
         }
 	}
 

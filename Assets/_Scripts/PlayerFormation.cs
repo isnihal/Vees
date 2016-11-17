@@ -9,7 +9,7 @@ public class PlayerFormation : MonoBehaviour {
     {
         if(collider.gameObject.GetComponent<EnemyFormation>())
         {
-            AudioSource.PlayClipAtPoint(destroyClip, transform.position);
+            AudioSource.PlayClipAtPoint(destroyClip, transform.position,1);
             Destroy(collider.gameObject);
         }
     }
