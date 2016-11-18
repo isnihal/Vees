@@ -13,6 +13,8 @@ public class EnemyFormation : MonoBehaviour {
             {
                 AudioSource.PlayClipAtPoint(destroyClip, transform.position, 1);
                 Destroy(collider.gameObject);
+                GameManager.decrementLife();
+                Debug.Log("Lives remaining:" + GameManager.getLife());
             }
         }
     }
