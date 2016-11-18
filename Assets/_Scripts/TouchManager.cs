@@ -22,9 +22,14 @@ public class TouchManager : MonoBehaviour {
         //Spawn a player formation start
         //Calculate X velocity
         xVelocity = (endPosition.x - startPositon.x) / (endTime - startTime);
-        if (xVelocity < 10)
-            xVelocity = 10;
-        xVelocity=Mathf.Clamp(xVelocity, 10,20);
+
+        //ONE DIRECTION PROPERTIES
+        if (GameManager.getLevelName() == "ONE_DIRECTION")
+        {
+            if (xVelocity < 10)
+                xVelocity = 10;
+            xVelocity = Mathf.Clamp(xVelocity, 10, 20);
+        }
 
         //Convert start pos to world unit
         startPositon = Camera.main.ScreenToWorldPoint(startPositon);

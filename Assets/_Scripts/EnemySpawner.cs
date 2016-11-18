@@ -20,18 +20,27 @@ public class EnemySpawner : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        probability = spawnRate * Time.deltaTime;
-        if(probability>Random.value)
+
+
+        //Enemy Spawner for One Direction
+        if (GameManager.getLevelName() == "ONE_DIRECTION")
         {
-            Debug.Log("Enemy Spawned");
-            enemySpawningPositionX = Random.Range(ScreenManager.getLeftBoundary(), ScreenManager.getRightBoundary());
-            enemySpawningPosition = new Vector3(enemySpawningPositionX, transform.position.y, 0);
-            enemyFormation=Instantiate(enemyFormationPrefab,enemySpawningPosition,Quaternion.identity) as GameObject;
-            enemyFormation.transform.parent = transform;
-            formationRigidBody = enemyFormation.GetComponent<Rigidbody2D>();
-            formationRigidBody.velocity = Vector3.down*formationVelocity;
-            AudioSource.PlayClipAtPoint(enemyClip, enemyFormation.transform.position,1);
+            probability = spawnRate * Time.deltaTime;
+            if (probability > Random.value)
+            {
+                Debug.Log("Enemy Spawned");
+                enemySpawningPositionX = Random.Range(ScreenManager.getLeftBoundary(), ScreenManager.getRightBoundary());
+                enemySpawningPosition = new Vector3(enemySpawningPositionX, transform.position.y, 0);
+                enemyFormation = Instantiate(enemyFormationPrefab, enemySpawningPosition, Quaternion.identity) as GameObject;
+                enemyFormation.transform.parent = transform;
+                formationRigidBody = enemyFormation.GetComponent<Rigidbody2D>();
+                formationRigidBody.velocity = Vector3.down * formationVelocity;
+                AudioSource.PlayClipAtPoint(enemyClip, enemyFormation.transform.position, 1);
+            }
         }
+
+        //Enemy Spawner for Arcade
+
 	}
 
     void OnDrawGizmos()

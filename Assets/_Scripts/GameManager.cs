@@ -3,13 +3,18 @@ using System.Collections;
 
 public class GameManager : MonoBehaviour {
 
-	// Use this for initialization
-	void Start () {
-	
-	}
-	
-	// Update is called once per frame
-	void Update () {
-	
-	}
+    public static string getLevelName()
+    {
+        if(Application.loadedLevel==3)
+        {
+            return ("ONE_DIRECTION");
+        }
+
+        else if(Application.loadedLevel==4)
+        {
+            return ("ARCADE");
+        }
+
+        return null;
+    }
 }
