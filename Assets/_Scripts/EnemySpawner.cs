@@ -72,10 +72,4 @@ public class EnemySpawner : MonoBehaviour {
             }
         }
 	}
-
-    void OnDrawGizmos()
-    {
-        Debug.Log("Draw gizoms");
-        Gizmos.DrawWireCube(transform.position,Vector3.one);
-    }
 }
