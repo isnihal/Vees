@@ -7,7 +7,7 @@ public class EnemySpawner : MonoBehaviour {
     TopEnemySpawner topSpawner;
     BottomEnemySpawner bottomSpawner;
     GameObject enemyFormation;
-    float enemySpawningPositionX;
+    float enemySpawningPositionX,enemySpawningPositionY;
     Vector3 enemySpawningPosition;
     float probability, spawnRate, formationVelocity;
     Rigidbody2D formationRigidBody;
@@ -25,7 +25,6 @@ public class EnemySpawner : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
         probability = spawnRate * Time.deltaTime;
-
         //Enemy Spawner for One Direction
         if (GameManager.getLevelName() == "ONE_DIRECTION")
         { 
@@ -73,6 +72,22 @@ public class EnemySpawner : MonoBehaviour {
                     formationRigidBody.velocity = Vector3.down * -formationVelocity;
                     AudioSource.PlayClipAtPoint(enemyClip, enemyFormation.transform.position, 1);
                 }
+            }
+        }
+
+
+        //Enemy spawner of fast escape
+        if(GameManager.getLevelName()=="FAST_ESCAPE")
+        {
+            if (probability > Random.value)
+            {
+                enemySpawningPositionY = Random.Range(ScreenManager.getBottomBoundary(), ScreenManager.getTopBoundary());
+                enemySpawningPosition = new Vector3(transform.position.x,enemySpawningPositionY, 0);
+                enemyFormation = Instantiate(EnemyPrefab, enemySpawningPosition, Quaternion.Euler(new Vector3(0,0,90))) as GameObject;
+                enemyFormation.transform.parent = transform;
+                formationRigidBody = enemyFormation.GetComponent<Rigidbody2D>();
+                formationRigidBody.velocity = Vector3.right * formationVelocity;
+                AudioSource.PlayClipAtPoint(enemyClip, enemyFormation.transform.position, 1);
             }
         }
 	}

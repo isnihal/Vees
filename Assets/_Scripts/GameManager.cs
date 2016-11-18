@@ -17,6 +17,11 @@ public class GameManager : MonoBehaviour {
             return ("ARCADE");
         }
 
+        else if(Application.loadedLevel==5)
+        {
+            return ("FAST_ESCAPE");
+        }
+
         return null;
     }
 }
