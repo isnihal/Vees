@@ -7,6 +7,7 @@ public class TouchManager : MonoBehaviour {
     static float startTime, endTime,xVelocity,yVelocity;
     PlayerSpawner playerSpawner;
     Vector3 playerPosition, playerVelocity;
+    float dragLength, dragDuration, dragHeight,minimumDragLength=40,minimumDragHeight=25;
 
     void DragStart()
     {
@@ -22,10 +23,13 @@ public class TouchManager : MonoBehaviour {
 
         //Spawn a player formation start
         //Calculate X velocity
-        if (endTime - startTime != 0)
+        dragLength=(endPosition.x - startPositon.x);
+        dragHeight = (endPosition.y - startPositon.y);
+        dragDuration = endTime - startTime;
+        if (endTime - startTime != 0 && ((Mathf.Abs(dragLength)>minimumDragLength)||(Mathf.Abs(dragHeight)>minimumDragHeight)))
         {
-            xVelocity = (endPosition.x - startPositon.x) / (endTime - startTime);
-            yVelocity = (endPosition.y - startPositon.y) / (endTime - startTime);
+            xVelocity = dragLength / dragDuration;
+            yVelocity = dragLength / dragDuration;
 
 
             //ONE DIRECTION PROPERTIES
