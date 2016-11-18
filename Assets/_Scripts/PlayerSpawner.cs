@@ -3,10 +3,18 @@ using System.Collections;
 
 public class PlayerSpawner : MonoBehaviour {
 
-    public GameObject playerFormation,leftSpawner,rightSpawner;
+    public GameObject playerFormation;
     GameObject spawnedPlayer;
+    LeftPlayerSpawner leftSpawner;
+    RightPlayerSpawner rightSpawner;
     Rigidbody2D spawnedPlayerRigidBody;
     public AudioClip playerClip;
+
+    void Start()
+    {
+        leftSpawner = FindObjectOfType<LeftPlayerSpawner>();
+        rightSpawner = FindObjectOfType<RightPlayerSpawner>();
+    }
 
     public void spawnPlayer(Vector3 spawningPosition, Vector3 playerVelocity)
     {
