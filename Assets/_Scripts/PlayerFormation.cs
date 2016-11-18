@@ -7,10 +7,13 @@ public class PlayerFormation : MonoBehaviour {
 
     void OnTriggerEnter2D(Collider2D collider)
     {
-        if(collider.gameObject.GetComponent<EnemyFormation>())
+        if (GameManager.getLevelName() != "FAST_ESCAPE")
         {
-            AudioSource.PlayClipAtPoint(destroyClip, transform.position,1);
-            Destroy(collider.gameObject);
+            if (collider.gameObject.GetComponent<EnemyFormation>())
+            {
+                AudioSource.PlayClipAtPoint(destroyClip, transform.position, 1);
+                Destroy(collider.gameObject);
+            }
         }
     }
 }

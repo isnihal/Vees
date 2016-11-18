@@ -3,13 +3,17 @@ using System.Collections;
 
 public class EnemyFormation : MonoBehaviour {
 
-	// Use this for initialization
-	void Start () {
-	
-	}
-	
-	// Update is called once per frame
-	void Update () {
-	
-	}
+    public AudioClip destroyClip;
+
+    void OnTriggerEnter2D(Collider2D collider)
+    {
+        if (GameManager.getLevelName() == "FAST_ESCAPE")
+        {
+            if (collider.gameObject.GetComponent<PlayerFormation>())
+            {
+                AudioSource.PlayClipAtPoint(destroyClip, transform.position, 1);
+                Destroy(collider.gameObject);
+            }
+        }
+    }
 }
