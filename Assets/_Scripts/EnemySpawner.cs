@@ -4,8 +4,6 @@ using System.Collections;
 public class EnemySpawner : MonoBehaviour {
 
     public GameObject EnemyPrefab;
-    TopEnemySpawner topSpawner;
-    BottomEnemySpawner bottomSpawner;
     GameObject enemyFormation;
     float enemySpawningPositionX,enemySpawningPositionY;
     Vector3 enemySpawningPosition;
@@ -18,8 +16,6 @@ public class EnemySpawner : MonoBehaviour {
     void Start () {
         spawnRate = 0.5f;
         formationVelocity = 10f;
-        bottomSpawner = FindObjectOfType<BottomEnemySpawner>();
-        topSpawner = FindObjectOfType<TopEnemySpawner>();
     }
 	
 	// Update is called once per frame
@@ -52,7 +48,7 @@ public class EnemySpawner : MonoBehaviour {
                     //Spawn enemy at top
                     Debug.Log("Enemy Spawned at top");
                     enemySpawningPositionX = Random.Range(ScreenManager.getLeftBoundary(), ScreenManager.getRightBoundary());
-                    enemySpawningPosition = new Vector3(enemySpawningPositionX, topSpawner.transform.position.y, 0);
+                    enemySpawningPosition = new Vector3(enemySpawningPositionX,transform.position.y, 0);
                     enemyFormation = Instantiate(EnemyPrefab, enemySpawningPosition, Quaternion.identity) as GameObject;
                     enemyFormation.transform.parent = transform;
                     formationRigidBody = enemyFormation.GetComponent<Rigidbody2D>();
@@ -65,7 +61,7 @@ public class EnemySpawner : MonoBehaviour {
                     //Spawn enemy at bottom
                     Debug.Log("Enemy spawned at bottom");
                     enemySpawningPositionX = Random.Range(ScreenManager.getLeftBoundary(), ScreenManager.getRightBoundary());
-                    enemySpawningPosition = new Vector3(enemySpawningPositionX, bottomSpawner.transform.position.y, 0);
+                    enemySpawningPosition = new Vector3(enemySpawningPositionX,-transform.position.y, 0);
                     enemyFormation = Instantiate(EnemyPrefab, enemySpawningPosition, Quaternion.Euler(new Vector3(0,0,180))) as GameObject;
                     enemyFormation.transform.parent = transform;
                     formationRigidBody = enemyFormation.GetComponent<Rigidbody2D>();
