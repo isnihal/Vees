@@ -11,21 +11,25 @@ public class GameManager : MonoBehaviour {
 
     void Start()
     {
-        resetScore();
-        resetLife();
-        setLevelProperties();
+        if (getLevelName() != "GAME_OVER")
+        {
+            resetScore();
+            resetLife();
+            setLevelProperties();
 
-        scoreBoard = FindObjectOfType<Text>();
+            scoreBoard = FindObjectOfType<Text>();
+        }
+        else
+        {
+            scoreBoard = FindObjectOfType<ScoreBoard>().GetComponent<Text>();
+        }
     }
 
     void Update()
     {
         scoreBoard.text = score.ToString();
         setLifeDisplay();
-        if(isGameOver())
-        {
-            Debug.Log("Game over");
-        }
+        isGameOver();
     }
 
     void setLevelProperties()
@@ -48,13 +52,20 @@ public class GameManager : MonoBehaviour {
         {
             setLife(5);
         }
+
+        //Game Over properties
+        if(getLevelName()=="GAME_OVER")
+        {
+            FindObjectOfType<ScoreBoard>().GetComponent<Text>().text = getScore().ToString();
+        }
     }
 
-    bool isGameOver()
+    void isGameOver()
     {
-        if (life == 0)
-            return true;
-        return false;
+        if (life <= 0)
+        {
+            Application.LoadLevel("GAME_OVER");
+        }
     }
 
     void setLifeDisplay()
@@ -120,6 +131,11 @@ public class GameManager : MonoBehaviour {
         else if(Application.loadedLevel==5)
         {
             return ("FAST_ESCAPE");
+        }
+
+        else if(Application.loadedLevel==6)
+        {
+            return ("GAME_OVER");
         }
 
         return null;
