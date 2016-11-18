@@ -5,7 +5,14 @@ public class GoalDetector : MonoBehaviour {
 
     void OnTriggerEnter2D(Collider2D collider)
     {
-        GameManager.incrementScore();
-        Debug.Log("Score:" + GameManager.getScore());
+        if (collider.gameObject.GetComponent<PlayerFormation>())
+        {
+            GameManager.incrementScore();
+        }
+
+        else if(collider.gameObject.GetComponent<EnemyFormation>())
+        {
+            GameManager.decrementLife();
+        }
     }
 }

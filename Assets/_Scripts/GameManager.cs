@@ -26,6 +26,13 @@ public class GameManager : MonoBehaviour {
 
     void setLevelProperties()
     {
+
+        //Arcade properites
+        if(getLevelName()=="ARCADE")
+        {
+            setLife(5);
+        }
+
         //Fast escape properties
         if(getLevelName()=="FAST_ESCAPE")
         {
