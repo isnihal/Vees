@@ -5,15 +5,11 @@ public class PlayerSpawner : MonoBehaviour {
 
     public GameObject playerFormation;
     GameObject spawnedPlayer;
-    LeftPlayerSpawner leftSpawner;
-    RightPlayerSpawner rightSpawner;
     Rigidbody2D spawnedPlayerRigidBody;
     public AudioClip playerClip;
 
     void Start()
     {
-        leftSpawner = FindObjectOfType<LeftPlayerSpawner>();
-        rightSpawner = FindObjectOfType<RightPlayerSpawner>();
     }
 
     public void spawnPlayer(Vector3 spawningPosition, Vector3 playerVelocity)
@@ -35,9 +31,9 @@ public class PlayerSpawner : MonoBehaviour {
             if (playerVelocity.x > 0)
             {
                 //Spawn from left
-                spawningPosition.x = leftSpawner.transform.position.x;
+                spawningPosition.x = transform.position.x;
                 spawnedPlayer = Instantiate(playerFormation, spawningPosition, Quaternion.Euler(new Vector3(0, 0, 90))) as GameObject;
-                spawnedPlayer.transform.parent = leftSpawner.transform;
+                spawnedPlayer.transform.parent = transform;
                 spawnedPlayerRigidBody = spawnedPlayer.GetComponent<Rigidbody2D>();
                 spawnedPlayerRigidBody.velocity = playerVelocity;
                 AudioSource.PlayClipAtPoint(playerClip, spawnedPlayer.transform.position, 1);
@@ -46,13 +42,25 @@ public class PlayerSpawner : MonoBehaviour {
             else
             {
                 //Spawn from right
-                spawningPosition.x = rightSpawner.transform.position.x;
+                spawningPosition.x = -transform.position.x;
                 spawnedPlayer = Instantiate(playerFormation, spawningPosition, Quaternion.Euler(new Vector3(0, 0, -90))) as GameObject;
-                spawnedPlayer.transform.parent = rightSpawner.transform;
+                spawnedPlayer.transform.parent = transform;
                 spawnedPlayerRigidBody = spawnedPlayer.GetComponent<Rigidbody2D>();
                 spawnedPlayerRigidBody.velocity = playerVelocity;
                 AudioSource.PlayClipAtPoint(playerClip, spawnedPlayer.transform.position, 1);
             }
+        }
+
+
+        //Spawn player for fast escape
+        if(GameManager.getLevelName()=="FAST_ESCAPE")
+        {
+            spawningPosition.y = transform.position.y;
+            spawnedPlayer = Instantiate(playerFormation, spawningPosition, Quaternion.Euler(new Vector3(0, 0,180))) as GameObject;
+            spawnedPlayer.transform.parent = transform;
+            spawnedPlayerRigidBody = spawnedPlayer.GetComponent<Rigidbody2D>();
+            spawnedPlayerRigidBody.velocity = -playerVelocity;
+            AudioSource.PlayClipAtPoint(playerClip, spawnedPlayer.transform.position, 1);
         }
     }
 }
