@@ -20,5 +20,11 @@ public class PlayerSpawner : MonoBehaviour {
             spawnedPlayerRigidBody.velocity = playerVelocity;
             AudioSource.PlayClipAtPoint(playerClip, spawnedPlayer.transform.position, 1);
         }
+
+        //Spawn player for ARCADE
+        if(GameManager.getLevelName() == "ARCADE")
+        {
+
+        }
     }
 }

@@ -3,7 +3,7 @@ using System.Collections;
 
 public class EnemySpawner : MonoBehaviour {
 
-    public GameObject topenemyFormationPrefab,bottomEnemyPrefab,topSpawner,bottomSpawner;
+    public GameObject EnemyPrefab,topSpawner,bottomSpawner;
     GameObject enemyFormation;
     float enemySpawningPositionX;
     Vector3 enemySpawningPosition;
@@ -29,7 +29,7 @@ public class EnemySpawner : MonoBehaviour {
             {
                 enemySpawningPositionX = Random.Range(ScreenManager.getLeftBoundary(), ScreenManager.getRightBoundary());
                 enemySpawningPosition = new Vector3(enemySpawningPositionX, transform.position.y, 0);
-                enemyFormation = Instantiate(topenemyFormationPrefab, enemySpawningPosition, Quaternion.identity) as GameObject;
+                enemyFormation = Instantiate(EnemyPrefab, enemySpawningPosition, Quaternion.identity) as GameObject;
                 enemyFormation.transform.parent = transform;
                 formationRigidBody = enemyFormation.GetComponent<Rigidbody2D>();
                 formationRigidBody.velocity = Vector3.down * formationVelocity;
@@ -50,7 +50,7 @@ public class EnemySpawner : MonoBehaviour {
                     Debug.Log("Enemy Spawned at top");
                     enemySpawningPositionX = Random.Range(ScreenManager.getLeftBoundary(), ScreenManager.getRightBoundary());
                     enemySpawningPosition = new Vector3(enemySpawningPositionX, topSpawner.transform.position.y, 0);
-                    enemyFormation = Instantiate(topenemyFormationPrefab, enemySpawningPosition, Quaternion.identity) as GameObject;
+                    enemyFormation = Instantiate(EnemyPrefab, enemySpawningPosition, Quaternion.identity) as GameObject;
                     enemyFormation.transform.parent = transform;
                     formationRigidBody = enemyFormation.GetComponent<Rigidbody2D>();
                     formationRigidBody.velocity = Vector3.down * formationVelocity;
@@ -63,7 +63,7 @@ public class EnemySpawner : MonoBehaviour {
                     Debug.Log("Enemy spawned at bottom");
                     enemySpawningPositionX = Random.Range(ScreenManager.getLeftBoundary(), ScreenManager.getRightBoundary());
                     enemySpawningPosition = new Vector3(enemySpawningPositionX, bottomSpawner.transform.position.y, 0);
-                    enemyFormation = Instantiate(bottomEnemyPrefab, enemySpawningPosition, Quaternion.Euler(new Vector3(0,0,180))) as GameObject;
+                    enemyFormation = Instantiate(EnemyPrefab, enemySpawningPosition, Quaternion.Euler(new Vector3(0,0,180))) as GameObject;
                     enemyFormation.transform.parent = transform;
                     formationRigidBody = enemyFormation.GetComponent<Rigidbody2D>();
                     formationRigidBody.velocity = Vector3.down * -formationVelocity;
