@@ -1,8 +1,11 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 
 public class GameManager : MonoBehaviour {
 
+    Text scoreBoard;
+    public Image[] lifeArray;
     static float enemySpawnFrequency;
     static int score,life;
 
@@ -11,6 +14,14 @@ public class GameManager : MonoBehaviour {
         resetScore();
         resetLife();
         setLevelProperties();
+
+        scoreBoard = FindObjectOfType<Text>();
+    }
+
+    void Update()
+    {
+        scoreBoard.text = score.ToString();
+        setLifeDisplay();
     }
 
     void setLevelProperties()
@@ -19,6 +30,19 @@ public class GameManager : MonoBehaviour {
         if(getLevelName()=="FAST_ESCAPE")
         {
             setLife(5);
+        }
+    }
+
+    void setLifeDisplay()
+    {
+        int count = 0;
+        foreach(Image lifeImage in lifeArray)
+        {
+            count++;
+            if(count==life+1)
+            {
+                Destroy(lifeImage);
+            }
         }
     }
 

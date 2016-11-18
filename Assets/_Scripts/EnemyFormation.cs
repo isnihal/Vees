@@ -15,6 +15,10 @@ public class EnemyFormation : MonoBehaviour {
                 Destroy(collider.gameObject);
                 GameManager.decrementLife();
                 Debug.Log("Lives remaining:" + GameManager.getLife());
+                if(GameManager.getLife()<=0)
+                {
+                    Debug.Log("Game over");
+                }
             }
         }
     }
