@@ -3,7 +3,7 @@ using System.Collections;
 
 public class EnemySpawner : MonoBehaviour {
 
-    public GameObject enemyFormationPrefab;
+    public GameObject topenemyFormationPrefab,bottomEnemyPrefab,topSpawner,bottomSpawner;
     GameObject enemyFormation;
     float enemySpawningPositionX;
     Vector3 enemySpawningPosition;
@@ -20,18 +20,16 @@ public class EnemySpawner : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-
+        probability = spawnRate * Time.deltaTime;
 
         //Enemy Spawner for One Direction
         if (GameManager.getLevelName() == "ONE_DIRECTION")
-        {
-            probability = spawnRate * Time.deltaTime;
+        { 
             if (probability > Random.value)
             {
-                Debug.Log("Enemy Spawned");
                 enemySpawningPositionX = Random.Range(ScreenManager.getLeftBoundary(), ScreenManager.getRightBoundary());
                 enemySpawningPosition = new Vector3(enemySpawningPositionX, transform.position.y, 0);
-                enemyFormation = Instantiate(enemyFormationPrefab, enemySpawningPosition, Quaternion.identity) as GameObject;
+                enemyFormation = Instantiate(topenemyFormationPrefab, enemySpawningPosition, Quaternion.identity) as GameObject;
                 enemyFormation.transform.parent = transform;
                 formationRigidBody = enemyFormation.GetComponent<Rigidbody2D>();
                 formationRigidBody.velocity = Vector3.down * formationVelocity;
@@ -40,7 +38,39 @@ public class EnemySpawner : MonoBehaviour {
         }
 
         //Enemy Spawner for Arcade
+        if(GameManager.getLevelName()=="ARCADE")
+        {
+            if(probability>Random.value)
+            {
+                enemySpawningPositionX = Random.Range(ScreenManager.getLeftBoundary(), ScreenManager.getRightBoundary());
+                int topOrBottom = Random.Range(0,2);
+                if(topOrBottom == 0)
+                {
+                    //Spawn enemy at top
+                    Debug.Log("Enemy Spawned at top");
+                    enemySpawningPositionX = Random.Range(ScreenManager.getLeftBoundary(), ScreenManager.getRightBoundary());
+                    enemySpawningPosition = new Vector3(enemySpawningPositionX, topSpawner.transform.position.y, 0);
+                    enemyFormation = Instantiate(topenemyFormationPrefab, enemySpawningPosition, Quaternion.identity) as GameObject;
+                    enemyFormation.transform.parent = transform;
+                    formationRigidBody = enemyFormation.GetComponent<Rigidbody2D>();
+                    formationRigidBody.velocity = Vector3.down * formationVelocity;
+                    AudioSource.PlayClipAtPoint(enemyClip, enemyFormation.transform.position, 1);
+                }
 
+                else
+                {
+                    //Spawn enemy at bottom
+                    Debug.Log("Enemy spawned at bottom");
+                    enemySpawningPositionX = Random.Range(ScreenManager.getLeftBoundary(), ScreenManager.getRightBoundary());
+                    enemySpawningPosition = new Vector3(enemySpawningPositionX, bottomSpawner.transform.position.y, 0);
+                    enemyFormation = Instantiate(bottomEnemyPrefab, enemySpawningPosition, Quaternion.Euler(new Vector3(0,0,180))) as GameObject;
+                    enemyFormation.transform.parent = transform;
+                    formationRigidBody = enemyFormation.GetComponent<Rigidbody2D>();
+                    formationRigidBody.velocity = Vector3.down * -formationVelocity;
+                    AudioSource.PlayClipAtPoint(enemyClip, enemyFormation.transform.position, 1);
+                }
+            }
+        }
 	}
 
     void OnDrawGizmos()
