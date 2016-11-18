@@ -3,7 +3,9 @@ using System.Collections;
 
 public class EnemySpawner : MonoBehaviour {
 
-    public GameObject EnemyPrefab,topSpawner,bottomSpawner;
+    public GameObject EnemyPrefab;
+    TopEnemySpawner topSpawner;
+    BottomEnemySpawner bottomSpawner;
     GameObject enemyFormation;
     float enemySpawningPositionX;
     Vector3 enemySpawningPosition;
@@ -16,6 +18,8 @@ public class EnemySpawner : MonoBehaviour {
     void Start () {
         spawnRate = 0.5f;
         formationVelocity = 10f;
+        bottomSpawner = FindObjectOfType<BottomEnemySpawner>();
+        topSpawner = FindObjectOfType<TopEnemySpawner>();
     }
 	
 	// Update is called once per frame
