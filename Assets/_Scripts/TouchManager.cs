@@ -48,7 +48,7 @@ public class TouchManager : MonoBehaviour {
        //FAST ESCAPE PROPERTIES
        if(GameManager.getLevelName()=="FAST_ESCAPE")
         {
-            yVelocity = Mathf.Clamp(yVelocity,-20, -10);
+            yVelocity = Mathf.Clamp(yVelocity,10,20);
         }
 
         //Convert start pos to world unit

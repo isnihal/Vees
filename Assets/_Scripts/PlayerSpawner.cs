@@ -59,7 +59,7 @@ public class PlayerSpawner : MonoBehaviour {
             spawnedPlayer = Instantiate(playerFormation, spawningPosition, Quaternion.Euler(new Vector3(0, 0,180))) as GameObject;
             spawnedPlayer.transform.parent = transform;
             spawnedPlayerRigidBody = spawnedPlayer.GetComponent<Rigidbody2D>();
-            spawnedPlayerRigidBody.velocity = -playerVelocity;
+            spawnedPlayerRigidBody.velocity = playerVelocity;
             AudioSource.PlayClipAtPoint(playerClip, spawnedPlayer.transform.position, 1);
         }
     }
