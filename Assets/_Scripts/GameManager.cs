@@ -22,6 +22,10 @@ public class GameManager : MonoBehaviour {
     {
         scoreBoard.text = score.ToString();
         setLifeDisplay();
+        if(isGameOver())
+        {
+            Debug.Log("Game over");
+        }
     }
 
     void setLevelProperties()
@@ -32,12 +36,25 @@ public class GameManager : MonoBehaviour {
         {
             setLife(5);
         }
+        
+        //ONE DIRECTION properties
+        if(getLevelName()=="ONE_DIRECTION")
+        {
+            setLife(5);
+        }
 
         //Fast escape properties
         if(getLevelName()=="FAST_ESCAPE")
         {
             setLife(5);
         }
+    }
+
+    bool isGameOver()
+    {
+        if (life == 0)
+            return true;
+        return false;
     }
 
     void setLifeDisplay()
