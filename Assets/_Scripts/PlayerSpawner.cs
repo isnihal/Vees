@@ -3,6 +3,11 @@ using System.Collections;
 
 public class PlayerSpawner : MonoBehaviour {
 
+    //Important script
+    //Responsible for generating player vees
+    //Spawn vees for each level
+    //TODO:Functional refactoring
+
     public GameObject playerFormation;
     GameObject spawnedPlayer;
     Rigidbody2D spawnedPlayerRigidBody;

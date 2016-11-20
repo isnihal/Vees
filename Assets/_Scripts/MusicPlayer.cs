@@ -3,6 +3,8 @@ using System.Collections;
 
 public class MusicPlayer : MonoBehaviour {
 
+    //Music player,Splash screen sound independent
+
     [Tooltip("Music clips played through each levels")]
     public AudioClip[] gameMusicArray;
     AudioSource musicPlayer;
@@ -10,12 +12,14 @@ public class MusicPlayer : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+        //Persist music player through each level
         DontDestroyOnLoad(gameObject);
         musicPlayer = GetComponent<AudioSource>();
 	}
 	
     void OnLevelWasLoaded(int level)
     {
+        //Executes on loading of each level;
         musicIndex = level - 1;
         musicPlayer.clip = gameMusicArray[musicIndex];
         if (musicPlayer.clip)
@@ -26,7 +30,7 @@ public class MusicPlayer : MonoBehaviour {
         }
         else
         {
-            Debug.LogError("Clip not founded");
+            Debug.LogError("Music Clip not found");
         }
     }
 }

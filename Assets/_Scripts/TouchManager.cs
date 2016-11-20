@@ -3,6 +3,15 @@ using System.Collections;
 
 public class TouchManager : MonoBehaviour {
 
+    //Script that deals with TouchInput
+    //Critical Script
+    /*
+     Functions
+     1)Calculate swipeVelocity
+     2)Check for a minimum swipe distance
+     3)Set drag properties to each level
+    */
+
     static Vector3 startPositon, endPosition;
     static float startTime, endTime,xVelocity,yVelocity;
     PlayerSpawner playerSpawner;
@@ -56,7 +65,7 @@ public class TouchManager : MonoBehaviour {
             if (GameManager.getLevelName() == "FAST_ESCAPE")
             {
 
-                yVelocity = Mathf.Clamp(yVelocity, 10, 20);
+                yVelocity = Mathf.Clamp(yVelocity, 18, 20);
             }
 
             //Convert start pos to world unit

@@ -3,6 +3,8 @@ using System.Collections;
 
 public class LevelManager : MonoBehaviour {
 
+    //Deals with splash screen and loading of other levels
+
     void Start()
     {
         //Load main menu if current level is splash screen

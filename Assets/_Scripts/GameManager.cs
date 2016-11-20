@@ -4,6 +4,20 @@ using System.Collections;
 
 public class GameManager : MonoBehaviour {
 
+    //Most Critical script
+
+   /*Game Manager Functions
+    1)Score reseting,incrementing,fetching
+    2)Life reseting,decrementing,fetching & Set life to an integer
+    3)Set life to 5(for all levels),If life is zero gameOver gets triggered()
+    4)Set score
+    5)Manage gameOver Level,like setting score
+    6)Check for game over
+    7)Manage Life Display
+    8)Get level name
+   */
+
+
     Text scoreBoard;
     public Image[] lifeArray;
     static float enemySpawnFrequency;
@@ -34,24 +48,8 @@ public class GameManager : MonoBehaviour {
 
     void setLevelProperties()
     {
-
-        //Arcade properites
-        if(getLevelName()=="ARCADE")
-        {
-            setLife(5);
-        }
-        
-        //ONE DIRECTION properties
-        if(getLevelName()=="ONE_DIRECTION")
-        {
-            setLife(5);
-        }
-
-        //Fast escape properties
-        if(getLevelName()=="FAST_ESCAPE")
-        {
-            setLife(5);
-        }
+        //Set life to all levels
+        setLife(5);
 
         //Game Over properties
         if(getLevelName()=="GAME_OVER")
@@ -135,9 +133,13 @@ public class GameManager : MonoBehaviour {
 
         else if(Application.loadedLevel==6)
         {
-            return ("GAME_OVER");
+            return ("EQUALS");
         }
 
+        else if(Application.loadedLevel==7)
+        {
+            return ("GAME_OVER");
+        }
         return null;
     }
 }

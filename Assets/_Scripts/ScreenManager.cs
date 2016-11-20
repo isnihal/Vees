@@ -3,6 +3,8 @@ using System.Collections;
 
 public class ScreenManager : MonoBehaviour {
 
+    //Determines screen dimensions
+
     static Vector3 leftBounday, rightBoundary,topBoundary,bottomBoundary;
     static float leftX, rightX,topY,bottomY,padding;
 

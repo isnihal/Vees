@@ -3,6 +3,8 @@ using System.Collections;
 
 public class EnemyFormation : MonoBehaviour {
 
+    //When enemies have destruction permission,This class is effective
+
     public AudioClip destroyClip;
 
     void OnTriggerEnter2D(Collider2D collider)

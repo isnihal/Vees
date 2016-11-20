@@ -4,6 +4,9 @@ using System.Collections;
 
 public class FadeIn : MonoBehaviour {
 
+    //UI CODE ONLY
+    //PURPOSE:FADING EFFECT
+
     Color panelImageColor;
     Image panelImage;
     float fadeInTime;
