@@ -93,5 +93,31 @@ public class PlayerSpawner : MonoBehaviour {
                 AudioSource.PlayClipAtPoint(playerClip, spawnedPlayer.transform.position, 1);
             }
         }
+
+        //Spawn player for TIME LAPSE
+        if (GameManager.getLevelName() == "TIME_LAPSE")
+        {
+            if (playerVelocity.x > 0)
+            {
+                //Spawn from left
+                spawningPosition.x = transform.position.x;
+                spawnedPlayer = Instantiate(playerFormation, spawningPosition, Quaternion.Euler(new Vector3(0, 0, 90))) as GameObject;
+                spawnedPlayer.transform.parent = transform;
+                spawnedPlayerRigidBody = spawnedPlayer.GetComponent<Rigidbody2D>();
+                spawnedPlayerRigidBody.velocity = playerVelocity;
+                AudioSource.PlayClipAtPoint(playerClip, spawnedPlayer.transform.position, 1);
+            }
+
+            else
+            {
+                //Spawn from right
+                spawningPosition.x = -transform.position.x;
+                spawnedPlayer = Instantiate(playerFormation, spawningPosition, Quaternion.Euler(new Vector3(0, 0, -90))) as GameObject;
+                spawnedPlayer.transform.parent = transform;
+                spawnedPlayerRigidBody = spawnedPlayer.GetComponent<Rigidbody2D>();
+                spawnedPlayerRigidBody.velocity = playerVelocity;
+                AudioSource.PlayClipAtPoint(playerClip, spawnedPlayer.transform.position, 1);
+            }
+        }
     }
 }

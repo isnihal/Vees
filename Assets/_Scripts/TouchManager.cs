@@ -48,7 +48,7 @@ public class TouchManager : MonoBehaviour {
             }
 
             //ARCADE & EQUALS PROPERTIES
-            if (GameManager.getLevelName() == "ARCADE" || GameManager.getLevelName()== "EQUALS")
+            if (GameManager.getLevelName() == "ARCADE" || GameManager.getLevelName()== "EQUALS" || GameManager.getLevelName()=="TIME_LAPSE")
             {
                 if (xVelocity < 0)
                 {

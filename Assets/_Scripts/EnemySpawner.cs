@@ -174,10 +174,10 @@ public class EnemySpawner : MonoBehaviour {
             if (probability > Random.value)
             {
                 //SPAWN RATE INCREASER 
-                spawnRate += 0.03f;
-                spawnRate = Mathf.Clamp(spawnRate, 0.4f, 3f);
+                spawnRate += 0.06f;
+                spawnRate = Mathf.Clamp(spawnRate, 0.4f, 8.5f);
+                Debug.Log("Spawn rate " + spawnRate);
                 //SPAWN RATE INCREASER
-                Debug.Log("Spawn rate : " + spawnRate);
                 enemySpawningPositionX = Random.Range(ScreenManager.getLeftBoundary(), ScreenManager.getRightBoundary());
                 int topOrBottom = Random.Range(0, 2);
                 if (topOrBottom == 0)
@@ -223,7 +223,7 @@ public class EnemySpawner : MonoBehaviour {
 
         else if(GameManager.getLevelName()=="TIME_LAPSE")
         {
-            return 0.3f;
+            return 0.4f;
         }
         else
         {

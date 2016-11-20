@@ -18,10 +18,13 @@ public class GameManager : MonoBehaviour {
    */
 
 
-    public Text scoreBoard;
+    public Text scoreBoard,timerText;
     public Image[] lifeArray;
     static float enemySpawnFrequency;
     static int score,life;
+
+    //Time Lapse property
+    float timeLeft;
 
     void Start()
     {
@@ -30,8 +33,8 @@ public class GameManager : MonoBehaviour {
             resetScore();
             resetLife();
             setLevelProperties();
-
-            //scoreBoard = FindObjectOfType<Text>();
+            //Only for time lapse
+            timeLeft = 60f;
         }
         else if(getLevelName() =="GAME_OVER")
         {
@@ -44,6 +47,10 @@ public class GameManager : MonoBehaviour {
         scoreBoard.text ="KILLS:"+score;
         setLifeDisplay();
         isGameOver();
+        if(GameManager.getLevelName()=="TIME_LAPSE")
+        {
+            setTimer();
+        }
     }
 
     void setLevelProperties()
@@ -76,6 +83,17 @@ public class GameManager : MonoBehaviour {
             {
                 Destroy(lifeImage);
             }
+        }
+    }
+
+    void setTimer()
+    {
+        timeLeft -= Time.deltaTime;
+        int timeInSeconds = Mathf.RoundToInt(timeLeft);
+        timerText.text = "TIME:00:" + timeInSeconds.ToString("00");
+        if(timeLeft<=0)
+        {
+            Application.LoadLevel("GAME_OVER");
         }
     }
 
