@@ -57,7 +57,7 @@ public class PlayerSpawner : MonoBehaviour {
         }
 
 
-        //Spawn player for fast escape
+        //Spawn player for FAST ESCAPE
         if(GameManager.getLevelName()=="FAST_ESCAPE")
         {
             spawningPosition.y = transform.position.y;
@@ -66,6 +66,32 @@ public class PlayerSpawner : MonoBehaviour {
             spawnedPlayerRigidBody = spawnedPlayer.GetComponent<Rigidbody2D>();
             spawnedPlayerRigidBody.velocity = playerVelocity;
             AudioSource.PlayClipAtPoint(playerClip, spawnedPlayer.transform.position, 1);
+        }
+
+        //Spawn player for EQUALS
+        if (GameManager.getLevelName() == "EQUALS")
+        {
+            if (playerVelocity.x > 0)
+            {
+                //Spawn from left
+                spawningPosition.x = transform.position.x;
+                spawnedPlayer = Instantiate(playerFormation, spawningPosition, Quaternion.Euler(new Vector3(0, 0, 90))) as GameObject;
+                spawnedPlayer.transform.parent = transform;
+                spawnedPlayerRigidBody = spawnedPlayer.GetComponent<Rigidbody2D>();
+                spawnedPlayerRigidBody.velocity = playerVelocity;
+                AudioSource.PlayClipAtPoint(playerClip, spawnedPlayer.transform.position, 1);
+            }
+
+            else
+            {
+                //Spawn from right
+                spawningPosition.x = -transform.position.x;
+                spawnedPlayer = Instantiate(playerFormation, spawningPosition, Quaternion.Euler(new Vector3(0, 0, -90))) as GameObject;
+                spawnedPlayer.transform.parent = transform;
+                spawnedPlayerRigidBody = spawnedPlayer.GetComponent<Rigidbody2D>();
+                spawnedPlayerRigidBody.velocity = playerVelocity;
+                AudioSource.PlayClipAtPoint(playerClip, spawnedPlayer.transform.position, 1);
+            }
         }
     }
 }

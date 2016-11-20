@@ -16,7 +16,7 @@ public class TouchManager : MonoBehaviour {
     static float startTime, endTime,xVelocity,yVelocity;
     PlayerSpawner playerSpawner;
     Vector3 playerPosition, playerVelocity;
-    float dragLength, dragDuration, dragHeight,minimumDragLength=40,minimumDragHeight=25;
+    float dragLength, dragDuration, dragHeight,minimumDragLength=30,minimumDragHeight=25;
 
     void DragStart()
     {
@@ -47,8 +47,8 @@ public class TouchManager : MonoBehaviour {
                 xVelocity = Mathf.Clamp(xVelocity, 10, 20);
             }
 
-            //ARCADE PROPERTIES
-            if (GameManager.getLevelName() == "ARCADE")
+            //ARCADE & EQUALS PROPERTIES
+            if (GameManager.getLevelName() == "ARCADE" || GameManager.getLevelName()== "EQUALS")
             {
                 if (xVelocity < 0)
                 {
@@ -72,13 +72,15 @@ public class TouchManager : MonoBehaviour {
             startPositon = Camera.main.ScreenToWorldPoint(startPositon);
 
             //Vector refactoring
-            if (GameManager.getLevelName() == "ARCADE" || GameManager.getLevelName() == "ONE_DIRECTION")
+            if (GameManager.getLevelName()!="FAST_ESCAPE")
             {
-                playerPosition = new Vector3(0, Mathf.Clamp(startPositon.y, -5, 5), 0);
+                //X Velocity for all other levels
+                playerPosition = new Vector3(0, Mathf.Clamp(startPositon.y,ScreenManager.getBottomBoundary(),ScreenManager.getTopBoundary()), 0);
                 playerVelocity = new Vector3(xVelocity, 0, 0);
             }
             else
             {
+                //FAST ESCAPE PROPERTIES
                 playerPosition = new Vector3(startPositon.x, 0, 0);
                 playerVelocity = new Vector3(0, yVelocity, 0);
             }
