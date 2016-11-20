@@ -12,6 +12,7 @@ public class ScoreBoard : MonoBehaviour {
         {
             //Wave number for level EQUALS
             gameObject.GetComponent<Text>().text = EnemySpawner.getWaveNumber().ToString();
+            GoalDetector.fromEquals = false;
         }
         else
         {

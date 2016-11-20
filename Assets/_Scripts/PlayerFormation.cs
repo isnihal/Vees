@@ -39,5 +39,12 @@ public class PlayerFormation : MonoBehaviour {
                 EnemySpawner.resumeTrigger = true;
             }
         }
+
+
+        //Handle Bomb collission
+        if(collider.gameObject.GetComponent<BombFormation>())
+        {
+            Application.LoadLevel("GAME_OVER");
+        }
     }
 }
