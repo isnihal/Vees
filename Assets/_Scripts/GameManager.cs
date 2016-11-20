@@ -138,6 +138,11 @@ public class GameManager : MonoBehaviour {
 
         else if(Application.loadedLevel==7)
         {
+            return ("TIME_LAPSE");
+        }
+
+        else if(Application.loadedLevel==8)
+        {
             return ("GAME_OVER");
         }
         return null;

@@ -22,8 +22,10 @@ public class EnemySpawner : MonoBehaviour {
 
 
 
-    //Properties applicable to equals
+    //Properties applicable to EQUALS
     static int waveNumber, enemiesKilled, enemiesSpawned;
+
+    //Properties applicable to TIME LAPSE
 
 
     // Use this for initialization
@@ -47,6 +49,7 @@ public class EnemySpawner : MonoBehaviour {
     void Update()
     {
         probability = spawnRate * Time.deltaTime;
+
         //Enemy Spawner for One Direction
         if (GameManager.getLevelName() == "ONE_DIRECTION")
         {
@@ -164,6 +167,46 @@ public class EnemySpawner : MonoBehaviour {
                 }
             }
         }
+
+        //Enemy Spawner for TIME LAPSE
+        if (GameManager.getLevelName() == "TIME_LAPSE")
+        {
+            if (probability > Random.value)
+            {
+                //SPAWN RATE INCREASER 
+                spawnRate += 0.03f;
+                spawnRate = Mathf.Clamp(spawnRate, 0.4f, 3f);
+                //SPAWN RATE INCREASER
+                Debug.Log("Spawn rate : " + spawnRate);
+                enemySpawningPositionX = Random.Range(ScreenManager.getLeftBoundary(), ScreenManager.getRightBoundary());
+                int topOrBottom = Random.Range(0, 2);
+                if (topOrBottom == 0)
+                {
+                    //Spawn enemy at top
+                    Debug.Log("Enemy Spawned at top");
+                    enemySpawningPositionX = Random.Range(ScreenManager.getLeftBoundary(), ScreenManager.getRightBoundary());
+                    enemySpawningPosition = new Vector3(enemySpawningPositionX, transform.position.y, 0);
+                    enemyFormation = Instantiate(EnemyPrefab, enemySpawningPosition, Quaternion.identity) as GameObject;
+                    enemyFormation.transform.parent = transform;
+                    formationRigidBody = enemyFormation.GetComponent<Rigidbody2D>();
+                    formationRigidBody.velocity = Vector3.down * formationVelocity;
+                    AudioSource.PlayClipAtPoint(enemyClip, enemyFormation.transform.position, 1);
+                }
+
+                else
+                {
+                    //Spawn enemy at bottom
+                    Debug.Log("Enemy spawned at bottom");
+                    enemySpawningPositionX = Random.Range(ScreenManager.getLeftBoundary(), ScreenManager.getRightBoundary());
+                    enemySpawningPosition = new Vector3(enemySpawningPositionX, -transform.position.y, 0);
+                    enemyFormation = Instantiate(EnemyPrefab, enemySpawningPosition, Quaternion.Euler(new Vector3(0, 0, 180))) as GameObject;
+                    enemyFormation.transform.parent = transform;
+                    formationRigidBody = enemyFormation.GetComponent<Rigidbody2D>();
+                    formationRigidBody.velocity = Vector3.down * -formationVelocity;
+                    AudioSource.PlayClipAtPoint(enemyClip, enemyFormation.transform.position, 1);
+                }
+            }
+        }
     }
 
 
@@ -176,6 +219,11 @@ public class EnemySpawner : MonoBehaviour {
         else if (GameManager.getLevelName() == "EQUALS")
         {
             return 0.4f;
+        }
+
+        else if(GameManager.getLevelName()=="TIME_LAPSE")
+        {
+            return 0.3f;
         }
         else
         {
