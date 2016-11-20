@@ -18,22 +18,22 @@ public class GameManager : MonoBehaviour {
    */
 
 
-    Text scoreBoard;
+    public Text scoreBoard;
     public Image[] lifeArray;
     static float enemySpawnFrequency;
     static int score,life;
 
     void Start()
     {
-        if (getLevelName() != "GAME_OVER")
+        if (getLevelName() != "GAME_OVER")//Properties of equals set in enemy spawner
         {
             resetScore();
             resetLife();
             setLevelProperties();
 
-            scoreBoard = FindObjectOfType<Text>();
+            //scoreBoard = FindObjectOfType<Text>();
         }
-        else
+        else if(getLevelName() =="GAME_OVER")
         {
             scoreBoard = FindObjectOfType<ScoreBoard>().GetComponent<Text>();
         }
@@ -41,7 +41,7 @@ public class GameManager : MonoBehaviour {
 
     void Update()
     {
-        scoreBoard.text = score.ToString();
+        scoreBoard.text ="KILLS:"+score;
         setLifeDisplay();
         isGameOver();
     }

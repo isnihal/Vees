@@ -7,14 +7,24 @@ public class GoalDetector : MonoBehaviour {
 
     void OnTriggerEnter2D(Collider2D collider)
     {
-        if (collider.gameObject.GetComponent<PlayerFormation>())
+        GameObject collidedObject=collider.gameObject;
+        //Special condition for EQUALS
+        if (GameManager.getLevelName() == "EQUALS")
         {
-            GameManager.incrementScore();
+            Application.LoadLevel("GAME_OVER");
         }
-
-        else if(collider.gameObject.GetComponent<EnemyFormation>())
+        //For other levels
+        else
         {
-            GameManager.decrementLife();
+            if (collidedObject.GetComponent<PlayerFormation>())
+            {
+                GameManager.incrementScore();
+            }
+
+            else if (collidedObject.GetComponent<EnemyFormation>())
+            {
+                GameManager.decrementLife();
+            }
         }
     }
 }

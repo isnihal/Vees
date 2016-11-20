@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 
 public class EnemySpawner : MonoBehaviour {
@@ -8,18 +9,36 @@ public class EnemySpawner : MonoBehaviour {
     //TODO:FUNCTIONAL REFACTORING
 
     public GameObject EnemyPrefab;
+    public AudioClip enemyClip;
+    public Text waveNumberText;
+
+
     GameObject enemyFormation;
-    float enemySpawningPositionX,enemySpawningPositionY;
+    float enemySpawningPositionX, enemySpawningPositionY;
     Vector3 enemySpawningPosition;
     float probability, spawnRate, formationVelocity;
     Rigidbody2D formationRigidBody;
-    public AudioClip enemyClip;
+
+
+
+    //Properties applicable to equals
+    static int waveNumber, enemiesKilled, enemiesSpawned;
 
 
     // Use this for initialization
-    void Start () {
+    void Start() {
         spawnRate = getSpawnFrequency();
         formationVelocity = 10f;
+
+
+        //Properties applicable to equals
+        if (GameManager.getLevelName() == "EQUALS")
+        {
+            waveNumber = 1;
+            enemiesSpawned = 0;
+            enemiesKilled = 0;
+            setWaveNumber();
+        }
     }
 
     // Update is called once per frame
@@ -95,35 +114,46 @@ public class EnemySpawner : MonoBehaviour {
         //Enemy Spawner of EQUALS
         if (GameManager.getLevelName() == "EQUALS")
         {
-            if (probability > Random.value)
+            if (enemiesSpawned < waveNumber)
             {
-                enemySpawningPositionX = Random.Range(ScreenManager.getLeftBoundary(), ScreenManager.getRightBoundary());
-                int topOrBottom = Random.Range(0, 2);
-                if (topOrBottom == 0)
+                if (probability > Random.value)
                 {
-                    //Spawn enemy at top
-                    Debug.Log("Enemy Spawned at top");
+                    enemiesSpawned++;
                     enemySpawningPositionX = Random.Range(ScreenManager.getLeftBoundary(), ScreenManager.getRightBoundary());
-                    enemySpawningPosition = new Vector3(enemySpawningPositionX, transform.position.y, 0);
-                    enemyFormation = Instantiate(EnemyPrefab, enemySpawningPosition, Quaternion.identity) as GameObject;
-                    enemyFormation.transform.parent = transform;
-                    formationRigidBody = enemyFormation.GetComponent<Rigidbody2D>();
-                    formationRigidBody.velocity = Vector3.down * formationVelocity;
-                    AudioSource.PlayClipAtPoint(enemyClip, enemyFormation.transform.position, 1);
-                }
+                    int topOrBottom = Random.Range(0, 2);
+                    if (topOrBottom == 0)
+                    {
+                        //Spawn enemy at top
+                        Debug.Log("Enemy Spawned at top");
+                        enemySpawningPositionX = Random.Range(ScreenManager.getLeftBoundary(), ScreenManager.getRightBoundary());
+                        enemySpawningPosition = new Vector3(enemySpawningPositionX, transform.position.y, 0);
+                        enemyFormation = Instantiate(EnemyPrefab, enemySpawningPosition, Quaternion.identity) as GameObject;
+                        enemyFormation.transform.parent = transform;
+                        formationRigidBody = enemyFormation.GetComponent<Rigidbody2D>();
+                        formationRigidBody.velocity = Vector3.down * formationVelocity;
+                        AudioSource.PlayClipAtPoint(enemyClip, enemyFormation.transform.position, 1);
+                    }
 
-                else
-                {
-                    //Spawn enemy at bottom
-                    Debug.Log("Enemy spawned at bottom");
-                    enemySpawningPositionX = Random.Range(ScreenManager.getLeftBoundary(), ScreenManager.getRightBoundary());
-                    enemySpawningPosition = new Vector3(enemySpawningPositionX, -transform.position.y, 0);
-                    enemyFormation = Instantiate(EnemyPrefab, enemySpawningPosition, Quaternion.Euler(new Vector3(0, 0, 180))) as GameObject;
-                    enemyFormation.transform.parent = transform;
-                    formationRigidBody = enemyFormation.GetComponent<Rigidbody2D>();
-                    formationRigidBody.velocity = Vector3.down * -formationVelocity;
-                    AudioSource.PlayClipAtPoint(enemyClip, enemyFormation.transform.position, 1);
+                    else
+                    {
+                        //Spawn enemy at bottom
+                        Debug.Log("Enemy spawned at bottom");
+                        enemySpawningPositionX = Random.Range(ScreenManager.getLeftBoundary(), ScreenManager.getRightBoundary());
+                        enemySpawningPosition = new Vector3(enemySpawningPositionX, -transform.position.y, 0);
+                        enemyFormation = Instantiate(EnemyPrefab, enemySpawningPosition, Quaternion.Euler(new Vector3(0, 0, 180))) as GameObject;
+                        enemyFormation.transform.parent = transform;
+                        formationRigidBody = enemyFormation.GetComponent<Rigidbody2D>();
+                        formationRigidBody.velocity = Vector3.down * -formationVelocity;
+                        AudioSource.PlayClipAtPoint(enemyClip, enemyFormation.transform.position, 1);
+                    }
                 }
+            }
+            else
+            {
+                Debug.Log("Maximum enemies spawned for wave " + waveNumber);
+                waveNumber++;
+                setWaveNumber();
+                enemiesSpawned = 0;
             }
         }
     }
@@ -131,11 +161,11 @@ public class EnemySpawner : MonoBehaviour {
 
     float getSpawnFrequency()
     {
-        if(GameManager.getLevelName()=="ARCADE")
+        if (GameManager.getLevelName() == "ARCADE")
         {
             return 1f;
         }
-        else if(GameManager.getLevelName()=="EQUALS")
+        else if (GameManager.getLevelName() == "EQUALS")
         {
             return 0.4f;
         }
@@ -143,5 +173,10 @@ public class EnemySpawner : MonoBehaviour {
         {
             return 2f;
         }
+    }
+
+    void setWaveNumber()
+    {
+        waveNumberText.text = "WAVE:" + waveNumber;
     }
 }
