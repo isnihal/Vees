@@ -93,7 +93,7 @@ public class EnemySpawner : MonoBehaviour {
         }
 
         //Enemy Spawner of EQUALS
-        /*if (GameManager.getLevelName() == "EQUALS")
+        if (GameManager.getLevelName() == "EQUALS")
         {
             if (probability > Random.value)
             {
@@ -125,7 +125,7 @@ public class EnemySpawner : MonoBehaviour {
                     AudioSource.PlayClipAtPoint(enemyClip, enemyFormation.transform.position, 1);
                 }
             }
-        }*/
+        }
     }
 
 
@@ -134,6 +134,10 @@ public class EnemySpawner : MonoBehaviour {
         if(GameManager.getLevelName()=="ARCADE")
         {
             return 1f;
+        }
+        else if(GameManager.getLevelName()=="EQUALS")
+        {
+            return 0.4f;
         }
         else
         {
