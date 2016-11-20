@@ -11,6 +11,7 @@ public class EnemySpawner : MonoBehaviour {
     public GameObject EnemyPrefab;
     public AudioClip enemyClip;
     public Text waveNumberText;
+    public static bool resumeTrigger;
 
 
     GameObject enemyFormation;
@@ -37,7 +38,8 @@ public class EnemySpawner : MonoBehaviour {
             waveNumber = 1;
             enemiesSpawned = 0;
             enemiesKilled = 0;
-            setWaveNumber();
+            setWaveNumberText();
+            resumeTrigger = false;
         }
     }
 
@@ -119,6 +121,7 @@ public class EnemySpawner : MonoBehaviour {
                 if (probability > Random.value)
                 {
                     enemiesSpawned++;
+                    resumeTrigger = false;
                     enemySpawningPositionX = Random.Range(ScreenManager.getLeftBoundary(), ScreenManager.getRightBoundary());
                     int topOrBottom = Random.Range(0, 2);
                     if (topOrBottom == 0)
@@ -150,10 +153,15 @@ public class EnemySpawner : MonoBehaviour {
             }
             else
             {
-                Debug.Log("Maximum enemies spawned for wave " + waveNumber);
-                waveNumber++;
-                setWaveNumber();
-                enemiesSpawned = 0;
+                if (resumeTrigger)//To ensure all enemies are killed in a wave before moving to next wave
+                {
+                    Debug.Log("Maximum enemies spawned for wave " + waveNumber);
+                    waveNumber++;
+                    setWaveNumberText();
+                    GameManager.resetScore();
+                    enemiesSpawned = 0;
+                    resumeTrigger = false;
+                }
             }
         }
     }
@@ -175,8 +183,13 @@ public class EnemySpawner : MonoBehaviour {
         }
     }
 
-    void setWaveNumber()
+    void setWaveNumberText()
     {
         waveNumberText.text = "WAVE:" + waveNumber;
+    }
+
+    public static int getWaveNumber()
+    {
+        return waveNumber;
     }
 }
