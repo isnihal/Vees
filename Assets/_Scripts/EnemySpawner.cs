@@ -31,7 +31,14 @@ public class EnemySpawner : MonoBehaviour {
     // Use this for initialization
     void Start() {
         spawnRate = getSpawnFrequency();
-        formationVelocity = 10f;
+        if (GameManager.getLevelName() == "ONE_DIRECTION" || GameManager.getLevelName() == "EQUALS" || GameManager.getLevelName() == "FAST_ESCAPE")
+        {
+            formationVelocity = 10f;
+        }
+        else
+        {
+            formationVelocity = 15f;
+        }
 
 
         //Properties applicable to equals
