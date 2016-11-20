@@ -3,6 +3,8 @@ using System.Collections;
 
 public class GoalDetector : MonoBehaviour {
 
+    public static bool fromEquals=false;
+
     //Increment score if player hits'em or decrease score if enemy hits'em
 
     void OnTriggerEnter2D(Collider2D collider)
@@ -11,8 +13,10 @@ public class GoalDetector : MonoBehaviour {
         //Special condition for EQUALS
         if (GameManager.getLevelName() == "EQUALS")
         {
+            fromEquals = true;
             Application.LoadLevel("GAME_OVER");
         }
+
         //For other levels
         else
         {

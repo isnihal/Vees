@@ -8,7 +8,15 @@ public class ScoreBoard : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-        gameObject.GetComponent<Text>().text = GameManager.getScore().ToString();
+        if (GoalDetector.fromEquals)
+        {
+            //Wave number for level EQUALS
+            gameObject.GetComponent<Text>().text ="WAVE:"+EnemySpawner.getWaveNumber().ToString();
+        }
+        else
+        {
+            gameObject.GetComponent<Text>().text = GameManager.getScore().ToString();
+        }
 	}
 	
 	// Update is called once per frame
