@@ -95,7 +95,7 @@ public class EnemySpawner : MonoBehaviour {
     {
         if(GameManager.getLevelName()=="ARCADE")
         {
-            return 0.5f;
+            return 1f;
         }
         else
         {
