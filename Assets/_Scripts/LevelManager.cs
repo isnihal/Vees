@@ -3,6 +3,9 @@ using System.Collections;
 
 public class LevelManager : MonoBehaviour {
 
+    //Replay Setting
+    static int fromLevel;
+
     //Deals with splash screen and loading of other levels
 
     void Start()
@@ -17,6 +20,11 @@ public class LevelManager : MonoBehaviour {
     public void loadLevel(string levelName)
     {
         Application.LoadLevel(levelName);
+    }
+
+    public void setLevelIndex(int levelIndex)
+    {
+        fromLevel = levelIndex;
     }
 
 
@@ -40,5 +48,10 @@ public class LevelManager : MonoBehaviour {
         }
 
         return false;
+    }
+
+    public void replayGame()
+    {
+        Application.LoadLevel(fromLevel);
     }
 }
