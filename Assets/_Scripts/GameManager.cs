@@ -44,7 +44,7 @@ public class GameManager : MonoBehaviour {
 
     void Update()
     {
-        scoreBoard.text ="KILLS:"+score;
+        setScoreBoardDisplay();
         setLifeDisplay();
         isGameOver();
         if(GameManager.getLevelName()=="TIME_LAPSE")
@@ -70,6 +70,18 @@ public class GameManager : MonoBehaviour {
         if (life <= 0)
         {
             Application.LoadLevel("GAME_OVER");
+        }
+    }
+
+    void setScoreBoardDisplay()
+    {
+        if (GameManager.getLevelName() == "FAST_ESCAPE")
+        {
+            scoreBoard.text = "ESCAPES:" + score;
+        }
+        else
+        {
+            scoreBoard.text = "KILLS:" + score;
         }
     }
 

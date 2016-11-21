@@ -33,11 +33,15 @@ public class EnemySpawner : MonoBehaviour {
         spawnRate = getSpawnFrequency();
         if (GameManager.getLevelName() == "ONE_DIRECTION" || GameManager.getLevelName() == "EQUALS" || GameManager.getLevelName() == "FAST_ESCAPE")
         {
-            formationVelocity = 10f;
+            formationVelocity = 11.35f;
+        }
+        else if (GameManager.getLevelName() == "ARCADE")
+        {
+            formationVelocity = 14.5f;
         }
         else
         {
-            formationVelocity = 15f;
+            formationVelocity = 16f;
         }
 
 
@@ -221,7 +225,7 @@ public class EnemySpawner : MonoBehaviour {
     {
         if (GameManager.getLevelName() == "ARCADE")
         {
-            return 1f;
+            return 1.5f;
         }
         else if (GameManager.getLevelName() == "EQUALS")
         {

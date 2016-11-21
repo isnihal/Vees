@@ -15,7 +15,22 @@ public class PlayerFormation : MonoBehaviour {
 
     void OnTriggerEnter2D(Collider2D collider)
     {
-        if (GameManager.getLevelName() != "FAST_ESCAPE" && GameManager.getLevelName() != "EQUALS")
+
+        //Player Formation for arcade
+        if(GameManager.getLevelName()=="ARCADE")
+        {
+            //Destroy enemy Vees and player vees
+            if (collider.gameObject.GetComponent<EnemyFormation>())
+            {
+                AudioSource.PlayClipAtPoint(destroyClip, transform.position, 1);
+                GameManager.incrementScore();
+                Destroy(collider.gameObject);
+                Destroy(gameObject);
+            }
+        }
+
+        //For Time Lapse and One Direction
+        else if (GameManager.getLevelName() != "FAST_ESCAPE" && GameManager.getLevelName() != "EQUALS")
         {
             //Destroy enemy Vees only
             if (collider.gameObject.GetComponent<EnemyFormation>())
@@ -26,6 +41,7 @@ public class PlayerFormation : MonoBehaviour {
             }
         }
 
+        //For equals only
         else if (GameManager.getLevelName() == "EQUALS")
         {
             //Destroy player and enemey Vees
