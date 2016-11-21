@@ -52,7 +52,7 @@ public class EnemySpawner : MonoBehaviour {
             enemiesSpawned = 0;
             enemiesKilled = 0;
             setWaveNumberText();
-            resumeTrigger = false;
+            resumeTrigger = true;
         }
     }
 
@@ -130,7 +130,7 @@ public class EnemySpawner : MonoBehaviour {
         //Enemy Spawner of EQUALS
         if (GameManager.getLevelName() == "EQUALS")
         {
-            if (enemiesSpawned < waveNumber)
+            if ((enemiesSpawned < waveNumber)&&resumeTrigger)
             {
                 if (probability > Random.value)
                 {
@@ -174,7 +174,6 @@ public class EnemySpawner : MonoBehaviour {
                     setWaveNumberText();
                     GameManager.resetScore();
                     enemiesSpawned = 0;
-                    resumeTrigger = false;
                 }
             }
         }
@@ -229,7 +228,7 @@ public class EnemySpawner : MonoBehaviour {
         }
         else if (GameManager.getLevelName() == "EQUALS")
         {
-            return 0.4f;
+            return 0.8f;
         }
 
         else if(GameManager.getLevelName()=="TIME_LAPSE")
