@@ -11,12 +11,29 @@ public class ScoreBoard : MonoBehaviour {
         if (GoalDetector.fromEquals)
         {
             //Wave number for level EQUALS
-            gameObject.GetComponent<Text>().text ="Wave\n"+EnemySpawner.getWaveNumber().ToString();
+            switch (PlayerPrefsManager.getLanguage())
+            {
+                case "ENGLISH":
+                    gameObject.GetComponent<Text>().text = "Wave\n" + EnemySpawner.getWaveNumber().ToString();
+                    break;
+                case "CHINEESE":
+                    gameObject.GetComponent<Text>().text = "波\n" + EnemySpawner.getWaveNumber().ToString();
+                    break;
+            }
             GoalDetector.fromEquals = false;
         }
         else
         {
-            gameObject.GetComponent<Text>().text ="Score\n" + GameManager.getScore().ToString();
+            switch (PlayerPrefsManager.getLanguage())
+            {
+                case "ENGLISH":
+                    gameObject.GetComponent<Text>().text = "Score\n" + GameManager.getScore().ToString();
+                    break;
+                case "CHINEESE":
+                    gameObject.GetComponent<Text>().text = "得分了\n" + GameManager.getScore().ToString();
+                    break;
+            }
+           
         }
 	}
 	

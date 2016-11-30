@@ -229,7 +229,7 @@ public class EnemySpawner : MonoBehaviour {
         }
         else
         {
-            return 2f;
+            return 1.5f;
         }
     }
 

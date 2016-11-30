@@ -77,11 +77,28 @@ public class GameManager : MonoBehaviour {
     {
         if (GameManager.getLevelName() == "FAST_ESCAPE")
         {
-            scoreBoard.text = "ESCAPES:" + score;
+            switch (PlayerPrefsManager.getLanguage())
+            {
+                case "ENGLISH":
+                    scoreBoard.text = "ESCAPES:" + score;
+                    break;
+                case "CHINEESE":
+                    scoreBoard.text = "逃脱:" + score;
+                    break;
+            }
+            
         }
         else
         {
-            scoreBoard.text = "KILLS:" + score;
+            switch(PlayerPrefsManager.getLanguage())
+            {
+                case "ENGLISH":
+                        scoreBoard.text = "KILLS:" + score;
+                        break;
+                case "CHINEESE":
+                    scoreBoard.text = "杀死:" + score;
+                    break;
+            }
         }
     }
 
