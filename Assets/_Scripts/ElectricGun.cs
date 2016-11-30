@@ -5,27 +5,42 @@ public class ElectricGun : MonoBehaviour {
 
     //Electric gun effect code
     static int charge;
-    float currentTime, lastIncrementedTime, timeToCharge;
+    float currentTime, lastIncrementedTime, timeToCharge ,resetCoolDownTime;
+    bool isReseting;
 
 	// Use this for initialization
 	void Start () {
         charge = 10;
         currentTime = 0;
         lastIncrementedTime = 0;
-        timeToCharge = 5;
+        timeToCharge = 1.5f;
+        isReseting = false;
+        resetCoolDownTime = 3f;
     }
-	
-	// Update is called once per frame
-	void Update () {
-        currentTime = Time.time;
-        if((currentTime-lastIncrementedTime) >=timeToCharge)
+
+    // Update is called once per frame
+    void Update() {
+        if (!isReseting)
         {
-            //Increase charge
-            incrementCharge();
-            lastIncrementedTime = currentTime;
-            Debug.Log("Incrementing charge at "+currentTime);
+            currentTime = Time.time;
+            if ((currentTime - lastIncrementedTime) >= timeToCharge)
+            {
+                //Increase charge
+                incrementCharge();
+                lastIncrementedTime = currentTime;
+                Debug.Log("Incrementing charge at " + currentTime);
+            }
         }
 
+        if(charge==0)
+        {
+            isReseting = true;
+            Invoke("resetCharge", 3f);
+        }
+        else
+        {
+            isReseting = false;
+        }
 	}
 
     public static int getCharge()
@@ -41,6 +56,12 @@ public class ElectricGun : MonoBehaviour {
     public static void incrementCharge()
     {
         charge++;
+    }
+
+    //Do not make it static
+    public void resetCharge()
+    {
+        charge = 10;
     }
 
     public static void decrementCharge()
