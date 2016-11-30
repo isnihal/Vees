@@ -18,7 +18,7 @@ public class ElectricGun : MonoBehaviour {
         lastIncrementedTime = 0;
         timeToCharge = 1.5f;
         isReseting = false;
-        resetCoolDownTime = 4.5f;
+        resetCoolDownTime = 3.75f;
     }
 
     // Update is called once per frame
@@ -37,17 +37,19 @@ public class ElectricGun : MonoBehaviour {
 
         else
         {
+            //To prevent increment soon after reset
             lastIncrementedTime = currentTime;
         }
 
         if(charge==0)
         {
             isReseting = true;
+            //Reset after a cooldown time
             resetCoolDownTime -= Time.deltaTime;
             if(resetCoolDownTime<=0)
             {
                 resetCharge();
-                resetCoolDownTime = 4.5f;
+                resetCoolDownTime = 3.75f;
                 isReseting = false;
             }
         }
