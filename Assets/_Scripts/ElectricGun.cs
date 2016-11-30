@@ -7,11 +7,13 @@ public class ElectricGun : MonoBehaviour {
     //Electric gun effect code
     static int charge,maximumCharge,chargeToDisplay;
     float currentTime, lastIncrementedTime, timeToCharge ,resetCoolDownTime;
-    bool isReseting;
+    bool isReseting,oneTime;
     public GameObject[] batteryBars;
+    public AudioClip rechargeClip;
 
 	// Use this for initialization
 	void Start () {
+        
         maximumCharge = 10;
         charge = maximumCharge;
         currentTime = 0;
@@ -19,6 +21,8 @@ public class ElectricGun : MonoBehaviour {
         timeToCharge = 0.7f;
         isReseting = false;
         resetCoolDownTime = 3.75f;
+        oneTime = true;
+
     }
 
     // Update is called once per frame
@@ -44,6 +48,11 @@ public class ElectricGun : MonoBehaviour {
         if(charge==0)
         {
             isReseting = true;
+            if (oneTime)
+            {
+                AudioSource.PlayClipAtPoint(rechargeClip, Vector3.zero);
+                oneTime = false;
+            }
             //Reset after a cooldown time
             resetCoolDownTime -= Time.deltaTime;
             if(resetCoolDownTime<=0)
@@ -87,6 +96,7 @@ public class ElectricGun : MonoBehaviour {
     //Do not make it static
     public void resetCharge()
     {
+        oneTime = true;
         charge = maximumCharge;
     }
 

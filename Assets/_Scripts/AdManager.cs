@@ -6,16 +6,22 @@ public class AdManager : MonoBehaviour {
 
     public void showAd()
     {
-        Advertisement.Show();
+        if (Advertisement.IsReady())
+        {
+            Advertisement.Show("rewardedVideo", new ShowOptions() {resultCallback=handleAdResult});
+        }
     }
 
-	// Use this for initialization
-	void Start () {
-	
-	}
-	
-	// Update is called once per frame
-	void Update () {
-	
-	}
+    void handleAdResult(ShowResult result)
+    {
+        switch(result)
+        {
+            case ShowResult.Finished:Debug.Log("Reward the user");
+                break;
+            case ShowResult.Skipped:Debug.Log("AD skipped");
+                break;
+            case ShowResult.Failed:Debug.Log("Ad failed");
+                break;
+        }
+    }
 }
