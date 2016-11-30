@@ -1,45 +1,55 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 
 public class ElectricGun : MonoBehaviour {
 
     //Electric gun effect code
-    static int charge;
+    static int charge,maximumCharge;
     float currentTime, lastIncrementedTime, timeToCharge ,resetCoolDownTime;
     bool isReseting;
+    public Text chargeText;
 
 	// Use this for initialization
 	void Start () {
-        charge = 10;
+        maximumCharge = 10;
+        charge = maximumCharge;
         currentTime = 0;
         lastIncrementedTime = 0;
         timeToCharge = 1.5f;
         isReseting = false;
-        resetCoolDownTime = 3f;
+        resetCoolDownTime = 4.5f;
     }
 
     // Update is called once per frame
     void Update() {
+        chargeText.text = charge.ToString();
+        currentTime = Time.time;
         if (!isReseting)
         {
-            currentTime = Time.time;
             if ((currentTime - lastIncrementedTime) >= timeToCharge)
             {
                 //Increase charge
                 incrementCharge();
                 lastIncrementedTime = currentTime;
-                Debug.Log("Incrementing charge at " + currentTime);
             }
+        }
+
+        else
+        {
+            lastIncrementedTime = currentTime;
         }
 
         if(charge==0)
         {
             isReseting = true;
-            Invoke("resetCharge", 3f);
-        }
-        else
-        {
-            isReseting = false;
+            resetCoolDownTime -= Time.deltaTime;
+            if(resetCoolDownTime<=0)
+            {
+                resetCharge();
+                resetCoolDownTime = 4.5f;
+                isReseting = false;
+            }
         }
 	}
 
@@ -55,13 +65,21 @@ public class ElectricGun : MonoBehaviour {
 
     public static void incrementCharge()
     {
-        charge++;
+        if(charge<maximumCharge)
+        {
+            charge++;
+        }
+    }
+
+    float getTime()
+    {
+        return currentTime;
     }
 
     //Do not make it static
     public void resetCharge()
     {
-        charge = 10;
+        charge = maximumCharge;
     }
 
     public static void decrementCharge()

@@ -23,7 +23,6 @@ public class PlayerSpawner : MonoBehaviour {
         if (ElectricGun.getCharge() > 0)
         {
             ElectricGun.decrementCharge();
-            Debug.Log(ElectricGun.getCharge() + " Charge Left");
             //Spawn Player for ONE_DIRECTION
             if (GameManager.getLevelName() == "ONE_DIRECTION")
             {
