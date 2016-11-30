@@ -5,10 +5,10 @@ using System.Collections;
 public class ElectricGun : MonoBehaviour {
 
     //Electric gun effect code
-    static int charge,maximumCharge;
+    static int charge,maximumCharge,chargeToDisplay;
     float currentTime, lastIncrementedTime, timeToCharge ,resetCoolDownTime;
     bool isReseting;
-    public Text chargeText;
+    public GameObject[] batteryBars;
 
 	// Use this for initialization
 	void Start () {
@@ -16,14 +16,14 @@ public class ElectricGun : MonoBehaviour {
         charge = maximumCharge;
         currentTime = 0;
         lastIncrementedTime = 0;
-        timeToCharge = 1.5f;
+        timeToCharge = 0.7f;
         isReseting = false;
         resetCoolDownTime = 3.75f;
     }
 
     // Update is called once per frame
     void Update() {
-        chargeText.text = charge.ToString();
+        setBattery();
         currentTime = Time.time;
         if (!isReseting)
         {
@@ -55,14 +55,25 @@ public class ElectricGun : MonoBehaviour {
         }
 	}
 
+    void setBattery()
+    {
+        chargeToDisplay= Mathf.CeilToInt((charge/2));
+        for(int i=0;i<batteryBars.Length;i++)
+        {
+            if(i<chargeToDisplay)
+            {
+                batteryBars[i].active = true;
+            }
+            else
+            {
+                batteryBars[i].active = false;
+            }
+        }
+    }
+
     public static int getCharge()
     {
         return charge;
-    }
-
-    public static void setCharge(int lifeToBeSet)
-    {
-        charge = lifeToBeSet;
     }
 
     public static void incrementCharge()
@@ -71,11 +82,6 @@ public class ElectricGun : MonoBehaviour {
         {
             charge++;
         }
-    }
-
-    float getTime()
-    {
-        return currentTime;
     }
 
     //Do not make it static
