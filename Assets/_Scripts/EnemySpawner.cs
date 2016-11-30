@@ -86,7 +86,6 @@ public class EnemySpawner : MonoBehaviour {
                 if (topOrBottom == 0)
                 {
                     //Spawn enemy at top
-                    Debug.Log("Enemy Spawned at top");
                     enemySpawningPositionX = Random.Range(ScreenManager.getLeftBoundary(), ScreenManager.getRightBoundary());
                     enemySpawningPosition = new Vector3(enemySpawningPositionX, transform.position.y, 0);
                     enemyFormation = Instantiate(EnemyPrefab, enemySpawningPosition, Quaternion.identity) as GameObject;
@@ -99,7 +98,6 @@ public class EnemySpawner : MonoBehaviour {
                 else
                 {
                     //Spawn enemy at bottom
-                    Debug.Log("Enemy spawned at bottom");
                     enemySpawningPositionX = Random.Range(ScreenManager.getLeftBoundary(), ScreenManager.getRightBoundary());
                     enemySpawningPosition = new Vector3(enemySpawningPositionX, -transform.position.y, 0);
                     enemyFormation = Instantiate(EnemyPrefab, enemySpawningPosition, Quaternion.Euler(new Vector3(0, 0, 180))) as GameObject;
@@ -141,7 +139,6 @@ public class EnemySpawner : MonoBehaviour {
                     if (topOrBottom == 0)
                     {
                         //Spawn enemy at top
-                        Debug.Log("Enemy Spawned at top");
                         enemySpawningPositionX = Random.Range(ScreenManager.getLeftBoundary(), ScreenManager.getRightBoundary());
                         enemySpawningPosition = new Vector3(enemySpawningPositionX, transform.position.y, 0);
                         enemyFormation = Instantiate(EnemyPrefab, enemySpawningPosition, Quaternion.identity) as GameObject;
@@ -154,7 +151,6 @@ public class EnemySpawner : MonoBehaviour {
                     else
                     {
                         //Spawn enemy at bottom
-                        Debug.Log("Enemy spawned at bottom");
                         enemySpawningPositionX = Random.Range(ScreenManager.getLeftBoundary(), ScreenManager.getRightBoundary());
                         enemySpawningPosition = new Vector3(enemySpawningPositionX, -transform.position.y, 0);
                         enemyFormation = Instantiate(EnemyPrefab, enemySpawningPosition, Quaternion.Euler(new Vector3(0, 0, 180))) as GameObject;
@@ -169,7 +165,6 @@ public class EnemySpawner : MonoBehaviour {
             {
                 if (resumeTrigger)//To ensure all enemies are killed in a wave before moving to next wave
                 {
-                    Debug.Log("Maximum enemies spawned for wave " + waveNumber);
                     waveNumber++;
                     setWaveNumberText();
                     GameManager.resetScore();
@@ -186,14 +181,12 @@ public class EnemySpawner : MonoBehaviour {
                 //SPAWN RATE INCREASER 
                 spawnRate += 0.06f;
                 spawnRate = Mathf.Clamp(spawnRate, 0.4f, 8.5f);
-                Debug.Log("Spawn rate " + spawnRate);
                 //SPAWN RATE INCREASER
                 enemySpawningPositionX = Random.Range(ScreenManager.getLeftBoundary(), ScreenManager.getRightBoundary());
                 int topOrBottom = Random.Range(0, 2);
                 if (topOrBottom == 0)
                 {
                     //Spawn enemy at top
-                    Debug.Log("Enemy Spawned at top");
                     enemySpawningPositionX = Random.Range(ScreenManager.getLeftBoundary(), ScreenManager.getRightBoundary());
                     enemySpawningPosition = new Vector3(enemySpawningPositionX, transform.position.y, 0);
                     enemyFormation = Instantiate(EnemyPrefab, enemySpawningPosition, Quaternion.identity) as GameObject;
@@ -206,7 +199,6 @@ public class EnemySpawner : MonoBehaviour {
                 else
                 {
                     //Spawn enemy at bottom
-                    Debug.Log("Enemy spawned at bottom");
                     enemySpawningPositionX = Random.Range(ScreenManager.getLeftBoundary(), ScreenManager.getRightBoundary());
                     enemySpawningPosition = new Vector3(enemySpawningPositionX, -transform.position.y, 0);
                     enemyFormation = Instantiate(EnemyPrefab, enemySpawningPosition, Quaternion.Euler(new Vector3(0, 0, 180))) as GameObject;
