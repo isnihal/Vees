@@ -4,12 +4,8 @@ using System.Collections;
 
 public class LanguageManager : MonoBehaviour {
 
-    Text[] text;
+    public Text[] text;
 
-    void Start()
-    {
-        text = FindObjectsOfType<Text>();
-    }
     void Update()
     {
         setText();
@@ -49,9 +45,9 @@ public class LanguageManager : MonoBehaviour {
                     break;
                 case "CHINEESE":
                     text[0].text = "拱廊";
-                    text[1].text = "一个方向";
+                    text[1].text = "一个方向"; 
                     text[2].text = "快速 逃逸";
-                    text[3].text = "等于";
+                    text[3].text = "等于"; 
                     text[4].text = "时间间隔";
                     break;
             }
@@ -64,11 +60,11 @@ public class LanguageManager : MonoBehaviour {
             {
                 case "ENGLISH":
                     text[0].text = "GAME OVER";
-                    text[2].text = "MAIN MENU";
+                    text[1].text = "MAIN MENU";
                     break;
                 case "CHINEESE":
                     text[0].text = "游戏结束";
-                    text[2].text = "主菜单";
+                    text[1].text = "主菜单";
                     break;
             }
         }

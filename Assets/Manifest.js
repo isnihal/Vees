@@ -15,6 +15,7 @@
     Create a new level,Add levelName and levelNumber in gameManager
   2)EnemySpawner,PlayerSpawner,TouchManager and GameManager are critical scripts,Editing only done by the core team
   3)Every level should have critical scripts
+  4)Never change level build number,Add new levels to end indices
 
   Architecture documentation
   --------------------------
