@@ -5,6 +5,18 @@ using System.Collections;
 public class LanguageManager : MonoBehaviour {
 
     public Text[] text;
+    string selectedLanguage, defaultLanguage;
+
+    void Start()
+    {
+        defaultLanguage = "ENGLISH";
+        selectedLanguage = PlayerPrefsManager.getLanguage();
+        if(selectedLanguage==null)
+        {
+            selectedLanguage = defaultLanguage;
+            PlayerPrefsManager.setLanguage(selectedLanguage);
+        }
+    }
 
     void Update()
     {
@@ -16,7 +28,7 @@ public class LanguageManager : MonoBehaviour {
         //Main Menu
         if (Application.loadedLevel == 1)
         {
-            switch (PlayerPrefsManager.getLanguage())
+            switch (selectedLanguage)
             {
                 case "ENGLISH":
                     text[0].text = "VEES";
