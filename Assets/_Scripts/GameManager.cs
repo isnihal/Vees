@@ -22,9 +22,9 @@ public class GameManager : MonoBehaviour {
     public Image[] lifeArray;
     static float enemySpawnFrequency;
     static int score,life;
-
     //Time Lapse property
     float timeLeft;
+    string language,defaultLanguage;
 
     void Start()
     {
@@ -39,6 +39,15 @@ public class GameManager : MonoBehaviour {
         else if(getLevelName() =="GAME_OVER")
         {
             scoreBoard = FindObjectOfType<ScoreBoard>().GetComponent<Text>();
+        }
+
+        //Some kind of bug to fix
+        defaultLanguage = "ENGLISH";
+        language = PlayerPrefsManager.getLanguage();
+        if (language == "")
+        {
+            language = defaultLanguage;
+            PlayerPrefsManager.setLanguage(language);
         }
     }
 
@@ -77,7 +86,7 @@ public class GameManager : MonoBehaviour {
     {
         if (GameManager.getLevelName() == "FAST_ESCAPE")
         {
-            switch (PlayerPrefsManager.getLanguage())
+            switch (language)
             {
                 case "ENGLISH":
                     scoreBoard.text = "ESCAPES:" + score;
@@ -90,7 +99,7 @@ public class GameManager : MonoBehaviour {
         }
         else
         {
-            switch(PlayerPrefsManager.getLanguage())
+            switch(language)
             {
                 case "ENGLISH":
                         scoreBoard.text = "KILLS:" + score;
@@ -193,5 +202,19 @@ public class GameManager : MonoBehaviour {
             return ("GAME_OVER");
         }
         return null;
+    }
+
+    public void muteButton()
+    {
+        if (!PlayerPrefsManager.isMuted())
+        {
+            MusicPlayer.setVolume(0);
+            PlayerPrefsManager.setMute(1);//1 for true,mute condition is true
+        }
+        else
+        {
+            MusicPlayer.setVolume(1);
+            PlayerPrefsManager.setMute(0);
+        }
     }
 }

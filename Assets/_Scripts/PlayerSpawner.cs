@@ -31,7 +31,10 @@ public class PlayerSpawner : MonoBehaviour {
                 spawnedPlayer.transform.parent = transform;
                 spawnedPlayerRigidBody = spawnedPlayer.GetComponent<Rigidbody2D>();
                 spawnedPlayerRigidBody.velocity = playerVelocity;
-                AudioSource.PlayClipAtPoint(playerClip, spawnedPlayer.transform.position, 1);
+                if (!PlayerPrefsManager.isMuted())
+                {
+                    AudioSource.PlayClipAtPoint(playerClip, spawnedPlayer.transform.position, 1);
+                }
             }
 
             //Spawn player for ARCADE
@@ -45,7 +48,10 @@ public class PlayerSpawner : MonoBehaviour {
                     spawnedPlayer.transform.parent = transform;
                     spawnedPlayerRigidBody = spawnedPlayer.GetComponent<Rigidbody2D>();
                     spawnedPlayerRigidBody.velocity = playerVelocity;
-                    AudioSource.PlayClipAtPoint(playerClip, spawnedPlayer.transform.position, 1);
+                    if (!PlayerPrefsManager.isMuted())
+                    {
+                        AudioSource.PlayClipAtPoint(playerClip, spawnedPlayer.transform.position, 1);
+                    }
                 }
 
                 else
@@ -56,7 +62,10 @@ public class PlayerSpawner : MonoBehaviour {
                     spawnedPlayer.transform.parent = transform;
                     spawnedPlayerRigidBody = spawnedPlayer.GetComponent<Rigidbody2D>();
                     spawnedPlayerRigidBody.velocity = playerVelocity;
-                    AudioSource.PlayClipAtPoint(playerClip, spawnedPlayer.transform.position, 1);
+                    if (!PlayerPrefsManager.isMuted())
+                    {
+                        AudioSource.PlayClipAtPoint(playerClip, spawnedPlayer.transform.position, 1);
+                    }
                 }
             }
 
@@ -69,7 +78,10 @@ public class PlayerSpawner : MonoBehaviour {
                 spawnedPlayer.transform.parent = transform;
                 spawnedPlayerRigidBody = spawnedPlayer.GetComponent<Rigidbody2D>();
                 spawnedPlayerRigidBody.velocity = playerVelocity;
-                AudioSource.PlayClipAtPoint(playerClip, spawnedPlayer.transform.position, 1);
+                if (!PlayerPrefsManager.isMuted())
+                {
+                    AudioSource.PlayClipAtPoint(playerClip, spawnedPlayer.transform.position, 1);
+                }
             }
 
             //Spawn player for EQUALS
@@ -83,7 +95,10 @@ public class PlayerSpawner : MonoBehaviour {
                     spawnedPlayer.transform.parent = transform;
                     spawnedPlayerRigidBody = spawnedPlayer.GetComponent<Rigidbody2D>();
                     spawnedPlayerRigidBody.velocity = playerVelocity;
-                    AudioSource.PlayClipAtPoint(playerClip, spawnedPlayer.transform.position, 1);
+                    if (!PlayerPrefsManager.isMuted())
+                    {
+                        AudioSource.PlayClipAtPoint(playerClip, spawnedPlayer.transform.position, 1);
+                    }
                 }
 
                 else
@@ -94,7 +109,10 @@ public class PlayerSpawner : MonoBehaviour {
                     spawnedPlayer.transform.parent = transform;
                     spawnedPlayerRigidBody = spawnedPlayer.GetComponent<Rigidbody2D>();
                     spawnedPlayerRigidBody.velocity = playerVelocity;
-                    AudioSource.PlayClipAtPoint(playerClip, spawnedPlayer.transform.position, 1);
+                    if (!PlayerPrefsManager.isMuted())
+                    {
+                        AudioSource.PlayClipAtPoint(playerClip, spawnedPlayer.transform.position, 1);
+                    }
                 }
             }
 
@@ -109,7 +127,10 @@ public class PlayerSpawner : MonoBehaviour {
                     spawnedPlayer.transform.parent = transform;
                     spawnedPlayerRigidBody = spawnedPlayer.GetComponent<Rigidbody2D>();
                     spawnedPlayerRigidBody.velocity = playerVelocity;
-                    AudioSource.PlayClipAtPoint(playerClip, spawnedPlayer.transform.position, 1);
+                    if (!PlayerPrefsManager.isMuted())
+                    {
+                        AudioSource.PlayClipAtPoint(playerClip, spawnedPlayer.transform.position, 1);
+                    }
                 }
 
                 else
@@ -120,7 +141,10 @@ public class PlayerSpawner : MonoBehaviour {
                     spawnedPlayer.transform.parent = transform;
                     spawnedPlayerRigidBody = spawnedPlayer.GetComponent<Rigidbody2D>();
                     spawnedPlayerRigidBody.velocity = playerVelocity;
-                    AudioSource.PlayClipAtPoint(playerClip, spawnedPlayer.transform.position, 1);
+                    if (!PlayerPrefsManager.isMuted())
+                    {
+                        AudioSource.PlayClipAtPoint(playerClip, spawnedPlayer.transform.position, 1);
+                    }
                 }
             }
         }

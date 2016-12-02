@@ -72,7 +72,10 @@ public class EnemySpawner : MonoBehaviour {
                 enemyFormation.transform.parent = transform;
                 formationRigidBody = enemyFormation.GetComponent<Rigidbody2D>();
                 formationRigidBody.velocity = Vector3.down * formationVelocity;
-                AudioSource.PlayClipAtPoint(enemyClip, enemyFormation.transform.position, 1);
+                if (!PlayerPrefsManager.isMuted())
+                {
+                    AudioSource.PlayClipAtPoint(enemyClip, enemyFormation.transform.position, 1);
+                }
             }
         }
 
@@ -92,7 +95,10 @@ public class EnemySpawner : MonoBehaviour {
                     enemyFormation.transform.parent = transform;
                     formationRigidBody = enemyFormation.GetComponent<Rigidbody2D>();
                     formationRigidBody.velocity = Vector3.down * formationVelocity;
-                    AudioSource.PlayClipAtPoint(enemyClip, enemyFormation.transform.position, 1);
+                    if (!PlayerPrefsManager.isMuted())
+                    {
+                        AudioSource.PlayClipAtPoint(enemyClip, enemyFormation.transform.position, 1);
+                    }
                 }
 
                 else
@@ -104,7 +110,10 @@ public class EnemySpawner : MonoBehaviour {
                     enemyFormation.transform.parent = transform;
                     formationRigidBody = enemyFormation.GetComponent<Rigidbody2D>();
                     formationRigidBody.velocity = Vector3.down * -formationVelocity;
-                    AudioSource.PlayClipAtPoint(enemyClip, enemyFormation.transform.position, 1);
+                    if (!PlayerPrefsManager.isMuted())
+                    {
+                        AudioSource.PlayClipAtPoint(enemyClip, enemyFormation.transform.position, 1);
+                    }
                 }
             }
         }
@@ -121,7 +130,10 @@ public class EnemySpawner : MonoBehaviour {
                 enemyFormation.transform.parent = transform;
                 formationRigidBody = enemyFormation.GetComponent<Rigidbody2D>();
                 formationRigidBody.velocity = Vector3.right * formationVelocity;
-                AudioSource.PlayClipAtPoint(enemyClip, enemyFormation.transform.position, 1);
+                if (!PlayerPrefsManager.isMuted())
+                {
+                    AudioSource.PlayClipAtPoint(enemyClip, enemyFormation.transform.position, 1);
+                }
             }
         }
 
@@ -145,7 +157,10 @@ public class EnemySpawner : MonoBehaviour {
                         enemyFormation.transform.parent = transform;
                         formationRigidBody = enemyFormation.GetComponent<Rigidbody2D>();
                         formationRigidBody.velocity = Vector3.down * formationVelocity;
-                        AudioSource.PlayClipAtPoint(enemyClip, enemyFormation.transform.position, 1);
+                        if (!PlayerPrefsManager.isMuted())
+                        {
+                            AudioSource.PlayClipAtPoint(enemyClip, enemyFormation.transform.position, 1);
+                        }
                     }
 
                     else
@@ -157,7 +172,10 @@ public class EnemySpawner : MonoBehaviour {
                         enemyFormation.transform.parent = transform;
                         formationRigidBody = enemyFormation.GetComponent<Rigidbody2D>();
                         formationRigidBody.velocity = Vector3.down * -formationVelocity;
-                        AudioSource.PlayClipAtPoint(enemyClip, enemyFormation.transform.position, 1);
+                        if (!PlayerPrefsManager.isMuted())
+                        {
+                            AudioSource.PlayClipAtPoint(enemyClip, enemyFormation.transform.position, 1);
+                        }
                     }
                 }
             }
@@ -193,7 +211,10 @@ public class EnemySpawner : MonoBehaviour {
                     enemyFormation.transform.parent = transform;
                     formationRigidBody = enemyFormation.GetComponent<Rigidbody2D>();
                     formationRigidBody.velocity = Vector3.down * formationVelocity;
-                    AudioSource.PlayClipAtPoint(enemyClip, enemyFormation.transform.position, 1);
+                    if (!PlayerPrefsManager.isMuted())
+                    {
+                        AudioSource.PlayClipAtPoint(enemyClip, enemyFormation.transform.position, 1);
+                    }
                 }
 
                 else
@@ -205,7 +226,10 @@ public class EnemySpawner : MonoBehaviour {
                     enemyFormation.transform.parent = transform;
                     formationRigidBody = enemyFormation.GetComponent<Rigidbody2D>();
                     formationRigidBody.velocity = Vector3.down * -formationVelocity;
-                    AudioSource.PlayClipAtPoint(enemyClip, enemyFormation.transform.position, 1);
+                    if (!PlayerPrefsManager.isMuted())
+                    {
+                        AudioSource.PlayClipAtPoint(enemyClip, enemyFormation.transform.position, 1);
+                    }
                 }
             }
         }

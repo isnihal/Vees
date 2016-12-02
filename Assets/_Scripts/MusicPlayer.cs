@@ -7,7 +7,7 @@ public class MusicPlayer : MonoBehaviour {
 
     [Tooltip("Music clips played through each levels")]
     public AudioClip[] gameMusicArray;
-    AudioSource musicPlayer;
+    static AudioSource musicPlayer;
     int musicIndex;
 
 	// Use this for initialization
@@ -15,6 +15,7 @@ public class MusicPlayer : MonoBehaviour {
         //Persist music player through each level
         DontDestroyOnLoad(gameObject);
         musicPlayer = GetComponent<AudioSource>();
+        PlayerPrefsManager.setMute(0);//Unmute the game during game start at splash screen
 	}
 	
     void OnLevelWasLoaded(int level)
@@ -32,5 +33,10 @@ public class MusicPlayer : MonoBehaviour {
         {
             Debug.LogError("Music Clip not found");
         }
+    }
+
+    public static void setVolume(float volume)
+    {
+        musicPlayer.volume = volume;
     }
 }

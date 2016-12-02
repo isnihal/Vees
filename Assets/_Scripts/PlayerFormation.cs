@@ -22,7 +22,10 @@ public class PlayerFormation : MonoBehaviour {
             //Destroy enemy Vees and player vees
             if (collider.gameObject.GetComponent<EnemyFormation>())
             {
-                AudioSource.PlayClipAtPoint(destroyClip, transform.position, 1);
+                if (!PlayerPrefsManager.isMuted())
+                {
+                    AudioSource.PlayClipAtPoint(destroyClip, transform.position, 1);
+                }
                 GameManager.incrementScore();
                 Destroy(collider.gameObject);
                 Destroy(gameObject);
@@ -35,7 +38,10 @@ public class PlayerFormation : MonoBehaviour {
             //Destroy enemy Vees only
             if (collider.gameObject.GetComponent<EnemyFormation>())
             {
-                AudioSource.PlayClipAtPoint(destroyClip, transform.position, 1);
+                if (!PlayerPrefsManager.isMuted())
+                {
+                    AudioSource.PlayClipAtPoint(destroyClip, transform.position, 1);
+                }
                 GameManager.incrementScore();
                 Destroy(collider.gameObject);
             }
@@ -48,7 +54,10 @@ public class PlayerFormation : MonoBehaviour {
             if (collider.gameObject.GetComponent<EnemyFormation>())
             {
                 totalEnemiesKilledInThisWave++;
-                AudioSource.PlayClipAtPoint(destroyClip, transform.position, 1);
+                if (!PlayerPrefsManager.isMuted())
+                {
+                    AudioSource.PlayClipAtPoint(destroyClip, transform.position, 1);
+                }
                 GameManager.incrementScore();
                 Destroy(collider.gameObject);
                 Destroy(gameObject);
