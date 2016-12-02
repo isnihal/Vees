@@ -15,7 +15,6 @@ public class MusicPlayer : MonoBehaviour {
         //Persist music player through each level
         DontDestroyOnLoad(gameObject);
         musicPlayer = GetComponent<AudioSource>();
-        PlayerPrefsManager.setMute(0);//Unmute the game during game start at splash screen
 	}
 	
     void OnLevelWasLoaded(int level)

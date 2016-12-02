@@ -85,6 +85,7 @@ public class LanguageManager : MonoBehaviour {
     public void changeLanguage(string language)
     {
         PlayerPrefsManager.setLanguage(language);
+        selectedLanguage = language;
     }
 }
 
