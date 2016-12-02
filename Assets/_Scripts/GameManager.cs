@@ -203,18 +203,4 @@ public class GameManager : MonoBehaviour {
         }
         return null;
     }
-
-    public void muteButton()
-    {
-        if (!PlayerPrefsManager.isMuted())
-        {
-            MusicPlayer.setVolume(0);
-            PlayerPrefsManager.setMute(1);//1 for true,mute condition is true
-        }
-        else
-        {
-            MusicPlayer.setVolume(1);
-            PlayerPrefsManager.setMute(0);
-        }
-    }
 }
