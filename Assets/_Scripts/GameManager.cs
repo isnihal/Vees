@@ -184,6 +184,14 @@ public class GameManager : MonoBehaviour {
 
     public void pauseGame()
     {
+        if(GameManager.getLevelName()=="EQUALS")
+        {
+            EnemyFormation enemiesOnScreen = FindObjectOfType<EnemyFormation>();
+            if(enemiesOnScreen!=null)
+            {
+                EnemySpawner.decreaseSpawnedCount();
+            }
+        }
         if (!isGamePaused())
         {
             isPaused = true;

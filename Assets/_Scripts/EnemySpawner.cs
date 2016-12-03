@@ -218,6 +218,12 @@ public class EnemySpawner : MonoBehaviour {
         }
     }
 
+    public static void decreaseSpawnedCount()
+    {
+        enemiesSpawned--;
+        resumeTrigger = true;
+    }
+
     void setWaveNumberText()
     {
         waveNumberText.text = "WAVE:" + waveNumber;
