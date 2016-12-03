@@ -68,8 +68,20 @@ public class TouchManager : MonoBehaviour {
                 yVelocity = Mathf.Clamp(yVelocity, 18, 20);
             }
 
-            //Convert start pos to world unit
-            startPositon = Camera.main.ScreenToWorldPoint(startPositon);
+            //Tutorial properties
+            if (GameManager.getLevelName() == "TUTORIAL")
+            {
+                if (TutorialManager.getSpawningPosition() == 1)//Basic state
+                {
+                    if (xVelocity > 0)
+                    {
+                        xVelocity = Mathf.Clamp(xVelocity, 10, 20);
+                    }
+                }
+            }
+
+                //Convert start pos to world unit
+                startPositon = Camera.main.ScreenToWorldPoint(startPositon);
 
             //Vector refactoring
             if (GameManager.getLevelName()!="FAST_ESCAPE")

@@ -264,6 +264,11 @@ public class GameManager : MonoBehaviour {
         {
             return ("GAME_OVER");
         }
+
+        else if(Application.loadedLevel==10)
+        {
+            return ("TUTORIAL");
+        }
         return null;
     }
 }

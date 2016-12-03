@@ -13,9 +13,11 @@ public class PlayerSpawner : MonoBehaviour {
     Rigidbody2D spawnedPlayerRigidBody;
     public AudioClip playerClip;
     enum Position {Top,Bottom,Left,Right}
+    static int spawnedVees;
 
     void Start()
     {
+        spawnedVees = 0;
     }
 
     public void spawnPlayer(Vector3 spawningPosition, Vector3 playerVelocity)
@@ -77,6 +79,20 @@ public class PlayerSpawner : MonoBehaviour {
                 else
                 {
                     spawnPlayerFormation(Position.Right, spawningPosition, playerVelocity);
+                }
+            }
+
+            //Spawn player for tutorial
+            if (GameManager.getLevelName() == "TUTORIAL")
+            {
+                if (TutorialManager.getSpawningPosition()==1)//Basic
+                {
+                    if (playerVelocity.x > 0 && spawnedVees<1)
+                    {
+                        spawnPlayerFormation(Position.Left, spawningPosition, playerVelocity);
+                        spawnedVees++;
+                        TutorialManager.veeHasSpawned();
+                    }
                 }
             }
         }
