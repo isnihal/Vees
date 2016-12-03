@@ -86,7 +86,10 @@ public class TouchManager : MonoBehaviour {
             }
 
             //Spawn player after swipe
-            playerSpawner.spawnPlayer(playerPosition, playerVelocity);
+            if (!GameManager.isGamePaused())
+            {
+                playerSpawner.spawnPlayer(playerPosition, playerVelocity);
+            }
 
             //Spawn a player formation end
         }

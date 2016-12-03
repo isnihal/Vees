@@ -8,7 +8,7 @@ public class PlayerSpawner : MonoBehaviour {
     //Spawn vees for each level
     //TODO:Functional refactoring
 
-    public GameObject playerFormation;
+    public GameObject playerFormation,parent;
     GameObject spawnedPlayer;
     Rigidbody2D spawnedPlayerRigidBody;
     public AudioClip playerClip;
@@ -89,33 +89,27 @@ public class PlayerSpawner : MonoBehaviour {
             case Position.Left:
                 spawningPosition.x = transform.position.x;
                 spawnedPlayer = Instantiate(playerFormation, spawningPosition, Quaternion.Euler(new Vector3(0, 0, 90))) as GameObject;
-                spawnedPlayer.transform.parent = transform;
-                spawnedPlayerRigidBody = spawnedPlayer.GetComponent<Rigidbody2D>();
-                spawnedPlayerRigidBody.velocity = playerVelocity;
-            
-                    AudioSource.PlayClipAtPoint(playerClip, spawnedPlayer.transform.position, 1);
-      
+                setPlayerFormationProperties(playerVelocity);
                 break;
             case Position.Right:
                 spawningPosition.x = -transform.position.x;
                 spawnedPlayer = Instantiate(playerFormation, spawningPosition, Quaternion.Euler(new Vector3(0, 0, -90))) as GameObject;
-                spawnedPlayer.transform.parent = transform;
-                spawnedPlayerRigidBody = spawnedPlayer.GetComponent<Rigidbody2D>();
-                spawnedPlayerRigidBody.velocity = playerVelocity;
-             
-                    AudioSource.PlayClipAtPoint(playerClip, spawnedPlayer.transform.position, 1);
-
+                setPlayerFormationProperties(playerVelocity);
                 break;
             case Position.Bottom:
                 spawningPosition.y = transform.position.y;
                 spawnedPlayer = Instantiate(playerFormation, spawningPosition, Quaternion.Euler(new Vector3(0, 0, 180))) as GameObject;
-                spawnedPlayer.transform.parent = transform;
-                spawnedPlayerRigidBody = spawnedPlayer.GetComponent<Rigidbody2D>();
-                spawnedPlayerRigidBody.velocity = playerVelocity;
-                    AudioSource.PlayClipAtPoint(playerClip, spawnedPlayer.transform.position, 1);
-              
+                setPlayerFormationProperties(playerVelocity);
                 break;
 
         }
+    }
+
+    void setPlayerFormationProperties(Vector3 playerVelocity)
+    {
+        spawnedPlayer.transform.parent = parent.transform;
+        spawnedPlayerRigidBody = spawnedPlayer.GetComponent<Rigidbody2D>();
+        spawnedPlayerRigidBody.velocity = playerVelocity;
+        AudioSource.PlayClipAtPoint(playerClip, spawnedPlayer.transform.position, 1);
     }
 }

@@ -8,7 +8,7 @@ public class EnemySpawner : MonoBehaviour {
     //Spawns enemy according to each level properties
     //TODO:FUNCTIONAL REFACTORING
 
-    public GameObject EnemyPrefab;
+    public GameObject EnemyPrefab,parent;
     public AudioClip enemyClip;
     public Text waveNumberText;
     public static bool resumeTrigger;
@@ -100,7 +100,6 @@ public class EnemySpawner : MonoBehaviour {
                     {
                         spawnEnemy(Position.Top);
                     }
-
                     else
                     {
                         spawnEnemy(Position.Bottom);
@@ -177,7 +176,7 @@ public class EnemySpawner : MonoBehaviour {
 
     void setEnemyFormationProperties()
     {
-        enemyFormation.transform.parent = transform;
+        enemyFormation.transform.parent = parent.transform;
         AudioSource.PlayClipAtPoint(enemyClip, enemyFormation.transform.position, 1);
         
     }

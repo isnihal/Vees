@@ -15,6 +15,7 @@ public class GameManager : MonoBehaviour {
     6)Check for game over
     7)Manage Life Display
     8)Get level name
+    9)Pause game
    */
 
 
@@ -25,6 +26,11 @@ public class GameManager : MonoBehaviour {
     //Time Lapse property
     float timeLeft;
     string language,defaultLanguage;
+
+    public GameObject enemySpawner, playerSpawner, bombSpawner;
+    public GameObject[] goalDetector;
+
+    static bool isPaused;
 
     void Start()
     {
@@ -49,6 +55,8 @@ public class GameManager : MonoBehaviour {
             language = defaultLanguage;
             PlayerPrefsManager.setLanguage(language);
         }
+
+        isPaused = false;
     }
 
     void Update()
@@ -126,9 +134,13 @@ public class GameManager : MonoBehaviour {
 
     void setTimer()
     {
-        timeLeft -= Time.deltaTime;
-        int timeInSeconds = Mathf.RoundToInt(timeLeft);
-        timerText.text = "TIME:00:" + timeInSeconds.ToString("00");
+        if (!isGamePaused())
+        {
+            timeLeft -= Time.deltaTime;
+            int timeInSeconds = Mathf.RoundToInt(timeLeft);
+            timerText.text = "TIME:00:" + timeInSeconds.ToString("00");
+        }
+
         if(timeLeft<=0)
         {
             Application.LoadLevel("GAME_OVER");
@@ -168,6 +180,49 @@ public class GameManager : MonoBehaviour {
     public static int getLife()
     {
         return life;
+    }
+
+    public void pauseGame()
+    {
+        if (!isGamePaused())
+        {
+            isPaused = true;
+            playerSpawner.active = false;
+            enemySpawner.active = false;
+            if(goalDetector!=null)
+            {
+                for (int i = 0; i < goalDetector.Length; i++)
+                {
+                    goalDetector[i].active = false;
+                }
+            }
+            if (getLevelName() == "ARCADE")
+            {
+                bombSpawner.active = false;
+            }
+        }
+        else if (isGamePaused())
+        {
+            isPaused = false;
+            playerSpawner.active = true;
+            enemySpawner.active = true;
+            if (goalDetector != null)
+            {
+                for (int i = 0; i < goalDetector.Length; i++)
+                {
+                    goalDetector[i].active = true;
+                }
+            }
+            if (getLevelName() == "ARCADE")
+            {
+                bombSpawner.active = true;
+            }
+        }
+    }
+
+    public static bool isGamePaused()
+    {
+        return isPaused;
     }
 
     public static string getLevelName()

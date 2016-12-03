@@ -4,7 +4,7 @@ using System.Collections;
 public class BombSpawner : MonoBehaviour {
 
     float bombingFrequency,spawningX,bombVelocity,probability;
-    public GameObject bombPrefab;
+    public GameObject bombPrefab,parent;
     public AudioClip bombClip;
     GameObject bombFormation;
     Vector3 spawningPosition;
@@ -24,9 +24,8 @@ public class BombSpawner : MonoBehaviour {
             spawningPosition = new Vector3(spawningX, transform.position.y, 0);
             bombFormation = Instantiate(bombPrefab, spawningPosition, Quaternion.identity) as GameObject;
             bombFormation.GetComponent<Rigidbody2D>().velocity = new Vector3(0, bombVelocity, 0);
-            bombFormation.transform.parent = transform;
-          
-                AudioSource.PlayClipAtPoint(bombClip, bombFormation.transform.position, 1);
+            bombFormation.transform.parent = parent.transform;
+            AudioSource.PlayClipAtPoint(bombClip, bombFormation.transform.position, 1);
             
         }
 	}

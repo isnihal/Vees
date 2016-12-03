@@ -37,4 +37,9 @@ public class PlayerPrefsManager : MonoBehaviour {
             return (false);
         }
     }
+
+    public void pauseGame()
+    {
+
+    }
 }
