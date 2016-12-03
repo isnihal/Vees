@@ -3,7 +3,7 @@ using System.Collections;
 
 public class TutorialManager : MonoBehaviour {
 
-    enum States {Basic,Basic_Enemy,One_Direction,Arcade,Fast_Escape,Equals,Time_LAPSE}
+    enum States {Basic,Basic_Enemy,One_Direction,Arcade,Fast_Escape,Equals,Time_Lapse}
     static States currentState;
     Animator animator;
     static bool veeSpawned;
@@ -21,13 +21,21 @@ public class TutorialManager : MonoBehaviour {
 
     void Update()
     {
-        if(currentState==States.Basic)
+        if (currentState == States.Basic)
         {
-            if(veeSpawned)
+            if (veeSpawned)
             {
-                Debug.Log("Vee spawned");
                 veeSpawned = false;
+                if (PlayerSpawner.getVeesSpawned() == 1)
+                {
+                    currentState = States.Basic_Enemy;
+                }
             }
+        }
+
+        else if(currentState == States.Basic_Enemy)
+        {
+
         }
     }
 	
@@ -43,6 +51,8 @@ public class TutorialManager : MonoBehaviour {
             case States.Basic:return 1;
                 break;
 
+            case States.Basic_Enemy:return 2;
+                break;
             default:return 1;
         }
     }

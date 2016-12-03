@@ -42,6 +42,11 @@ public class EnemySpawner : MonoBehaviour {
             setWaveNumberText();
             resumeTrigger = true;
         }
+
+        if(GameManager.getLevelName()=="TUTORIAL")
+        {
+            enemiesSpawned = 0;
+        }
     }
 
     // Update is called once per frame
@@ -139,6 +144,19 @@ public class EnemySpawner : MonoBehaviour {
                 }
             }
         }
+
+        //Enemy Spawner for TUTORIAL
+        if (GameManager.getLevelName() == "TUTORIAL")
+        {
+            if (TutorialManager.getSpawningPosition() == 2 && enemiesSpawned<1)//BASIC_ENEMY
+            {
+                if (probability > Random.value)
+                {
+                    spawnEnemy(Position.Top);
+                    enemiesSpawned++;
+                }
+            }
+        }
     }
 
     void spawnEnemy(Position position)
@@ -212,6 +230,12 @@ public class EnemySpawner : MonoBehaviour {
         {
             formationVelocity = 14.5f;
         }
+
+        else if(GameManager.getLevelName()=="TUTORIAL")
+        {
+            formationVelocity = 3.5f;
+        }
+
         else
         {
             formationVelocity = 16f;

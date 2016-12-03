@@ -94,6 +94,16 @@ public class PlayerSpawner : MonoBehaviour {
                         TutorialManager.veeHasSpawned();
                     }
                 }
+
+                if (TutorialManager.getSpawningPosition() == 2)//Basic_Enemy
+                {
+                    if (playerVelocity.x > 0 && spawnedVees < 2)
+                    {
+                        spawnPlayerFormation(Position.Left, spawningPosition, playerVelocity);
+                        spawnedVees++;
+                        TutorialManager.veeHasSpawned();
+                    }
+                }
             }
         }
     }
@@ -127,5 +137,10 @@ public class PlayerSpawner : MonoBehaviour {
         spawnedPlayerRigidBody = spawnedPlayer.GetComponent<Rigidbody2D>();
         spawnedPlayerRigidBody.velocity = playerVelocity;
         AudioSource.PlayClipAtPoint(playerClip, spawnedPlayer.transform.position, 1);
+    }
+
+    public static int getVeesSpawned()
+    {
+        return spawnedVees;
     }
 }
