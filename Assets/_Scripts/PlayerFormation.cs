@@ -22,11 +22,7 @@ public class PlayerFormation : MonoBehaviour {
             //Destroy enemy Vees and player vees
             if (collider.gameObject.GetComponent<EnemyFormation>())
             {
-
-                    AudioSource.PlayClipAtPoint(destroyClip, transform.position, 1);
-                
-                GameManager.incrementScore();
-                Destroy(collider.gameObject);
+                DestroyEnemyVees(collider);
                 Destroy(gameObject);
             }
         }
@@ -37,11 +33,7 @@ public class PlayerFormation : MonoBehaviour {
             //Destroy enemy Vees only
             if (collider.gameObject.GetComponent<EnemyFormation>())
             {
-
-                    AudioSource.PlayClipAtPoint(destroyClip, transform.position, 1);
-       
-                GameManager.incrementScore();
-                Destroy(collider.gameObject);
+                DestroyEnemyVees(collider);
             }
         }
 
@@ -52,11 +44,7 @@ public class PlayerFormation : MonoBehaviour {
             if (collider.gameObject.GetComponent<EnemyFormation>())
             {
                 totalEnemiesKilledInThisWave++;
-
-                    AudioSource.PlayClipAtPoint(destroyClip, transform.position, 1);
-
-                GameManager.incrementScore();
-                Destroy(collider.gameObject);
+                DestroyEnemyVees(collider);
                 Destroy(gameObject);
                 EnemySpawner.resumeTrigger = true;
             }
@@ -68,5 +56,12 @@ public class PlayerFormation : MonoBehaviour {
         {
             Application.LoadLevel("GAME_OVER");
         }
+    }
+
+    void DestroyEnemyVees(Collider2D collider)
+    {
+        AudioSource.PlayClipAtPoint(destroyClip, transform.position, 1);
+        GameManager.incrementScore();
+        Destroy(collider.gameObject);
     }
 }

@@ -19,6 +19,7 @@ public class EnemySpawner : MonoBehaviour {
     Vector3 enemySpawningPosition;
     float probability, spawnRate, formationVelocity;
     Rigidbody2D formationRigidBody;
+    enum Position {Top,Bottom,Left,Right};
 
 
 
@@ -31,20 +32,7 @@ public class EnemySpawner : MonoBehaviour {
     // Use this for initialization
     void Start() {
         spawnRate = getSpawnFrequency();
-        if (GameManager.getLevelName() == "ONE_DIRECTION" || GameManager.getLevelName() == "EQUALS" || GameManager.getLevelName() == "FAST_ESCAPE")
-        {
-            formationVelocity = 11.35f;
-        }
-        else if (GameManager.getLevelName() == "ARCADE")
-        {
-            formationVelocity = 14.5f;
-        }
-        else
-        {
-            formationVelocity = 16f;
-        }
-
-
+        setFormationVelocity();
         //Properties applicable to equals
         if (GameManager.getLevelName() == "EQUALS")
         {
@@ -66,13 +54,7 @@ public class EnemySpawner : MonoBehaviour {
         {
             if (probability > Random.value)
             {
-                enemySpawningPositionX = Random.Range(ScreenManager.getLeftBoundary(), ScreenManager.getRightBoundary());
-                enemySpawningPosition = new Vector3(enemySpawningPositionX, transform.position.y, 0);
-                enemyFormation = Instantiate(EnemyPrefab, enemySpawningPosition, Quaternion.identity) as GameObject;
-                enemyFormation.transform.parent = transform;
-                formationRigidBody = enemyFormation.GetComponent<Rigidbody2D>();
-                formationRigidBody.velocity = Vector3.down * formationVelocity;
-                    AudioSource.PlayClipAtPoint(enemyClip, enemyFormation.transform.position, 1);
+                spawnEnemy(Position.Top);
             }
         }
 
@@ -81,32 +63,15 @@ public class EnemySpawner : MonoBehaviour {
         {
             if (probability > Random.value)
             {
-                enemySpawningPositionX = Random.Range(ScreenManager.getLeftBoundary(), ScreenManager.getRightBoundary());
                 int topOrBottom = Random.Range(0, 2);
                 if (topOrBottom == 0)
                 {
-                    //Spawn enemy at top
-                    enemySpawningPositionX = Random.Range(ScreenManager.getLeftBoundary(), ScreenManager.getRightBoundary());
-                    enemySpawningPosition = new Vector3(enemySpawningPositionX, transform.position.y, 0);
-                    enemyFormation = Instantiate(EnemyPrefab, enemySpawningPosition, Quaternion.identity) as GameObject;
-                    enemyFormation.transform.parent = transform;
-                    formationRigidBody = enemyFormation.GetComponent<Rigidbody2D>();
-                    formationRigidBody.velocity = Vector3.down * formationVelocity;
-                        AudioSource.PlayClipAtPoint(enemyClip, enemyFormation.transform.position, 1);
+                    spawnEnemy(Position.Top);
                 }
 
                 else
                 {
-                    //Spawn enemy at bottom
-                    enemySpawningPositionX = Random.Range(ScreenManager.getLeftBoundary(), ScreenManager.getRightBoundary());
-                    enemySpawningPosition = new Vector3(enemySpawningPositionX, -transform.position.y, 0);
-                    enemyFormation = Instantiate(EnemyPrefab, enemySpawningPosition, Quaternion.Euler(new Vector3(0, 0, 180))) as GameObject;
-                    enemyFormation.transform.parent = transform;
-                    formationRigidBody = enemyFormation.GetComponent<Rigidbody2D>();
-                    formationRigidBody.velocity = Vector3.down * -formationVelocity;
-
-                        AudioSource.PlayClipAtPoint(enemyClip, enemyFormation.transform.position, 1);
-                    
+                    spawnEnemy(Position.Bottom);
                 }
             }
         }
@@ -117,14 +82,7 @@ public class EnemySpawner : MonoBehaviour {
         {
             if (probability > Random.value)
             {
-                enemySpawningPositionY = Random.Range(ScreenManager.getBottomBoundary(), ScreenManager.getTopBoundary());
-                enemySpawningPosition = new Vector3(transform.position.x, enemySpawningPositionY, 0);
-                enemyFormation = Instantiate(EnemyPrefab, enemySpawningPosition, Quaternion.Euler(new Vector3(0, 0, 90))) as GameObject;
-                enemyFormation.transform.parent = transform;
-                formationRigidBody = enemyFormation.GetComponent<Rigidbody2D>();
-                formationRigidBody.velocity = Vector3.right * formationVelocity;
-                    AudioSource.PlayClipAtPoint(enemyClip, enemyFormation.transform.position, 1);
-                
+                spawnEnemy(Position.Left);
             }
         }
 
@@ -137,34 +95,15 @@ public class EnemySpawner : MonoBehaviour {
                 {
                     enemiesSpawned++;
                     resumeTrigger = false;
-                    enemySpawningPositionX = Random.Range(ScreenManager.getLeftBoundary(), ScreenManager.getRightBoundary());
                     int topOrBottom = Random.Range(0, 2);
                     if (topOrBottom == 0)
                     {
-                        //Spawn enemy at top
-                        enemySpawningPositionX = Random.Range(ScreenManager.getLeftBoundary(), ScreenManager.getRightBoundary());
-                        enemySpawningPosition = new Vector3(enemySpawningPositionX, transform.position.y, 0);
-                        enemyFormation = Instantiate(EnemyPrefab, enemySpawningPosition, Quaternion.identity) as GameObject;
-                        enemyFormation.transform.parent = transform;
-                        formationRigidBody = enemyFormation.GetComponent<Rigidbody2D>();
-                        formationRigidBody.velocity = Vector3.down * formationVelocity;
-
-                            AudioSource.PlayClipAtPoint(enemyClip, enemyFormation.transform.position, 1);
-
+                        spawnEnemy(Position.Top);
                     }
 
                     else
                     {
-                        //Spawn enemy at bottom
-                        enemySpawningPositionX = Random.Range(ScreenManager.getLeftBoundary(), ScreenManager.getRightBoundary());
-                        enemySpawningPosition = new Vector3(enemySpawningPositionX, -transform.position.y, 0);
-                        enemyFormation = Instantiate(EnemyPrefab, enemySpawningPosition, Quaternion.Euler(new Vector3(0, 0, 180))) as GameObject;
-                        enemyFormation.transform.parent = transform;
-                        formationRigidBody = enemyFormation.GetComponent<Rigidbody2D>();
-                        formationRigidBody.velocity = Vector3.down * -formationVelocity;
-      
-                            AudioSource.PlayClipAtPoint(enemyClip, enemyFormation.transform.position, 1);
-                        
+                        spawnEnemy(Position.Bottom);
                     }
                 }
             }
@@ -189,39 +128,58 @@ public class EnemySpawner : MonoBehaviour {
                 spawnRate += 0.06f;
                 spawnRate = Mathf.Clamp(spawnRate, 0.4f, 8.5f);
                 //SPAWN RATE INCREASER
-                enemySpawningPositionX = Random.Range(ScreenManager.getLeftBoundary(), ScreenManager.getRightBoundary());
                 int topOrBottom = Random.Range(0, 2);
                 if (topOrBottom == 0)
                 {
-                    //Spawn enemy at top
-                    enemySpawningPositionX = Random.Range(ScreenManager.getLeftBoundary(), ScreenManager.getRightBoundary());
-                    enemySpawningPosition = new Vector3(enemySpawningPositionX, transform.position.y, 0);
-                    enemyFormation = Instantiate(EnemyPrefab, enemySpawningPosition, Quaternion.identity) as GameObject;
-                    enemyFormation.transform.parent = transform;
-                    formationRigidBody = enemyFormation.GetComponent<Rigidbody2D>();
-                    formationRigidBody.velocity = Vector3.down * formationVelocity;
-
-                        AudioSource.PlayClipAtPoint(enemyClip, enemyFormation.transform.position, 1);
-                    
+                    spawnEnemy(Position.Top);
                 }
 
                 else
                 {
-                    //Spawn enemy at bottom
-                    enemySpawningPositionX = Random.Range(ScreenManager.getLeftBoundary(), ScreenManager.getRightBoundary());
-                    enemySpawningPosition = new Vector3(enemySpawningPositionX, -transform.position.y, 0);
-                    enemyFormation = Instantiate(EnemyPrefab, enemySpawningPosition, Quaternion.Euler(new Vector3(0, 0, 180))) as GameObject;
-                    enemyFormation.transform.parent = transform;
-                    formationRigidBody = enemyFormation.GetComponent<Rigidbody2D>();
-                    formationRigidBody.velocity = Vector3.down * -formationVelocity;
-
-                        AudioSource.PlayClipAtPoint(enemyClip, enemyFormation.transform.position, 1);
-                    
+                    spawnEnemy(Position.Bottom);
                 }
             }
         }
     }
 
+    void spawnEnemy(Position position)
+    {
+        switch(position)
+        {
+            case Position.Top:
+                enemySpawningPositionX = Random.Range(ScreenManager.getLeftBoundary(), ScreenManager.getRightBoundary());
+                enemySpawningPosition = new Vector3(enemySpawningPositionX, transform.position.y, 0);
+                enemyFormation = Instantiate(EnemyPrefab, enemySpawningPosition, Quaternion.identity) as GameObject;
+                formationRigidBody = enemyFormation.GetComponent<Rigidbody2D>();
+                formationRigidBody.velocity = Vector3.down * formationVelocity;
+                setEnemyFormationProperties();
+                break;
+
+            case Position.Bottom:
+                enemySpawningPositionX = Random.Range(ScreenManager.getLeftBoundary(), ScreenManager.getRightBoundary());
+                enemySpawningPosition = new Vector3(enemySpawningPositionX, -transform.position.y, 0);
+                enemyFormation = Instantiate(EnemyPrefab, enemySpawningPosition, Quaternion.Euler(new Vector3(0, 0, 180))) as GameObject;
+                formationRigidBody = enemyFormation.GetComponent<Rigidbody2D>();
+                formationRigidBody.velocity = Vector3.down * -formationVelocity;
+                setEnemyFormationProperties();
+                break;
+
+            case Position.Left:
+                enemySpawningPositionY = Random.Range(ScreenManager.getBottomBoundary(), ScreenManager.getTopBoundary());
+                enemySpawningPosition = new Vector3(transform.position.x, enemySpawningPositionY, 0);
+                enemyFormation = Instantiate(EnemyPrefab, enemySpawningPosition, Quaternion.Euler(new Vector3(0, 0, 90))) as GameObject;
+                formationRigidBody = enemyFormation.GetComponent<Rigidbody2D>();
+                formationRigidBody.velocity = Vector3.right * formationVelocity;
+                setEnemyFormationProperties();
+                break;
+        }
+    }
+
+    void setEnemyFormationProperties()
+    {
+        enemyFormation.transform.parent = transform;
+        AudioSource.PlayClipAtPoint(enemyClip, enemyFormation.transform.position, 1);
+    }
 
     float getSpawnFrequency()
     {
@@ -241,6 +199,22 @@ public class EnemySpawner : MonoBehaviour {
         else
         {
             return 1.5f;
+        }
+    }
+
+    void setFormationVelocity()
+    {
+        if (GameManager.getLevelName() == "ONE_DIRECTION" || GameManager.getLevelName() == "EQUALS" || GameManager.getLevelName() == "FAST_ESCAPE")
+        {
+            formationVelocity = 11.35f;
+        }
+        else if (GameManager.getLevelName() == "ARCADE")
+        {
+            formationVelocity = 14.5f;
+        }
+        else
+        {
+            formationVelocity = 16f;
         }
     }
 

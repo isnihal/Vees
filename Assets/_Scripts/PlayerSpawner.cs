@@ -12,6 +12,7 @@ public class PlayerSpawner : MonoBehaviour {
     GameObject spawnedPlayer;
     Rigidbody2D spawnedPlayerRigidBody;
     public AudioClip playerClip;
+    enum Position {Top,Bottom,Left,Right}
 
     void Start()
     {
@@ -26,12 +27,7 @@ public class PlayerSpawner : MonoBehaviour {
             //Spawn Player for ONE_DIRECTION
             if (GameManager.getLevelName() == "ONE_DIRECTION")
             {
-                spawningPosition.x = transform.position.x;
-                spawnedPlayer = Instantiate(playerFormation, spawningPosition, Quaternion.Euler(new Vector3(0, 0, 90))) as GameObject;
-                spawnedPlayer.transform.parent = transform;
-                spawnedPlayerRigidBody = spawnedPlayer.GetComponent<Rigidbody2D>();
-                spawnedPlayerRigidBody.velocity = playerVelocity;
-                    AudioSource.PlayClipAtPoint(playerClip, spawnedPlayer.transform.position, 1);
+                spawnPlayerFormation(Position.Left, spawningPosition, playerVelocity);
             }
 
             //Spawn player for ARCADE
@@ -39,24 +35,12 @@ public class PlayerSpawner : MonoBehaviour {
             {
                 if (playerVelocity.x > 0)
                 {
-                    //Spawn from left
-                    spawningPosition.x = transform.position.x;
-                    spawnedPlayer = Instantiate(playerFormation, spawningPosition, Quaternion.Euler(new Vector3(0, 0, 90))) as GameObject;
-                    spawnedPlayer.transform.parent = transform;
-                    spawnedPlayerRigidBody = spawnedPlayer.GetComponent<Rigidbody2D>();
-                    spawnedPlayerRigidBody.velocity = playerVelocity;
-                        AudioSource.PlayClipAtPoint(playerClip, spawnedPlayer.transform.position, 1);
+                    spawnPlayerFormation(Position.Left, spawningPosition, playerVelocity);
                 }
 
                 else
                 {
-                    //Spawn from right
-                    spawningPosition.x = -transform.position.x;
-                    spawnedPlayer = Instantiate(playerFormation, spawningPosition, Quaternion.Euler(new Vector3(0, 0, -90))) as GameObject;
-                    spawnedPlayer.transform.parent = transform;
-                    spawnedPlayerRigidBody = spawnedPlayer.GetComponent<Rigidbody2D>();
-                    spawnedPlayerRigidBody.velocity = playerVelocity;
-                        AudioSource.PlayClipAtPoint(playerClip, spawnedPlayer.transform.position, 1);
+                    spawnPlayerFormation(Position.Right, spawningPosition, playerVelocity);
                 }
             }
 
@@ -64,12 +48,7 @@ public class PlayerSpawner : MonoBehaviour {
             //Spawn player for FAST ESCAPE
             if (GameManager.getLevelName() == "FAST_ESCAPE")
             {
-                spawningPosition.y = transform.position.y;
-                spawnedPlayer = Instantiate(playerFormation, spawningPosition, Quaternion.Euler(new Vector3(0, 0, 180))) as GameObject;
-                spawnedPlayer.transform.parent = transform;
-                spawnedPlayerRigidBody = spawnedPlayer.GetComponent<Rigidbody2D>();
-                spawnedPlayerRigidBody.velocity = playerVelocity;
-                    AudioSource.PlayClipAtPoint(playerClip, spawnedPlayer.transform.position, 1);
+                spawnPlayerFormation(Position.Bottom, spawningPosition, playerVelocity);
             }
 
             //Spawn player for EQUALS
@@ -77,24 +56,13 @@ public class PlayerSpawner : MonoBehaviour {
             {
                 if (playerVelocity.x > 0)
                 {
-                    //Spawn from left
-                    spawningPosition.x = transform.position.x;
-                    spawnedPlayer = Instantiate(playerFormation, spawningPosition, Quaternion.Euler(new Vector3(0, 0, 90))) as GameObject;
-                    spawnedPlayer.transform.parent = transform;
-                    spawnedPlayerRigidBody = spawnedPlayer.GetComponent<Rigidbody2D>();
-                    spawnedPlayerRigidBody.velocity = playerVelocity;
-                        AudioSource.PlayClipAtPoint(playerClip, spawnedPlayer.transform.position, 1);
+                    spawnPlayerFormation(Position.Left, spawningPosition, playerVelocity);
                 }
 
                 else
                 {
                     //Spawn from right
-                    spawningPosition.x = -transform.position.x;
-                    spawnedPlayer = Instantiate(playerFormation, spawningPosition, Quaternion.Euler(new Vector3(0, 0, -90))) as GameObject;
-                    spawnedPlayer.transform.parent = transform;
-                    spawnedPlayerRigidBody = spawnedPlayer.GetComponent<Rigidbody2D>();
-                    spawnedPlayerRigidBody.velocity = playerVelocity;
-                        AudioSource.PlayClipAtPoint(playerClip, spawnedPlayer.transform.position, 1);
+                    spawnPlayerFormation(Position.Right, spawningPosition, playerVelocity);
                 }
             }
 
@@ -103,26 +71,46 @@ public class PlayerSpawner : MonoBehaviour {
             {
                 if (playerVelocity.x > 0)
                 {
-                    //Spawn from left
-                    spawningPosition.x = transform.position.x;
-                    spawnedPlayer = Instantiate(playerFormation, spawningPosition, Quaternion.Euler(new Vector3(0, 0, 90))) as GameObject;
-                    spawnedPlayer.transform.parent = transform;
-                    spawnedPlayerRigidBody = spawnedPlayer.GetComponent<Rigidbody2D>();
-                    spawnedPlayerRigidBody.velocity = playerVelocity;
-                        AudioSource.PlayClipAtPoint(playerClip, spawnedPlayer.transform.position, 1);
+                    spawnPlayerFormation(Position.Left, spawningPosition, playerVelocity);
                 }
 
                 else
                 {
-                    //Spawn from right
-                    spawningPosition.x = -transform.position.x;
-                    spawnedPlayer = Instantiate(playerFormation, spawningPosition, Quaternion.Euler(new Vector3(0, 0, -90))) as GameObject;
-                    spawnedPlayer.transform.parent = transform;
-                    spawnedPlayerRigidBody = spawnedPlayer.GetComponent<Rigidbody2D>();
-                    spawnedPlayerRigidBody.velocity = playerVelocity;
-                        AudioSource.PlayClipAtPoint(playerClip, spawnedPlayer.transform.position, 1);
+                    spawnPlayerFormation(Position.Right, spawningPosition, playerVelocity);
                 }
             }
+        }
+    }
+
+    void spawnPlayerFormation(Position position, Vector3 spawningPosition, Vector3 playerVelocity)
+    {
+        switch(position)
+        {
+            case Position.Left:
+                spawningPosition.x = transform.position.x;
+                spawnedPlayer = Instantiate(playerFormation, spawningPosition, Quaternion.Euler(new Vector3(0, 0, 90))) as GameObject;
+                spawnedPlayer.transform.parent = transform;
+                spawnedPlayerRigidBody = spawnedPlayer.GetComponent<Rigidbody2D>();
+                spawnedPlayerRigidBody.velocity = playerVelocity;
+                AudioSource.PlayClipAtPoint(playerClip, spawnedPlayer.transform.position, 1);
+                break;
+            case Position.Right:
+                spawningPosition.x = -transform.position.x;
+                spawnedPlayer = Instantiate(playerFormation, spawningPosition, Quaternion.Euler(new Vector3(0, 0, -90))) as GameObject;
+                spawnedPlayer.transform.parent = transform;
+                spawnedPlayerRigidBody = spawnedPlayer.GetComponent<Rigidbody2D>();
+                spawnedPlayerRigidBody.velocity = playerVelocity;
+                AudioSource.PlayClipAtPoint(playerClip, spawnedPlayer.transform.position, 1);
+                break;
+            case Position.Bottom:
+                spawningPosition.y = transform.position.y;
+                spawnedPlayer = Instantiate(playerFormation, spawningPosition, Quaternion.Euler(new Vector3(0, 0, 180))) as GameObject;
+                spawnedPlayer.transform.parent = transform;
+                spawnedPlayerRigidBody = spawnedPlayer.GetComponent<Rigidbody2D>();
+                spawnedPlayerRigidBody.velocity = playerVelocity;
+                AudioSource.PlayClipAtPoint(playerClip, spawnedPlayer.transform.position, 1);
+                break;
+
         }
     }
 }
