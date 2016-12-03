@@ -25,7 +25,9 @@ public class BombSpawner : MonoBehaviour {
             bombFormation = Instantiate(bombPrefab, spawningPosition, Quaternion.identity) as GameObject;
             bombFormation.GetComponent<Rigidbody2D>().velocity = new Vector3(0, bombVelocity, 0);
             bombFormation.transform.parent = transform;
-            AudioSource.PlayClipAtPoint(bombClip, bombFormation.transform.position, 1);
+          
+                AudioSource.PlayClipAtPoint(bombClip, bombFormation.transform.position, 1);
+            
         }
 	}
 }

@@ -60,7 +60,7 @@ public class PlayerFormation : MonoBehaviour {
 
     void DestroyEnemyVees(Collider2D collider)
     {
-        AudioSource.PlayClipAtPoint(destroyClip, transform.position, 1);
+            AudioSource.PlayClipAtPoint(destroyClip, transform.position, 1);  
         GameManager.incrementScore();
         Destroy(collider.gameObject);
     }

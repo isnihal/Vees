@@ -92,7 +92,9 @@ public class PlayerSpawner : MonoBehaviour {
                 spawnedPlayer.transform.parent = transform;
                 spawnedPlayerRigidBody = spawnedPlayer.GetComponent<Rigidbody2D>();
                 spawnedPlayerRigidBody.velocity = playerVelocity;
-                AudioSource.PlayClipAtPoint(playerClip, spawnedPlayer.transform.position, 1);
+            
+                    AudioSource.PlayClipAtPoint(playerClip, spawnedPlayer.transform.position, 1);
+      
                 break;
             case Position.Right:
                 spawningPosition.x = -transform.position.x;
@@ -100,7 +102,9 @@ public class PlayerSpawner : MonoBehaviour {
                 spawnedPlayer.transform.parent = transform;
                 spawnedPlayerRigidBody = spawnedPlayer.GetComponent<Rigidbody2D>();
                 spawnedPlayerRigidBody.velocity = playerVelocity;
-                AudioSource.PlayClipAtPoint(playerClip, spawnedPlayer.transform.position, 1);
+             
+                    AudioSource.PlayClipAtPoint(playerClip, spawnedPlayer.transform.position, 1);
+
                 break;
             case Position.Bottom:
                 spawningPosition.y = transform.position.y;
@@ -108,7 +112,8 @@ public class PlayerSpawner : MonoBehaviour {
                 spawnedPlayer.transform.parent = transform;
                 spawnedPlayerRigidBody = spawnedPlayer.GetComponent<Rigidbody2D>();
                 spawnedPlayerRigidBody.velocity = playerVelocity;
-                AudioSource.PlayClipAtPoint(playerClip, spawnedPlayer.transform.position, 1);
+                    AudioSource.PlayClipAtPoint(playerClip, spawnedPlayer.transform.position, 1);
+              
                 break;
 
         }

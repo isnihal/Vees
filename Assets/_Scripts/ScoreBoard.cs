@@ -8,6 +8,11 @@ public class ScoreBoard : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+        string language = PlayerPrefsManager.getLanguage();
+        if(language=="")
+        {
+            language = "ENGLISH";
+        }
         if (GoalDetector.fromEquals)
         {
             //Wave number for level EQUALS
@@ -24,7 +29,7 @@ public class ScoreBoard : MonoBehaviour {
         }
         else
         {
-            switch (PlayerPrefsManager.getLanguage())
+            switch (language)
             {
                 case "ENGLISH":
                     gameObject.GetComponent<Text>().text = "Score\n" + GameManager.getScore().ToString();

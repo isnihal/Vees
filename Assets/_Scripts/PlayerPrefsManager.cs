@@ -20,4 +20,21 @@ public class PlayerPrefsManager : MonoBehaviour {
     {
         return (PlayerPrefs.GetString(LANGUAGE_KEY));
     }   
+
+    public static void setMute(int volume)
+    {
+        PlayerPrefs.SetInt(MUTE_KEY, volume);
+    }
+
+    public static bool isMuted()
+    {
+        if(PlayerPrefs.GetInt(MUTE_KEY)==0)
+        {
+            return (true);
+        }
+        else
+        {
+            return (false);
+        }
+    }
 }

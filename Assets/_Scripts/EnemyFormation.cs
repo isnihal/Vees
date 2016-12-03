@@ -13,7 +13,9 @@ public class EnemyFormation : MonoBehaviour {
         {
             if (collider.gameObject.GetComponent<PlayerFormation>())
             {
-                AudioSource.PlayClipAtPoint(destroyClip, transform.position, 1);
+               
+                    AudioSource.PlayClipAtPoint(destroyClip, transform.position, 1);
+                
                 Destroy(collider.gameObject);
                 GameManager.decrementLife();
                 Debug.Log("Lives remaining:" + GameManager.getLife());

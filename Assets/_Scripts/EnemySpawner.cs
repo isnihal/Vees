@@ -179,6 +179,7 @@ public class EnemySpawner : MonoBehaviour {
     {
         enemyFormation.transform.parent = transform;
         AudioSource.PlayClipAtPoint(enemyClip, enemyFormation.transform.position, 1);
+        
     }
 
     float getSpawnFrequency()

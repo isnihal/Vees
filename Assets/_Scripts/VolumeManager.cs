@@ -7,7 +7,19 @@ public class VolumeManager : MonoBehaviour {
 
     void Start()
     {
-        isMuted = false;
+        if (Application.loadedLevel == 0)
+        {
+            PlayerPrefsManager.setMute(1);
+            isMuted = false;
+        }
+        else
+        {
+            isMuted = PlayerPrefsManager.isMuted();
+            if (isMuted == null)
+            {
+                isMuted = false;
+            }
+        }
     }
 
     public void muteVolume()
@@ -15,12 +27,14 @@ public class VolumeManager : MonoBehaviour {
         if (!isMuted)
         {
             MusicPlayer.setVolume(0);
-            isMuted = true;
+            PlayerPrefsManager.setMute(0);
+            isMuted = PlayerPrefsManager.isMuted();
         }
         else
         {
             MusicPlayer.setVolume(1);
-            isMuted = false;
+            PlayerPrefsManager.setMute(1);
+            isMuted = PlayerPrefsManager.isMuted();
         }
     }
 }
