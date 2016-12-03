@@ -189,7 +189,7 @@ public class GameManager : MonoBehaviour {
             EnemyFormation enemiesOnScreen = FindObjectOfType<EnemyFormation>();
             if(enemiesOnScreen!=null)
             {
-                EnemySpawner.decreaseSpawnedCount();
+              
             }
         }
         if (!isGamePaused())
