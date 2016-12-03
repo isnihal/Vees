@@ -14,6 +14,7 @@ public class LevelManager : MonoBehaviour {
     bool startTimer,firstTap;
     float ButtonCooler; //Time before reset
     int ButtonCount;
+    bool doubleTapped;
 
     //Deals with splash screen and loading of other levels
 
@@ -33,7 +34,7 @@ public class LevelManager : MonoBehaviour {
             context = currentActivity.Call<AndroidJavaObject>("getApplicationContext");
         }
 
-        firstTap = false;
+        doubleTapped = false;
         ButtonCooler = 2.5f;
         ButtonCount = 0;
     }
@@ -41,34 +42,41 @@ public class LevelManager : MonoBehaviour {
     void Update()
     {
         detectDoubleTap();
+        detectSingleTap();
     }
 
+
+    void detectSingleTap()
+    {
+        if (Input.GetKeyDown((KeyCode.Escape)) && !doubleTapped)
+        {
+
+            switch (Application.loadedLevel)
+            {
+                case 1:
+                    showToastOnUiThread("Press again to quit");
+                    break;
+                case 2:
+                    Application.LoadLevel(1);//Load main menu
+                    break;
+                case 9:
+                    Application.LoadLevel(1);//Load main menu
+                    break;
+                default:
+                    showToastOnUiThread("Press again to return to main menu");
+                    break;
+            }
+        }
+    }
     void detectDoubleTap()
     {
         
         if (Input.GetKeyDown((KeyCode.Escape)))
             {
-
-                if(ButtonCooler>0 && ButtonCount==0)
-                {
-                switch (Application.loadedLevel)
-                {
-                    case 1:
-                        showToastOnUiThread("Press again to quit");
-                        break;
-                    case 2:
-                        Application.LoadLevel(1);//Load main menu
-                        break;
-                    case 9:
-                        Application.LoadLevel(1);//Load main menu
-                        break;
-                    default: showToastOnUiThread("Press again to return to main menu");
-                        break;
-                }
-                }
                 if (ButtonCooler > 0 && ButtonCount == 1/*Number of Taps you want Minus One*/)
                 {
                 //Has double tapped
+                    doubleTapped = true;
                     switch (Application.loadedLevel)
                     {
                         case 1:
@@ -94,6 +102,7 @@ public class LevelManager : MonoBehaviour {
             else
             {
                 ButtonCount = 0;
+                doubleTapped = false;
             }
    }
 
