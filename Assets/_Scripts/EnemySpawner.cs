@@ -148,7 +148,7 @@ public class EnemySpawner : MonoBehaviour {
         //Enemy Spawner for TUTORIAL
         if (GameManager.getLevelName() == "TUTORIAL")
         {
-            if (TutorialManager.getSpawningPosition() == 2 && enemiesSpawned<1)//BASIC_ENEMY
+            if (TutorialManager.getCurentState() == 2 && enemiesSpawned<1)//BASIC_ENEMY
             {
                 if (probability > Random.value)
                 {

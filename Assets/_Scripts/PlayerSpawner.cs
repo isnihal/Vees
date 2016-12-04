@@ -85,7 +85,7 @@ public class PlayerSpawner : MonoBehaviour {
             //Spawn player for tutorial
             if (GameManager.getLevelName() == "TUTORIAL")
             {
-                if (TutorialManager.getSpawningPosition()==1)//Basic
+                if (TutorialManager.getCurentState()==1)//Basic
                 {
                     if (playerVelocity.x > 0 && spawnedVees<1)
                     {
@@ -95,7 +95,7 @@ public class PlayerSpawner : MonoBehaviour {
                     }
                 }
 
-                if (TutorialManager.getSpawningPosition() == 2)//Basic_Enemy
+                if (TutorialManager.getCurentState() == 2)//Basic_Enemy
                 {
                     if (playerVelocity.x > 0 && spawnedVees < 2)
                     {

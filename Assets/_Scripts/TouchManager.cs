@@ -71,19 +71,19 @@ public class TouchManager : MonoBehaviour {
             //Tutorial properties
             if (GameManager.getLevelName() == "TUTORIAL")
             {
-                if (TutorialManager.getSpawningPosition() == 1)//Basic 
+                if (TutorialManager.getCurentState() == 1)//Basic 
                 {
                     if (xVelocity > 0)
                     {
-                        xVelocity = Mathf.Clamp(xVelocity, 10, 20);
+                        xVelocity = Mathf.Clamp(xVelocity,9,12);
                     }
                 }
 
-                if (TutorialManager.getSpawningPosition() == 2)//Basic ENEMY
+                if (TutorialManager.getCurentState() == 2)//Basic ENEMY
                 {
                     if (xVelocity > 0)
                     {
-                        xVelocity = Mathf.Clamp(xVelocity, 10, 20);
+                        xVelocity = Mathf.Clamp(xVelocity, 9, 12);
                     }
                 }
             }

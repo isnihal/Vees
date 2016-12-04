@@ -1,12 +1,15 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 
 public class TutorialManager : MonoBehaviour {
 
-    enum States {Basic,Basic_Enemy,One_Direction,Arcade,Fast_Escape,Equals,Time_Lapse}
+    enum States {Basic,Tap_To_Continue,Basic_Enemy,Score,Battery}
     static States currentState;
     Animator animator;
     static bool veeSpawned;
+
+    public Text instructionBoard;
 
 	// Use this for initialization
 	void Start () {
@@ -23,19 +26,38 @@ public class TutorialManager : MonoBehaviour {
     {
         if (currentState == States.Basic)
         {
+            instructionBoard.text = "SWIPE TO SPAWN A VEE";
             if (veeSpawned)
             {
                 veeSpawned = false;
                 if (PlayerSpawner.getVeesSpawned() == 1)
                 {
-                    currentState = States.Basic_Enemy;
+                    currentState = States.Tap_To_Continue;
                 }
             }
         }
 
+        else if(currentState==States.Tap_To_Continue)
+        {
+            instructionBoard.text = "GOOD!";
+        }
+
         else if(currentState == States.Basic_Enemy)
         {
+            instructionBoard.text = "HIT THE ENEMY VEE";
+        }
+    }
 
+    public static void setCurrentState(string state)
+    {
+        switch(state)
+        {
+            case "TAP_TO_CONTINUE":
+                currentState = States.Tap_To_Continue;
+                break;
+            case "BASIC_ENEMY":
+                currentState = States.Basic_Enemy;
+                break;
         }
     }
 	
@@ -44,7 +66,7 @@ public class TutorialManager : MonoBehaviour {
         veeSpawned = true;
     }
 
-    public static int getSpawningPosition()
+    public static int getCurentState()
     {
         switch(currentState)
         {
@@ -53,6 +75,12 @@ public class TutorialManager : MonoBehaviour {
 
             case States.Basic_Enemy:return 2;
                 break;
+            case States.Tap_To_Continue:
+                return 3;
+            case States.Score:
+                return 4;
+            case States.Battery:
+                return 5;
             default:return 1;
         }
     }
