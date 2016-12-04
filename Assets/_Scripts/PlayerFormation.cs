@@ -56,7 +56,6 @@ public class PlayerFormation : MonoBehaviour {
             //Destroy enemy Vees only
             if (collider.gameObject.GetComponent<EnemyFormation>())
             {
-                Debug.Log("BINGO!");
                 DestroyEnemyVees(collider);
                 TutorialManager.veeHasCollided();
             }

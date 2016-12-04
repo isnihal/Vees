@@ -29,10 +29,23 @@ public class AnimationManager : MonoBehaviour
 
     public void moveToBattery()
     {
-        if(TutorialManager.getCurentState()==5)
+        if (TutorialManager.getCurentState() == 5)
         {
             animator.SetTrigger("ShowBattery");
         }
+    }
+
+    public void moveToEnd()
+    {
+        if(TutorialManager.getCurentState()==6)
+        {
+            animator.SetTrigger("ShowEnd");
+        }
+    }
+
+    public void loadLevel()
+    {
+        Application.LoadLevel(1);
     }
 
     public void changeState(string state)

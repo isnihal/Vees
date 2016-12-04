@@ -21,9 +21,18 @@ public class LevelManager : MonoBehaviour {
     void Start()
     {
         //Load main menu if current level is splash screen
+        //Load Tutorial if game is loaded for the first time
         if(isSplash())
         {
-            loadMainMenu();
+            if (!PlayerPrefsManager.isFirstTime())
+            {
+                loadTutorial();
+                PlayerPrefsManager.setFirstTime();
+            }
+            else
+            {
+                loadMainMenu();
+            }
         }
 
 
@@ -127,6 +136,16 @@ public class LevelManager : MonoBehaviour {
     {
         
         Application.LoadLevel(Application.loadedLevel + 1);
+    }
+
+    void loadTutorial()
+    {
+        Invoke("showTutorial", 5f); 
+    }
+
+    void showTutorial()
+    {
+        Application.LoadLevel(10);
     }
 
     bool isSplash()

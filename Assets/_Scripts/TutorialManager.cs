@@ -4,7 +4,7 @@ using System.Collections;
 
 public class TutorialManager : MonoBehaviour {
 
-    enum States {Basic,Tap_To_Continue,Basic_Enemy,Score,Battery}
+    enum States {Basic,Tap_To_Continue,Basic_Enemy,Score,Battery,END}
     static States currentState;
     Animator animator;
     static bool veeSpawned,hasFinishedColliding;
@@ -58,6 +58,11 @@ public class TutorialManager : MonoBehaviour {
         {
             instructionBoard.text = "KEEP AN EYE ON THE BATTEY,VEES COST BATTERY AND REFILS WITH TIME";
         }
+
+        else if(currentState==States.END)
+        {
+            instructionBoard.text = "YOU ARE READY TO GO!\nCHECK OUT THE VARIOUS GAME MODES";
+        }
     }
 
     public static void setCurrentState(string state)
@@ -72,6 +77,9 @@ public class TutorialManager : MonoBehaviour {
                 break;
             case "BATTERY":
                 currentState = States.Battery;
+                break;
+            case "END":
+                currentState = States.END;
                 break;
         }
     }
@@ -101,6 +109,8 @@ public class TutorialManager : MonoBehaviour {
                 return 4;
             case States.Battery:
                 return 5;
+            case States.END:
+                return 6;
             default:return 1;
         }
     }

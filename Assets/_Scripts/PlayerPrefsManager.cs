@@ -3,12 +3,13 @@ using System.Collections;
 
 public class PlayerPrefsManager : MonoBehaviour {
 
-    static string LANGUAGE_KEY,MUTE_KEY;
+    static string LANGUAGE_KEY,MUTE_KEY,FIRST_TIME_KEY;
 
     void Start()
     {
         LANGUAGE_KEY = "LANGUAGE";
         MUTE_KEY = "MUTE";
+        FIRST_TIME_KEY = "FIRST_TIME";
     }
 
     public static void setLanguage(string selectedLanguage)
@@ -38,8 +39,21 @@ public class PlayerPrefsManager : MonoBehaviour {
         }
     }
 
-    public void pauseGame()
+    public static void setFirstTime()
     {
+        PlayerPrefs.SetInt(FIRST_TIME_KEY, 1);
+    }
 
+    public static bool isFirstTime()
+    {
+        Debug.Log("First time:" + PlayerPrefs.GetInt(FIRST_TIME_KEY));
+        if(PlayerPrefs.GetInt(FIRST_TIME_KEY)==0)
+        {
+            return false;
+        }
+        else
+        {
+            return true;
+        }
     }
 }
