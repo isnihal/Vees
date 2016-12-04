@@ -24,7 +24,7 @@ public class LevelManager : MonoBehaviour {
         //Load Tutorial if game is loaded for the first time
         if(isSplash())
         {
-            if (!PlayerPrefsManager.isFirstTime())
+            if (PlayerPrefsManager.isFirstTime())
             {
                 loadTutorial();
                 PlayerPrefsManager.setFirstTime();
