@@ -19,6 +19,22 @@ public class AnimationManager : MonoBehaviour
         }
     }
 
+    public void moveToScore()
+    {
+        if (TutorialManager.getCurentState() == 4)
+        {
+            animator.SetTrigger("ShowScore");
+        }
+    }
+
+    public void moveToBattery()
+    {
+        if(TutorialManager.getCurentState()==5)
+        {
+            animator.SetTrigger("ShowBattery");
+        }
+    }
+
     public void changeState(string state)
     {
         TutorialManager.setCurrentState(state);

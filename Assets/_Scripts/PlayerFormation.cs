@@ -28,7 +28,7 @@ public class PlayerFormation : MonoBehaviour {
         }
 
         //For Time Lapse and One Direction
-        else if (GameManager.getLevelName() != "FAST_ESCAPE" && GameManager.getLevelName() != "EQUALS")
+        else if (GameManager.getLevelName() != "FAST_ESCAPE" && GameManager.getLevelName() != "EQUALS" && GameManager.getLevelName()!="TUTORIAL")
         {
             //Destroy enemy Vees only
             if (collider.gameObject.GetComponent<EnemyFormation>())
@@ -50,17 +50,30 @@ public class PlayerFormation : MonoBehaviour {
             }
         }
 
+        //For Tutorial
+        else if(GameManager.getLevelName()=="TUTORIAL")
+        {
+            //Destroy enemy Vees only
+            if (collider.gameObject.GetComponent<EnemyFormation>())
+            {
+                Debug.Log("BINGO!");
+                DestroyEnemyVees(collider);
+                TutorialManager.veeHasCollided();
+            }
+        }
+
 
         //Handle Bomb collission
         if(collider.gameObject.GetComponent<BombFormation>())
         {
             Application.LoadLevel("GAME_OVER");
+
         }
     }
 
     void DestroyEnemyVees(Collider2D collider)
     {
-            AudioSource.PlayClipAtPoint(destroyClip, transform.position, 1);  
+        AudioSource.PlayClipAtPoint(destroyClip, transform.position, 1);  
         GameManager.incrementScore();
         Destroy(collider.gameObject);
     }

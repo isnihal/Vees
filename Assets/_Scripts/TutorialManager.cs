@@ -7,7 +7,7 @@ public class TutorialManager : MonoBehaviour {
     enum States {Basic,Tap_To_Continue,Basic_Enemy,Score,Battery}
     static States currentState;
     Animator animator;
-    static bool veeSpawned;
+    static bool veeSpawned,hasFinishedColliding;
 
     public Text instructionBoard;
 
@@ -15,11 +15,8 @@ public class TutorialManager : MonoBehaviour {
 	void Start () {
         currentState = States.Basic;
         animator = FindObjectOfType<Animator>();
-        if(animator)
-        {
-            Debug.Log("Animator found");
-        }
         veeSpawned = false;
+        hasFinishedColliding = false;
 	}
 
     void Update()
@@ -45,6 +42,21 @@ public class TutorialManager : MonoBehaviour {
         else if(currentState == States.Basic_Enemy)
         {
             instructionBoard.text = "HIT THE ENEMY VEE";
+            if(hasFinishedColliding)
+            {
+                hasFinishedColliding = false;
+                currentState = States.Score;
+            }
+        }
+
+        else if(currentState==States.Score)
+        {
+            instructionBoard.text = "EACH HIT WILL INCREASE YOUR SCORE";
+        }
+
+        else if (currentState == States.Battery)
+        {
+            instructionBoard.text = "KEEP AN EYE ON THE BATTEY,VEES COST BATTERY AND REFILS WITH TIME";
         }
     }
 
@@ -58,12 +70,20 @@ public class TutorialManager : MonoBehaviour {
             case "BASIC_ENEMY":
                 currentState = States.Basic_Enemy;
                 break;
+            case "BATTERY":
+                currentState = States.Battery;
+                break;
         }
     }
 	
     public static void veeHasSpawned()
     {
         veeSpawned = true;
+    }
+
+    public static void veeHasCollided()
+    {
+        hasFinishedColliding = true;
     }
 
     public static int getCurentState()
