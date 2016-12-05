@@ -4,7 +4,7 @@ using System.Collections;
 
 public class ScoreBoard : MonoBehaviour {
 
-    static int showRewardedAdAfter=7, showNoRewardAdAfter=1,numberOfGames=0;
+    static int showRewardedAdAfter=6, showNoRewardAdAfter=3,numberOfGames=0;
 
     //Set scoreboard for gameOver level
 
@@ -14,11 +14,11 @@ public class ScoreBoard : MonoBehaviour {
         //Ad Script
         if(numberOfGames%showRewardedAdAfter==0)
         {
-            AdManager.showNoRewardedAd();
-        }
-        else
-        {
             AdManager.showRewardedAd();
+        }
+        else if(numberOfGames%showNoRewardAdAfter==0)
+        {
+            AdManager.showNoRewardedAd();
         }
 
 
