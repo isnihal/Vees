@@ -224,21 +224,21 @@ public class EnemySpawner : MonoBehaviour {
     {
         if (GameManager.getLevelName() == "ONE_DIRECTION" || GameManager.getLevelName() == "EQUALS" || GameManager.getLevelName() == "FAST_ESCAPE")
         {
-            formationVelocity = 11.35f;
+            formationVelocity = 10.75f;
         }
         else if (GameManager.getLevelName() == "ARCADE")
         {
-            formationVelocity = 14.5f;
+            formationVelocity = 12.85f;
         }
 
         else if(GameManager.getLevelName()=="TUTORIAL")
         {
-            formationVelocity = 3.5f;
+            formationVelocity = 4f;
         }
 
-        else
+        else if(GameManager.getLevelName()=="TIME_LAPSE")
         {
-            formationVelocity = 16f;
+            formationVelocity = 13.85f;
         }
     }
 

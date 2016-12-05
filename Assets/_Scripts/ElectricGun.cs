@@ -20,7 +20,7 @@ public class ElectricGun : MonoBehaviour {
         lastIncrementedTime = 0;
         timeToCharge = 0.7f;
         isReseting = false;
-        resetCoolDownTime = 3.75f;
+        resetCoolDownTime = 4.75f;
         oneTime = true;
 
     }

@@ -12,7 +12,7 @@ public class BombSpawner : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
         bombingFrequency = 0.2f;
-        bombVelocity = -10;
+        bombVelocity = -6;
 	}
 	
 	// Update is called once per frame
