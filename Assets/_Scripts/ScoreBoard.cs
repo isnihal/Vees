@@ -4,10 +4,24 @@ using System.Collections;
 
 public class ScoreBoard : MonoBehaviour {
 
+    static int showRewardedAdAfter=7, showNoRewardAdAfter=1,numberOfGames=0;
+
     //Set scoreboard for gameOver level
 
 	// Use this for initialization
 	void Start () {
+        numberOfGames++;
+        //Ad Script
+        if(numberOfGames%showRewardedAdAfter==0)
+        {
+            AdManager.showNoRewardedAd();
+        }
+        else
+        {
+            AdManager.showRewardedAd();
+        }
+
+
         string language = PlayerPrefsManager.getLanguage();
         if(language=="")
         {

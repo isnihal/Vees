@@ -4,7 +4,7 @@ using System.Collections;
 
 public class AdManager : MonoBehaviour {
 
-    public void showAd()
+    public static void showRewardedAd()
     {
         if (Advertisement.IsReady())
         {
@@ -12,7 +12,32 @@ public class AdManager : MonoBehaviour {
         }
     }
 
-    void handleAdResult(ShowResult result)
+    public void rewardAds()//Use this for onclick to buttons
+    {
+        if (Advertisement.IsReady())
+        {
+            Advertisement.Show("rewardedVideo", new ShowOptions() { resultCallback = handleAdResult });
+        }
+    }
+
+
+    public static void showNoRewardedAd()
+    {
+        if (Advertisement.IsReady())
+        {
+            Advertisement.Show("video");
+        }
+    }
+
+    public void noRewardAds()//Use this for onclick to buttons
+    {
+        if (Advertisement.IsReady())
+        {
+            Advertisement.Show("video");
+        }
+    }
+
+    static void handleAdResult(ShowResult result)
     {
         switch(result)
         {
