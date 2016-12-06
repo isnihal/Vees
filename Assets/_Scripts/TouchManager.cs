@@ -44,7 +44,15 @@ public class TouchManager : MonoBehaviour {
             //ONE DIRECTION PROPERTIES
             if (GameManager.getLevelName() == "ONE_DIRECTION")
             {
-                xVelocity = Mathf.Clamp(xVelocity, 10, 20);
+                if (xVelocity < 0)
+                {
+                    xVelocity = Mathf.Clamp(xVelocity, -20, -10);
+                }
+
+                else
+                {
+                    xVelocity = Mathf.Clamp(xVelocity, 10, 20);
+                }
             }
 
             //ARCADE & EQUALS PROPERTIES

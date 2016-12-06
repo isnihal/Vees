@@ -53,13 +53,15 @@ public class EnemySpawner : MonoBehaviour {
     void Update()
     {
         probability = spawnRate * Time.deltaTime;
-
+        
         //Enemy Spawner for One Direction
         if (GameManager.getLevelName() == "ONE_DIRECTION")
         {
             if (probability > Random.value)
             {
                 spawnEnemy(Position.Top);
+                spawnRate += 0.006f;
+                Mathf.Clamp(spawnRate, 1.5f, 8.5f);
             }
         }
 
@@ -69,6 +71,8 @@ public class EnemySpawner : MonoBehaviour {
             if (probability > Random.value)
             {
                 int topOrBottom = Random.Range(0, 2);
+                spawnRate += 0.006f;
+                Mathf.Clamp(spawnRate, 1.5f, 8.5f);
                 if (topOrBottom == 0)
                 {
                     spawnEnemy(Position.Top);
@@ -214,6 +218,12 @@ public class EnemySpawner : MonoBehaviour {
         {
             return 0.4f;
         }
+
+        else if (GameManager.getLevelName() =="FAST_ESCAPE")
+        {
+            return 1.75f;
+        }
+        
         else
         {
             return 1.5f;

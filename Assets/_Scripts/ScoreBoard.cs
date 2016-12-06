@@ -12,11 +12,11 @@ public class ScoreBoard : MonoBehaviour {
 	void Start () {
         numberOfGames++;
         //Ad Script
-        if(numberOfGames%showRewardedAdAfter==0)
+        if(numberOfGames % showRewardedAdAfter==0)
         {
             AdManager.showRewardedAd();
         }
-        else if(numberOfGames%showNoRewardAdAfter==0)
+        else if(numberOfGames % showNoRewardAdAfter==0)
         {
             AdManager.showNoRewardedAd();
         }

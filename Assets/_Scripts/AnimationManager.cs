@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 using System.Collections;
 
 public class AnimationManager : MonoBehaviour
@@ -45,7 +46,7 @@ public class AnimationManager : MonoBehaviour
 
     public void loadLevel()
     {
-        Application.LoadLevel(1);
+        SceneManager.LoadScene(1);
     }
 
     public void changeState(string state)

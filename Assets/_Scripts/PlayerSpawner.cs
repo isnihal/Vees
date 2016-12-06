@@ -29,7 +29,10 @@ public class PlayerSpawner : MonoBehaviour {
             //Spawn Player for ONE_DIRECTION
             if (GameManager.getLevelName() == "ONE_DIRECTION")
             {
-                spawnPlayerFormation(Position.Left, spawningPosition, playerVelocity);
+                if (playerVelocity.x > 0)
+                {
+                    spawnPlayerFormation(Position.Left, spawningPosition, playerVelocity);
+                }
             }
 
             //Spawn player for ARCADE
