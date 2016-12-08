@@ -1,4 +1,6 @@
 ﻿using UnityEngine;
+using GooglePlayGames;
+using Google;
 using System.Collections;
 
 public class LevelManager : MonoBehaviour {
@@ -22,18 +24,23 @@ public class LevelManager : MonoBehaviour {
     {
         //Load main menu if current level is splash screen
         //Load Tutorial if game is loaded for the first time
-        if(isSplash())
+        if (isSplash())
         {
-            if (PlayerPrefsManager.isFirstTime())
+            PlayGamesPlatform.Activate();
+            Social.localUser.Authenticate((bool success) =>
             {
-                loadTutorial();
-                PlayerPrefsManager.setFirstTime();
-            }
-            else
-            {
+                if (success)
+                {
+                    Debug.Log("Google sign in failed");
+                }
+                else
+                {
+                    Debug.Log("Google sign in success :D");
+                }
                 loadMainMenu();
-            }
+            });
         }
+        
 
 
         if (Application.platform == RuntimePlatform.Android)
