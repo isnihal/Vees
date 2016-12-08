@@ -1,5 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
+using GooglePlayGames;
+using Google;
 using System.Collections;
 
 public class GameManager : MonoBehaviour {
@@ -32,6 +34,14 @@ public class GameManager : MonoBehaviour {
 
     static bool isPaused;
 
+
+    //Achievement Keys
+    static string ONE_DIRECTION_NOOB = "CgkIu73IgfAIEAIQBA";
+    static string ARCADE_NOOB = "CgkIu73IgfAIEAIQAw";
+    static string FAST_ESCAPE_NOOB = "CgkIu73IgfAIEAIQBQ";
+    static string EQUALS_NOOB = "CgkIu73IgfAIEAIQBg";
+    static string TIME_LAPSE_NOOB = "CgkIu73IgfAIEAIQBw";
+
     void Start()
     {
         if (getLevelName() != "GAME_OVER")//Properties of equals set in enemy spawner
@@ -57,6 +67,8 @@ public class GameManager : MonoBehaviour {
         }
 
         isPaused = false;
+
+        checkForAchievements();
     }
 
     void Update()
@@ -233,30 +245,108 @@ public class GameManager : MonoBehaviour {
         return isPaused;
     }
 
+    void checkForAchievements()
+    {
+        if (Application.loadedLevel == 3)
+        {
+            Social.ReportProgress(ONE_DIRECTION_NOOB, 100, (bool sucess) => {
+                if (sucess)
+                {
+                    Debug.Log("One Direction noob unlocked");
+                }
+                else
+                {
+                    Debug.Log("Achievement failed");
+                }
+            });
+        }
+
+        else if (Application.loadedLevel == 4)
+        {
+            Social.ReportProgress(ARCADE_NOOB, 100, (bool sucess) => {
+                if (sucess)
+                {
+                    Debug.Log("ARCADE noob unlocked");
+                }
+                else
+                {
+                    Debug.Log("Achievement failed");
+                }
+            });
+        }
+
+        else if (Application.loadedLevel == 5)
+        {
+            Social.ReportProgress(FAST_ESCAPE_NOOB, 100, (bool sucess) => {
+                if (sucess)
+                {
+                    Debug.Log("Fast escape noob unlocked");
+                }
+                else
+                {
+                    Debug.Log("Achievement failed");
+                }
+            });
+        }
+
+        else if (Application.loadedLevel == 6)
+        {
+            Social.ReportProgress(EQUALS_NOOB, 100, (bool sucess) => {
+                if (sucess)
+                {
+                    Debug.Log("Equals noob unlocked");
+                }
+                else
+                {
+                    Debug.Log("Achievement failed");
+                }
+            });
+        }
+
+        else if (Application.loadedLevel == 7)
+        {
+            Social.ReportProgress(TIME_LAPSE_NOOB, 100, (bool sucess) => {
+                if (sucess)
+                {
+                    Debug.Log("Time lapse noob unlocked");
+                }
+                else
+                {
+                    Debug.Log("Achievement failed");
+                }
+            });
+        }
+    }
+
     public static string getLevelName()
     {
         if(Application.loadedLevel==3)
         {
+        
             return ("ONE_DIRECTION");
         }
 
         else if(Application.loadedLevel==4)
         {
+            
             return ("ARCADE");
         }
 
         else if(Application.loadedLevel==5)
         {
+            
             return ("FAST_ESCAPE");
         }
 
         else if(Application.loadedLevel==6)
         {
+           
             return ("EQUALS");
         }
 
         else if(Application.loadedLevel==7)
         {
+           
             return ("TIME_LAPSE");
         }
 

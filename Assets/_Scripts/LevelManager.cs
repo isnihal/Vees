@@ -26,6 +26,11 @@ public class LevelManager : MonoBehaviour {
         //Load Tutorial if game is loaded for the first time
         if (isSplash())
         {
+            loadMainMenu();
+        }
+        
+        if(isMainMenu())
+        {
             PlayGamesPlatform.Activate();
             Social.localUser.Authenticate((bool success) =>
             {
@@ -37,11 +42,8 @@ public class LevelManager : MonoBehaviour {
                 {
                     Debug.Log("Google sign in success :D");
                 }
-                loadMainMenu();
             });
         }
-        
-
 
         if (Application.platform == RuntimePlatform.Android)
         {
@@ -159,6 +161,18 @@ public class LevelManager : MonoBehaviour {
     {
         //Level 0->00_SPLASH
         if (Application.loadedLevel == 0)
+        {
+            return true;
+        }
+
+        return false;
+    }
+
+
+    bool isMainMenu()
+    {
+        //Level 1->MAIN MENU
+        if (Application.loadedLevel == 1)
         {
             return true;
         }
