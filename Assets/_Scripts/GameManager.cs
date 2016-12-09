@@ -2,6 +2,7 @@
 using UnityEngine.UI;
 using GooglePlayGames;
 using Google;
+using UnityEngine.Advertisements;
 using System.Collections;
 
 public class GameManager : MonoBehaviour {
@@ -34,6 +35,9 @@ public class GameManager : MonoBehaviour {
 
     static bool isPaused;
 
+
+    //Show AD button and No
+    public GameObject showAdButton, noButton,pauseButton;
 
     //Achievement Keys
     static string ONE_DIRECTION_NOOB = "CgkIu73IgfAIEAIQBA";
@@ -96,9 +100,14 @@ public class GameManager : MonoBehaviour {
 
     void isGameOver()
     {
-        if (life <= 0)
+        if(life<=0)
         {
-            Application.LoadLevel("GAME_OVER");
+            //Show the UI Buttons
+            pauseGame();
+            life = 2;
+            pauseButton.active = false;
+            showAdButton.active = true;
+            noButton.active = true;
         }
     }
 
@@ -318,6 +327,23 @@ public class GameManager : MonoBehaviour {
         }
     }
 
+    public void continueGameWithAd()
+    {
+        if(Advertisement.IsReady())
+        {
+            Advertisement.Show("video", new ShowOptions() { resultCallback = handleAdResult });
+        }
+        
+    }
+
+    void restartGame()
+    {
+        pauseGame();
+        pauseButton.active = true;
+        showAdButton.active = false;
+        noButton.active = false;
+    }
+
     public static string getLevelName()
     {
         if(Application.loadedLevel==3)
@@ -360,5 +386,21 @@ public class GameManager : MonoBehaviour {
             return ("TUTORIAL");
         }
         return null;
+    }
+
+    void handleAdResult(ShowResult result)
+    {
+        switch (result)
+        {
+            case ShowResult.Finished:
+                restartGame();
+                break;
+            case ShowResult.Skipped:
+                restartGame();
+                break;
+            case ShowResult.Failed:
+                Debug.Log("Ad failed");
+                break;
+        }
     }
 }

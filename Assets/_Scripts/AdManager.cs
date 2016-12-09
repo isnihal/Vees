@@ -41,7 +41,9 @@ public class AdManager : MonoBehaviour {
     {
         switch(result)
         {
-            case ShowResult.Finished:Debug.Log("Reward the user");
+            case ShowResult.Finished:
+                Debug.Log("Reward the user");
+
                 break;
             case ShowResult.Skipped:Debug.Log("AD skipped");
                 break;
