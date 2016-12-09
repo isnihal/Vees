@@ -151,7 +151,7 @@ public class GameManager : MonoBehaviour {
 
     void setLifeDisplay()
     {
-        if (GameManager.getLevelName() != "ARCADE")
+        if (GameManager.getLevelName() != "ARCADE" && GameManager.getLevelName()!="TIME_LAPSE")
         {
             for (int i = 0; i < lifeArray.Length; i++)
             {
@@ -169,7 +169,7 @@ public class GameManager : MonoBehaviour {
 
     void setTimer()
     {
-        if (!isGamePaused())
+        if (!isGamePaused() && timeLeft<= 1000)
         {
             timeLeft -= Time.deltaTime;
             int timeInSeconds = Mathf.RoundToInt(timeLeft);
@@ -178,7 +178,8 @@ public class GameManager : MonoBehaviour {
 
         if(timeLeft<=0)
         {
-            Application.LoadLevel("GAME_OVER");
+            life = 0;
+            timeLeft = 10000000;
         }
     }
 
@@ -356,7 +357,7 @@ public class GameManager : MonoBehaviour {
         pauseGame();
         pauseButton.active = true;
         showAdButton.active = false;
-        noButton.active = false;
+        noButton.active = false; 
     }
 
     public static string getLevelName()
@@ -415,10 +416,18 @@ public class GameManager : MonoBehaviour {
             case ShowResult.Finished:
                 restartGame();
                 life = 4;
+                if (GameManager.getLevelName() == "TIME_LAPSE")
+                {
+                    timeLeft = 20f;
+                }
                 break;
             case ShowResult.Skipped:
                 restartGame();
                 life = 1;
+                if (GameManager.getLevelName() == "TIME_LAPSE")
+                {
+                    timeLeft = 10f;
+                }
                 break;
             case ShowResult.Failed:
                 SceneManager.LoadScene("GAME_OVER");
