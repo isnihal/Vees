@@ -14,7 +14,7 @@ public class GoalDetector : MonoBehaviour {
         if (GameManager.getLevelName() == "EQUALS")
         {
             fromEquals = true;
-            Application.LoadLevel("GAME_OVER");
+            GameManager.setLife(0);
         }
 
         //For other levels

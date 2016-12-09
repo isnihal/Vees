@@ -151,7 +151,7 @@ public class GameManager : MonoBehaviour {
 
     void setLifeDisplay()
     {
-        if (GameManager.getLevelName() != "ARCADE" && GameManager.getLevelName()!="TIME_LAPSE")
+        if (GameManager.getLevelName()=="FAST_ESCAPE" || GameManager.getLevelName()=="ONE_DIRECTION")
         {
             for (int i = 0; i < lifeArray.Length; i++)
             {
@@ -225,7 +225,7 @@ public class GameManager : MonoBehaviour {
             EnemyFormation enemiesOnScreen = FindObjectOfType<EnemyFormation>();
             if(enemiesOnScreen!=null)
             {
-              
+                EnemySpawner.decreaseSpawnedCount();
             }
         }
         if (!isGamePaused())
