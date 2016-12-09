@@ -151,15 +151,18 @@ public class GameManager : MonoBehaviour {
 
     void setLifeDisplay()
     {
-        for(int i=0;i<lifeArray.Length; i++)
+        if (GameManager.getLevelName() != "ARCADE")
         {
-            if(i<life)
+            for (int i = 0; i < lifeArray.Length; i++)
             {
-                lifeArray[i].active = true;
-            }
-            else
-            {
-                lifeArray[i].active = false;
+                if (i < life)
+                {
+                    lifeArray[i].active = true;
+                }
+                else
+                {
+                    lifeArray[i].active = false;
+                }
             }
         }
     }

@@ -5,7 +5,7 @@ public class PlayerFormation : MonoBehaviour {
 
     //Destroy enemies colliding with player except for levels FAST_ESCAPE
 
-    public AudioClip destroyClip;
+    public AudioClip destroyClip,blastClip;
     static int totalEnemiesKilledInThisWave;
 
     void Start()
@@ -65,8 +65,10 @@ public class PlayerFormation : MonoBehaviour {
         //Handle Bomb collission
         if(collider.gameObject.GetComponent<BombFormation>())
         {
-            Application.LoadLevel("GAME_OVER");
-
+            Destroy(collider.gameObject);
+            Destroy(gameObject);
+            AudioSource.PlayClipAtPoint(blastClip, transform.position);
+            GameManager.setLife(0);
         }
     }
 
