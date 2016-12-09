@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using GooglePlayGames;
+using UnityEngine.SceneManagement;
 using Google;
 using System.Collections;
 
@@ -127,7 +128,7 @@ public class LevelManager : MonoBehaviour {
 
     public void loadLevel(string levelName)
     {
-        Application.LoadLevel(levelName);
+        SceneManager.LoadScene(levelName);
     }
 
     public void setLevelIndex(int levelIndex)
@@ -142,9 +143,8 @@ public class LevelManager : MonoBehaviour {
     }
 
     void loadNextLevel()
-    {
-        
-        Application.LoadLevel(Application.loadedLevel + 1);
+    { 
+       SceneManager.LoadScene(Application.loadedLevel + 1);
     }
 
     void loadTutorial()
@@ -154,7 +154,7 @@ public class LevelManager : MonoBehaviour {
 
     void showTutorial()
     {
-        Application.LoadLevel(10);
+        SceneManager.LoadScene(10);
     }
 
     bool isSplash()
@@ -182,7 +182,7 @@ public class LevelManager : MonoBehaviour {
 
     public void replayGame()
     {
-        Application.LoadLevel(fromLevel);
+        SceneManager.LoadScene(fromLevel);
     }
 
 

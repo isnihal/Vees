@@ -12,11 +12,7 @@ public class ScoreBoard : MonoBehaviour {
 	void Start () {
         numberOfGames++;
         //Ad Script
-        if(numberOfGames % showRewardedAdAfter==0)
-        {
-            AdManager.showRewardedAd();
-        }
-        else if(numberOfGames % showNoRewardAdAfter==0)
+        if(numberOfGames % showNoRewardAdAfter==0 && !GameManager.hasGameBeenRestarted())//Show ad only if user didnt view ad for restarting
         {
             AdManager.showNoRewardedAd();
         }

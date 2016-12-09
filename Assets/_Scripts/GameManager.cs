@@ -24,7 +24,7 @@ public class GameManager : MonoBehaviour {
 
 
     public Text scoreBoard,timerText;
-    public Image[] lifeArray;
+    public GameObject[] lifeArray;
     static float enemySpawnFrequency;
     static int score,life;
     //Time Lapse property
@@ -102,16 +102,16 @@ public class GameManager : MonoBehaviour {
 
     void isGameOver()
     {
-        if(life<=0)
+        if(life<=0 && life!=-99)//-99 as a flag
         {
             if (!hasRestarted)//Play more by viewing ad (Only once)
             {
                 //Show the UI Buttons
                 pauseGame();
-                life = 1;//To avoid a bug,More life granted after viewing ad
                 pauseButton.active = false;
                 showAdButton.active = true;
                 noButton.active = true;
+                life = -99;//To avoid a bug
             }
             else
             {
@@ -151,13 +151,15 @@ public class GameManager : MonoBehaviour {
 
     void setLifeDisplay()
     {
-        int count = 0;
-        foreach(Image lifeImage in lifeArray)
+        for(int i=0;i<lifeArray.Length; i++)
         {
-            count++;
-            if(count==life+1)
+            if(i<life)
             {
-                Destroy(lifeImage);
+                lifeArray[i].active = true;
+            }
+            else
+            {
+                lifeArray[i].active = false;
             }
         }
     }
@@ -398,16 +400,22 @@ public class GameManager : MonoBehaviour {
         return null;
     }
 
+    public static bool hasGameBeenRestarted()
+    {
+        return hasRestarted;
+    }
+
     void handleAdResult(ShowResult result)
     {
         switch (result)
         {
             case ShowResult.Finished:
                 restartGame();
-                life += 3;
+                life = 4;
                 break;
             case ShowResult.Skipped:
                 restartGame();
+                life = 1;
                 break;
             case ShowResult.Failed:
                 SceneManager.LoadScene("GAME_OVER");

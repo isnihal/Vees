@@ -5,7 +5,7 @@ public class GoalDetector : MonoBehaviour {
 
     public static bool fromEquals=false;
 
-    //Increment score if player hits'em or decrease score if enemy hits'em
+    //Increment score if player hits'em or decrease life if enemy hits'em
 
     void OnTriggerEnter2D(Collider2D collider)
     {
