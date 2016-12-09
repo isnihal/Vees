@@ -2,6 +2,7 @@
 using UnityEngine.UI;
 using GooglePlayGames;
 using Google;
+using UnityEngine.SceneManagement;
 using UnityEngine.Advertisements;
 using System.Collections;
 
@@ -33,7 +34,7 @@ public class GameManager : MonoBehaviour {
     public GameObject enemySpawner, playerSpawner, bombSpawner;
     public GameObject[] goalDetector;
 
-    static bool isPaused;
+    static bool isPaused,hasRestarted;
 
 
     //Show AD button and No
@@ -71,6 +72,7 @@ public class GameManager : MonoBehaviour {
         }
 
         isPaused = false;
+        hasRestarted = false;
 
         checkForAchievements();
     }
@@ -102,12 +104,19 @@ public class GameManager : MonoBehaviour {
     {
         if(life<=0)
         {
-            //Show the UI Buttons
-            pauseGame();
-            life = 2;
-            pauseButton.active = false;
-            showAdButton.active = true;
-            noButton.active = true;
+            if (!hasRestarted)//Play more by viewing ad (Only once)
+            {
+                //Show the UI Buttons
+                pauseGame();
+                life = 1;//To avoid a bug,More life granted after viewing ad
+                pauseButton.active = false;
+                showAdButton.active = true;
+                noButton.active = true;
+            }
+            else
+            {
+                SceneManager.LoadScene("GAME_OVER");
+            }
         }
     }
 
@@ -332,6 +341,7 @@ public class GameManager : MonoBehaviour {
         if(Advertisement.IsReady())
         {
             Advertisement.Show("video", new ShowOptions() { resultCallback = handleAdResult });
+            hasRestarted = true;
         }
         
     }
@@ -394,12 +404,13 @@ public class GameManager : MonoBehaviour {
         {
             case ShowResult.Finished:
                 restartGame();
+                life += 3;
                 break;
             case ShowResult.Skipped:
                 restartGame();
                 break;
             case ShowResult.Failed:
-                Debug.Log("Ad failed");
+                SceneManager.LoadScene("GAME_OVER");
                 break;
         }
     }
