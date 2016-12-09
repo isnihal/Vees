@@ -8,16 +8,12 @@ public class LevelManager : MonoBehaviour {
 
     //Replay Setting
     static int fromLevel;
-
-    string toastString;
-    string input;
-    AndroidJavaObject currentActivity;
-    AndroidJavaClass UnityPlayer;
-    AndroidJavaObject context;
     bool startTimer,firstTap;
     float ButtonCooler; //Time before reset
     int ButtonCount;
     bool doubleTapped;
+
+    ToastManager toastManager;
 
     //Deals with splash screen and loading of other levels
 
@@ -46,16 +42,13 @@ public class LevelManager : MonoBehaviour {
             });
         }
 
-        if (Application.platform == RuntimePlatform.Android)
-        {
-            UnityPlayer = new AndroidJavaClass("com.unity3d.player.UnityPlayer");
-            currentActivity = UnityPlayer.GetStatic<AndroidJavaObject>("currentActivity");
-            context = currentActivity.Call<AndroidJavaObject>("getApplicationContext");
-        }
+
 
         doubleTapped = false;
         ButtonCooler = 2.5f;
         ButtonCount = 0;
+
+        toastManager = FindObjectOfType<ToastManager>();
     }
 
     void Update()
@@ -73,7 +66,7 @@ public class LevelManager : MonoBehaviour {
             switch (Application.loadedLevel)
             {
                 case 1:
-                    showToastOnUiThread("Press again to quit");
+                    toastManager.showToastOnUiThread("Press again to quit");
                     break;
                 case 2:
                     Application.LoadLevel(1);//Load main menu
@@ -82,7 +75,7 @@ public class LevelManager : MonoBehaviour {
                     Application.LoadLevel(1);//Load main menu
                     break;
                 default:
-                    showToastOnUiThread("Press again to return to main menu");
+                    toastManager.showToastOnUiThread("Press again to return to main menu");
                     break;
             }
         }
@@ -185,20 +178,4 @@ public class LevelManager : MonoBehaviour {
         SceneManager.LoadScene(fromLevel);
     }
 
-
-    public void showToastOnUiThread(string toastString)
-    {
-        this.toastString = toastString;
-        currentActivity.Call("runOnUiThread", new AndroidJavaRunnable(showToast));
-    }
-
-    void showToast()
-    {
-        Debug.Log(this + ": Running on UI thread");
-
-        AndroidJavaClass Toast = new AndroidJavaClass("android.widget.Toast");
-        AndroidJavaObject javaString = new AndroidJavaObject("java.lang.String", toastString);
-        AndroidJavaObject toast = Toast.CallStatic<AndroidJavaObject>("makeText", context, javaString, Toast.GetStatic<int>("LENGTH_SHORT"));
-        toast.Call("show");
-    }
 }

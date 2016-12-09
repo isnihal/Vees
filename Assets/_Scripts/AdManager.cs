@@ -4,11 +4,24 @@ using System.Collections;
 
 public class AdManager : MonoBehaviour {
 
+    static ToastManager toastManager;
+
+
+    void Start()
+    {
+        toastManager = FindObjectOfType<ToastManager>();
+    }
+
+
     public static void showRewardedAd()
     {
         if (Advertisement.IsReady())
         {
             Advertisement.Show("rewardedVideo", new ShowOptions() {resultCallback=handleAdResult});
+        }
+        else
+        {
+            toastManager.showToastOnUiThread("Check Your Internet Connection");
         }
     }
 
@@ -17,6 +30,10 @@ public class AdManager : MonoBehaviour {
         if (Advertisement.IsReady())
         {
             Advertisement.Show("rewardedVideo", new ShowOptions() { resultCallback = handleAdResult });
+        }
+        else
+        {
+            toastManager.showToastOnUiThread("Check Your Internet Connection");
         }
     }
 
@@ -27,6 +44,10 @@ public class AdManager : MonoBehaviour {
         {
             Advertisement.Show("video");
         }
+        else
+        {
+            toastManager.showToastOnUiThread("Check Your Internet Connection");
+        }
     }
 
     public void noRewardAds()//Use this for onclick to buttons
@@ -34,6 +55,10 @@ public class AdManager : MonoBehaviour {
         if (Advertisement.IsReady())
         {
             Advertisement.Show("video");
+        }
+        else
+        {
+            toastManager.showToastOnUiThread("Check Your Internet Connection");
         }
     }
 

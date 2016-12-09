@@ -40,6 +40,8 @@ public class GameManager : MonoBehaviour {
     //Show AD button and No
     public GameObject showAdButton, noButton,pauseButton;
 
+    ToastManager toastManager;
+
     //Achievement Keys
     static string ONE_DIRECTION_NOOB = "CgkIu73IgfAIEAIQBA";
     static string ARCADE_NOOB = "CgkIu73IgfAIEAIQAw";
@@ -75,6 +77,7 @@ public class GameManager : MonoBehaviour {
         hasRestarted = false;
 
         checkForAchievements();
+        toastManager = FindObjectOfType<ToastManager>();
     }
 
     void Update()
@@ -349,7 +352,10 @@ public class GameManager : MonoBehaviour {
             Advertisement.Show("video", new ShowOptions() { resultCallback = handleAdResult });
             hasRestarted = true;
         }
-        
+        else
+        {
+            toastManager.showToastOnUiThread("Check Your Internet Connection");
+        }
     }
 
     void restartGame()
