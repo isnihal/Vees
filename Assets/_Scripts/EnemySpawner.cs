@@ -199,7 +199,10 @@ public class EnemySpawner : MonoBehaviour {
     void setEnemyFormationProperties()
     {
         enemyFormation.transform.parent = parent.transform;
-        AudioSource.PlayClipAtPoint(enemyClip, enemyFormation.transform.position, 1);
+        if (!VolumeManager.getIsMuted())
+        {
+            AudioSource.PlayClipAtPoint(enemyClip, enemyFormation.transform.position, 1);
+        }
         
     }
 

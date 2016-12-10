@@ -67,14 +67,20 @@ public class PlayerFormation : MonoBehaviour {
         {
             Destroy(collider.gameObject);
             Destroy(gameObject);
-            AudioSource.PlayClipAtPoint(blastClip, transform.position);
+            if (!VolumeManager.getIsMuted())
+            {
+                AudioSource.PlayClipAtPoint(blastClip, transform.position);
+            }
             GameManager.setLife(0);
         }
     }
 
     void DestroyEnemyVees(Collider2D collider)
     {
-        AudioSource.PlayClipAtPoint(destroyClip, transform.position, 1);  
+        if (!VolumeManager.getIsMuted())
+        {
+            AudioSource.PlayClipAtPoint(destroyClip, transform.position, 1);
+        }
         GameManager.incrementScore();
         Destroy(collider.gameObject);
     }

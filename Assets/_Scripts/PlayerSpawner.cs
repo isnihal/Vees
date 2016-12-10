@@ -139,7 +139,10 @@ public class PlayerSpawner : MonoBehaviour {
         spawnedPlayer.transform.parent = parent.transform;
         spawnedPlayerRigidBody = spawnedPlayer.GetComponent<Rigidbody2D>();
         spawnedPlayerRigidBody.velocity = playerVelocity;
-        AudioSource.PlayClipAtPoint(playerClip, spawnedPlayer.transform.position, 1);
+        if (!VolumeManager.getIsMuted())
+        {
+            AudioSource.PlayClipAtPoint(playerClip, spawnedPlayer.transform.position, 1);
+        }
     }
 
     public static int getVeesSpawned()

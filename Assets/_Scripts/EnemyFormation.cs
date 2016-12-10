@@ -13,8 +13,10 @@ public class EnemyFormation : MonoBehaviour {
         {
             if (collider.gameObject.GetComponent<PlayerFormation>())
             {
-               
+                if (!VolumeManager.getIsMuted())
+                {
                     AudioSource.PlayClipAtPoint(destroyClip, transform.position, 1);
+                }
                 
                 Destroy(collider.gameObject);
                 GameManager.decrementLife();
