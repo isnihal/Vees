@@ -11,7 +11,7 @@ public class BombSpawner : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-        bombingFrequency = 0.2f;
+        bombingFrequency = 0.35f;
         bombVelocity = -6;
 	}
 	
@@ -26,7 +26,7 @@ public class BombSpawner : MonoBehaviour {
             bombFormation.GetComponent<Rigidbody2D>().velocity = new Vector3(0, bombVelocity, 0);
             bombFormation.transform.parent = parent.transform;
             AudioSource.PlayClipAtPoint(bombClip, bombFormation.transform.position, 1);
-            bombingFrequency += 0.02f;
+            bombingFrequency += 0.05f;
         }
 	}
 }
