@@ -178,4 +178,8 @@ public class LevelManager : MonoBehaviour {
         SceneManager.LoadScene(fromLevel);
     }
 
+    public static int getFromLevel()
+    {
+        return fromLevel;
+    }
 }

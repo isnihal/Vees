@@ -29,7 +29,7 @@ public class ScoreBoard : MonoBehaviour {
             switch (PlayerPrefsManager.getLanguage())
             {
                 case "ENGLISH":
-                    gameObject.GetComponent<Text>().text = "Wave\n" + EnemySpawner.getWaveNumber().ToString();
+                    gameObject.GetComponent<Text>().text = "WAVE\n" + EnemySpawner.getWaveNumber().ToString();
                     break;
                 case "CHINEESE":
                     gameObject.GetComponent<Text>().text = "波\n" + EnemySpawner.getWaveNumber().ToString();
@@ -42,7 +42,14 @@ public class ScoreBoard : MonoBehaviour {
             switch (language)
             {
                 case "ENGLISH":
-                    gameObject.GetComponent<Text>().text = "Score\n" + GameManager.getScore().ToString();
+                    if (LevelManager.getFromLevel() != 5)
+                    {
+                        gameObject.GetComponent<Text>().text = "HITS\n" + GameManager.getScore().ToString();
+                    }
+                    else
+                    {
+                        gameObject.GetComponent<Text>().text = "ESCAPES\n" + GameManager.getScore().ToString();
+                    }
                     break;
                 case "CHINEESE":
                     gameObject.GetComponent<Text>().text = "得分了\n" + GameManager.getScore().ToString();

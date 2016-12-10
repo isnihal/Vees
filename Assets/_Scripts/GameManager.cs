@@ -144,7 +144,7 @@ public class GameManager : MonoBehaviour {
             switch(language)
             {
                 case "ENGLISH":
-                        scoreBoard.text = "KILLS:" + score;
+                        scoreBoard.text = "HITS:" + score;
                         break;
                 case "CHINEESE":
                     scoreBoard.text = "杀死:" + score;
