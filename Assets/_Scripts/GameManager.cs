@@ -38,7 +38,7 @@ public class GameManager : MonoBehaviour {
 
 
     //Show AD button and No
-    public GameObject showAdButton, noButton,pauseButton;
+    public GameObject gameOverPanel,pauseButton;
 
     ToastManager toastManager;
 
@@ -112,8 +112,7 @@ public class GameManager : MonoBehaviour {
                 //Show the UI Buttons
                 pauseGame();
                 pauseButton.active = false;
-                showAdButton.active = true;
-                noButton.active = true;
+                gameOverPanel.active = true;
                 life = -99;//To avoid a bug
             }
             else
@@ -362,8 +361,7 @@ public class GameManager : MonoBehaviour {
     {
         pauseGame();
         pauseButton.active = true;
-        showAdButton.active = false;
-        noButton.active = false; 
+        gameOverPanel.active = false;
     }
 
     public static string getLevelName()
