@@ -40,6 +40,8 @@ public class GameManager : MonoBehaviour {
     //Show AD button and No
     public GameObject gameOverPanel,pauseMenuPanel,pauseButton;
 
+    public Sprite pauseImage, resumeImage;
+
     ToastManager toastManager;
 
     //Achievement Keys
@@ -233,6 +235,7 @@ public class GameManager : MonoBehaviour {
         if (!isGamePaused())
         {
             isPaused = true;
+            pauseButton.GetComponent<Image>().sprite = resumeImage;
             if (life > 0)
             {
                 pauseMenuPanel.active = true;
@@ -254,6 +257,7 @@ public class GameManager : MonoBehaviour {
         else if (isGamePaused())
         {
             isPaused = false;
+            pauseButton.GetComponent<Image>().sprite = pauseImage;
             if (life > 0)
             {
                 pauseMenuPanel.active = false;
