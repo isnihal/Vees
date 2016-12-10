@@ -38,7 +38,7 @@ public class GameManager : MonoBehaviour {
 
 
     //Show AD button and No
-    public GameObject gameOverPanel,pauseButton;
+    public GameObject gameOverPanel,pauseMenuPanel,pauseButton;
 
     ToastManager toastManager;
 
@@ -233,6 +233,10 @@ public class GameManager : MonoBehaviour {
         if (!isGamePaused())
         {
             isPaused = true;
+            if (life > 0)
+            {
+                pauseMenuPanel.active = true;
+            }
             playerSpawner.active = false;
             enemySpawner.active = false;
             if(goalDetector!=null)
@@ -250,6 +254,10 @@ public class GameManager : MonoBehaviour {
         else if (isGamePaused())
         {
             isPaused = false;
+            if (life > 0)
+            {
+                pauseMenuPanel.active = false;
+            }
             playerSpawner.active = true;
             enemySpawner.active = true;
             if (goalDetector != null)

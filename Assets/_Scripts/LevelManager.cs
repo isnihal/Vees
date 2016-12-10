@@ -94,7 +94,7 @@ public class LevelManager : MonoBehaviour {
                         case 1:
                         Application.Quit();
                         break;
-                        default: Application.LoadLevel(1);
+                        default: SceneManager.LoadScene(1);
                         break;
                 }
                 }
