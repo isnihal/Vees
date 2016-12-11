@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.Purchasing;
+using UnityEngine.SceneManagement;
   
     public class IAPManager : MonoBehaviour, IStoreListener
     {
@@ -12,6 +14,14 @@ using UnityEngine.Purchasing;
 
         // Google Play Store-specific product identifier subscription product.
         private static string kProductNameGooglePlaySubscription = "com.ensorcell.vees";
+        
+
+        //Local params
+        enum States {first,second,third};
+        States currentState;
+        public Text titleDisplay,priceDisplay;
+        float price,maxPrice,minPrice;
+        public GameObject increaseButton, decreaseButton, priceText;
 
         void Start()
         {
@@ -21,6 +31,77 @@ using UnityEngine.Purchasing;
                 // Begin to configure our connection to Purchasing
                 InitializePurchasing();
             }
+
+            //Local Params
+            currentState = States.first;
+            price = 1;
+            maxPrice = 10;
+            minPrice = 1;
+        }
+        
+        void Update()
+        {
+            switch(currentState)
+            {
+                case States.first:
+                titleDisplay.text = "We are a young and small team who makes games with lots of passion";
+                if(Input.GetMouseButtonDown(0))
+                {
+                    currentState = States.second;
+                }
+                break;
+                case States.second:
+                titleDisplay.text = "If you think the game's worth it,Help us buy some beer and we will remove the ads for you :)";
+                if (Input.GetMouseButtonDown(0))
+                {
+                    currentState = States.third;
+                }
+                break;
+                case States.third:
+                increaseButton.active = true;
+                decreaseButton.active = true;
+                priceText.active = true;
+                if (price != 1)
+                {
+                    titleDisplay.text = price + " Beers";
+                }
+                else
+                {
+                    titleDisplay.text = price + "Beer";
+                }
+                break;
+            }
+
+            setPriceDisplay();
+        }
+
+        public void IncreasePrice()
+        {
+            if(price<maxPrice)
+            {
+                price++;
+            }
+        }
+
+        public void DecreasePrice()
+        {
+            if(price>minPrice)
+            {
+                price--;
+            }
+        }
+
+        public void confirmPurchase()
+        {
+             if (currentState == States.third)
+            {
+                Debug.Log("IAP Purchase of " + price + " to be done");
+            }
+        }
+
+        void setPriceDisplay()
+        {
+            priceDisplay.text = (price - 0.01f) + "$";
         }
 
         public void InitializePurchasing()
