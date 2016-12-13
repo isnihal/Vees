@@ -11,15 +11,7 @@ public class VolumeManager : MonoBehaviour {
 
     void Start()
     {
-        if(isMuted)
-        {
-            muteButton.GetComponent<Image>().sprite = muteIcon;
-        }
-
-        else
-        {
-            muteButton.GetComponent<Image>().sprite = unMuteIcon;
-        }
+        setMuteButtonSprite();
     }
     public void muteGame()
     {
@@ -41,5 +33,25 @@ public class VolumeManager : MonoBehaviour {
     public static bool getIsMuted()
     {
         return isMuted;
+    }
+
+    void setMuteButtonSprite()
+    {
+        if (isMuted)
+        {
+            muteButton.GetComponent<Image>().sprite = muteIcon;
+        }
+
+        else
+        {
+            muteButton.GetComponent<Image>().sprite = unMuteIcon;
+        }
+    }
+    public static void setMusicPlayerOnIfSilent()
+    {
+        if (MusicPlayer.getVolume() == 0)
+        {
+            MusicPlayer.setVolume(0.5f);
+        }
     }
 }

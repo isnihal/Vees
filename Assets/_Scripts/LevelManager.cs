@@ -40,6 +40,11 @@ public class LevelManager : MonoBehaviour {
                     Debug.Log("Google sign in success :D");
                 }
             });
+
+            if (!VolumeManager.getIsMuted())
+            {
+                VolumeManager.setMusicPlayerOnIfSilent();
+            }
         }
 
 

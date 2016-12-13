@@ -17,6 +17,10 @@ public class ScoreBoard : MonoBehaviour {
             AdManager.showNoRewardedAd();
         }
 
+        if (!VolumeManager.getIsMuted())
+        {
+            VolumeManager.setMusicPlayerOnIfSilent();
+        }
 
         string language = PlayerPrefsManager.getLanguage();
         if(language=="")

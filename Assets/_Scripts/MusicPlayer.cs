@@ -38,4 +38,9 @@ public class MusicPlayer : MonoBehaviour {
     {
         musicPlayer.volume = volume;
     }
+
+    public static float getVolume()
+    {
+        return musicPlayer.volume;
+    }
 }
