@@ -105,4 +105,9 @@ public class ElectricGun : MonoBehaviour {
     {
         charge--;
     }
+
+    public static void setMaximumCharge()
+    {
+        charge = maximumCharge;
+    }
 }

@@ -373,6 +373,7 @@ public class GameManager : MonoBehaviour {
     void restartGame()
     {
         pauseGame();
+        ElectricGun.setMaximumCharge();
         MusicPlayer.setVolume(0.5f);
         pauseButton.active = true;
         gameOverPanel.active = false;
