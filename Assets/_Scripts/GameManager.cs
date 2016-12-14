@@ -203,6 +203,18 @@ public class GameManager : MonoBehaviour {
         return score;
     }
 
+    public static void decrementScoreBy(int number)
+    {
+        if (score - number >= 0)
+        {
+            score -= number;
+        }
+        else
+        {
+            score = 0;
+        }
+    }
+
     public static void resetLife()
     {
         life = 0;

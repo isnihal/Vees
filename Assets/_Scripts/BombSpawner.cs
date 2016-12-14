@@ -11,8 +11,16 @@ public class BombSpawner : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-        bombingFrequency = 0.35f;
-        bombVelocity = -6;
+        if (GameManager.getLevelName() == "ARCADE")
+        {
+            bombingFrequency = 0.35f;
+            bombVelocity = -6;
+        }
+        else
+        {
+            bombingFrequency = 0.05f;
+            bombVelocity = -4.45f;
+        }
 	}
 	
 	// Update is called once per frame
@@ -29,7 +37,14 @@ public class BombSpawner : MonoBehaviour {
             {
                 AudioSource.PlayClipAtPoint(bombClip, bombFormation.transform.position, 1);
             }
-            bombingFrequency += 0.05f;
+            if (GameManager.getLevelName() != "TIME_LAPSE")
+            {
+                bombingFrequency += 0.05f;
+            }
+            else
+            {
+                bombingFrequency += 0.005f;
+            }
         }
 	}
 }

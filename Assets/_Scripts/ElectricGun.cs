@@ -50,8 +50,10 @@ public class ElectricGun : MonoBehaviour {
             isReseting = true;
             if (oneTime)
             {
+                if (!VolumeManager.getIsMuted())
+                {
                     AudioSource.PlayClipAtPoint(rechargeClip, Vector3.zero);
-
+                }
                 oneTime = false;
             }
             //Reset after a cooldown time

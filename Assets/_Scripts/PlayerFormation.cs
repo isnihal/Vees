@@ -71,7 +71,14 @@ public class PlayerFormation : MonoBehaviour {
             {
                 AudioSource.PlayClipAtPoint(blastClip, transform.position);
             }
-            GameManager.setLife(0);
+            if (GameManager.getLevelName() == "ARCADE")
+            {
+                GameManager.setLife(0);
+            }
+            else if(GameManager.getLevelName()=="TIME_LAPSE")
+            {
+                GameManager.decrementScoreBy(5);
+            }
         }
     }
 
