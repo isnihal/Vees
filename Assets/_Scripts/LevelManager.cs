@@ -21,18 +21,18 @@ public class LevelManager : MonoBehaviour {
     {
         //Load main menu if current level is splash screen
         //Load Tutorial if game is loaded for the first time
-        if(PlayerPrefsManager.isFirstTime())
+        /*if(PlayerPrefsManager.isFirstTime())
         {
-            SceneManager.LoadScene("00A_TUTORIAL");
             PlayerPrefsManager.setFirstTime();
-        }
+            SceneManager.LoadScene("00A_TUTORIAL");
+        }*/
 
         if (isSplash())
         {
             loadMainMenu();
         }
         
-        if(isMainMenu())
+        else if(isMainMenu())
         {
             PlayGamesPlatform.Activate();
             Social.localUser.Authenticate((bool success) =>
