@@ -235,7 +235,7 @@ public class EnemySpawner : MonoBehaviour {
 
     void setFormationVelocity()
     {
-        if (GameManager.getLevelName() == "ONE_DIRECTION" || GameManager.getLevelName() == "EQUALS" || GameManager.getLevelName() == "FAST_ESCAPE")
+        if (GameManager.getLevelName() == "ONE_DIRECTION" || GameManager.getLevelName() == "EQUALS")
         {
             formationVelocity = 10.75f;
         }
@@ -252,6 +252,11 @@ public class EnemySpawner : MonoBehaviour {
         else if(GameManager.getLevelName()=="TIME_LAPSE")
         {
             formationVelocity = 13.85f;
+        }
+
+        else if(GameManager.getLevelName()=="FAST_ESCAPE")
+        {
+            formationVelocity = 8.75f;
         }
     }
 
