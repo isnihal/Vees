@@ -1,7 +1,5 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
-using GooglePlayGames;
-using Google;
 using UnityEngine.SceneManagement;
 using UnityEngine.Advertisements;
 using System.Collections;
@@ -298,7 +296,7 @@ public class GameManager : MonoBehaviour {
 
     void checkForAchievements()
     {
-        if (Application.loadedLevel == 3)
+        /*if (Application.loadedLevel == 3)
         {
             Social.ReportProgress(ONE_DIRECTION_NOOB, 100, (bool sucess) => {
                 if (sucess)
@@ -366,7 +364,7 @@ public class GameManager : MonoBehaviour {
                     Debug.Log("Achievement failed");
                 }
             });
-        }
+        }*/
     }
 
     public void continueGameWithAd()
