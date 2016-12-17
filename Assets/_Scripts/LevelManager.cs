@@ -1,5 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.SceneManagement;
+using Google;
+using GooglePlayGames;
 using System.Collections;
 
 public class LevelManager : MonoBehaviour {
@@ -32,7 +34,7 @@ public class LevelManager : MonoBehaviour {
         
         else if(isMainMenu())
         {
-            /*PlayGamesPlatform.Activate();
+            PlayGamesPlatform.Activate();
             Social.localUser.Authenticate((bool success) =>
             {
                 if (success)
@@ -48,7 +50,7 @@ public class LevelManager : MonoBehaviour {
             if (!VolumeManager.getIsMuted())
             {
                 VolumeManager.setMusicPlayerOnIfSilent();
-            }*/
+            }
         }
 
 
@@ -190,5 +192,10 @@ public class LevelManager : MonoBehaviour {
     public static int getFromLevel()
     {
         return fromLevel;
+    }
+
+    public void showLeaderBoard()
+    {
+        Social.ShowLeaderboardUI();
     }
 }

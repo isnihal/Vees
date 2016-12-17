@@ -43,11 +43,11 @@ public class GameManager : MonoBehaviour {
     ToastManager toastManager;
 
     //Achievement Keys
-    static string ONE_DIRECTION_NOOB = "CgkIu73IgfAIEAIQBA";
-    static string ARCADE_NOOB = "CgkIu73IgfAIEAIQAw";
-    static string FAST_ESCAPE_NOOB = "CgkIu73IgfAIEAIQBQ";
-    static string EQUALS_NOOB = "CgkIu73IgfAIEAIQBg";
-    static string TIME_LAPSE_NOOB = "CgkIu73IgfAIEAIQBw";
+    static string ONE_DIRECTION_NOOB = "CgkIiY779uUNEAIQAQ";
+    static string ARCADE_NOOB = "CgkIiY779uUNEAIQBQ";
+    static string FAST_ESCAPE_NOOB = "CgkIiY779uUNEAIQAw";
+    static string EQUALS_NOOB = "CgkIiY779uUNEAIQAg";
+    static string TIME_LAPSE_NOOB = "CgkIiY779uUNEAIQBA";
 
     void Start()
     {
@@ -296,7 +296,7 @@ public class GameManager : MonoBehaviour {
 
     void checkForAchievements()
     {
-        /*if (Application.loadedLevel == 3)
+        if (Application.loadedLevel == 3)
         {
             Social.ReportProgress(ONE_DIRECTION_NOOB, 100, (bool sucess) => {
                 if (sucess)
@@ -364,7 +364,7 @@ public class GameManager : MonoBehaviour {
                     Debug.Log("Achievement failed");
                 }
             });
-        }*/
+        }
     }
 
     public void continueGameWithAd()
