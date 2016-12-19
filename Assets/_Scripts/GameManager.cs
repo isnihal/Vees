@@ -111,7 +111,10 @@ public class GameManager : MonoBehaviour {
             {
                 //Show the UI Buttons
                 pauseGame();
-                MusicPlayer.setVolume(0f);
+                if (!VolumeManager.getIsMuted())
+                {
+                    MusicPlayer.setVolume(0f);
+                }
                 pauseButton.active = false;
                 gameOverPanel.active = true;
                 life = -99;//To avoid a bug
@@ -384,7 +387,10 @@ public class GameManager : MonoBehaviour {
     {
         pauseGame();
         ElectricGun.setMaximumCharge();
-        MusicPlayer.setVolume(0.5f);
+        if (!VolumeManager.getIsMuted())
+        {
+            MusicPlayer.setVolume(0.5f);
+        }
         pauseButton.active = true;
         gameOverPanel.active = false;
     }
