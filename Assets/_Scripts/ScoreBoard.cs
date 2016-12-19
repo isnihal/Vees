@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Advertisements;
 using System.Collections;
 
 public class ScoreBoard : MonoBehaviour {
@@ -10,9 +11,16 @@ public class ScoreBoard : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-        numberOfGames++;
+        if (GameManager.hasGameBeenRestarted())
+        {
+            numberOfGames = 0;
+        }
+        else
+        {
+            numberOfGames++;
+        }
         //Ad Script
-        if(numberOfGames % showNoRewardAdAfter==0 && !GameManager.hasGameBeenRestarted())//Show ad only if user didnt view ad for restarting
+        if(numberOfGames % showNoRewardAdAfter==0 && !GameManager.hasGameBeenRestarted() && Advertisement.IsReady())//Show ad only if user didnt view ad for restarting
         {
             AdManager.showNoRewardedAd();
         }
