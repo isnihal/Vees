@@ -5,7 +5,7 @@ using System.Collections;
 
 public class ScoreBoard : MonoBehaviour {
 
-    static int showRewardedAdAfter=6, showNoRewardAdAfter=3,numberOfGames=0;
+    static int showRewardedAdAfter=6, showNoRewardAdAfter=3,numberOfGames=0,numberOfLapseGames=0;
 
     //Set scoreboard for gameOver level
 
@@ -70,5 +70,32 @@ public class ScoreBoard : MonoBehaviour {
            
         }
 	}
-	
+
+
+    void checkForAchievements()
+    {
+        if (LevelManager.getFromLevel() == 7)
+        {
+            numberOfLapseGames++;
+        }
+        else
+        {
+            numberOfLapseGames = 0;
+        }
+        if (numberOfLapseGames == 10)
+        {
+            Social.ReportProgress(GPGSIds.achievement_lapse_love, 100, (bool sucess) =>
+            {
+                if (sucess)
+                {
+                    Debug.Log("Achievement Success");
+                }
+                else
+                {
+                    Debug.Log("Achievement failed");
+                }
+            });
+        }
+
+    }
 }

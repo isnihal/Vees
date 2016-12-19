@@ -24,7 +24,7 @@ public class GameManager : MonoBehaviour {
     public Text scoreBoard,timerText;
     public GameObject[] lifeArray;
     static float enemySpawnFrequency;
-    static int score,life;
+    static int score,life,lastLifeScore;
     //Time Lapse property
     float timeLeft;
     string language,defaultLanguage;
@@ -32,7 +32,7 @@ public class GameManager : MonoBehaviour {
     public GameObject enemySpawner, playerSpawner, bombSpawner;
     public GameObject[] goalDetector;
 
-    static bool isPaused,hasRestarted;
+    static bool isPaused,hasRestarted,lastLife;
 
 
     //Show AD button and No
@@ -41,13 +41,6 @@ public class GameManager : MonoBehaviour {
     public Sprite pauseImage, resumeImage;
 
     ToastManager toastManager;
-
-    //Achievement Keys
-    static string ONE_DIRECTION_NOOB = "CgkIiY779uUNEAIQAQ";
-    static string ARCADE_NOOB = "CgkIiY779uUNEAIQBQ";
-    static string FAST_ESCAPE_NOOB = "CgkIiY779uUNEAIQAw";
-    static string EQUALS_NOOB = "CgkIiY779uUNEAIQAg";
-    static string TIME_LAPSE_NOOB = "CgkIiY779uUNEAIQBA";
 
     void Start()
     {
@@ -78,6 +71,8 @@ public class GameManager : MonoBehaviour {
 
         checkForAchievements();
         toastManager = FindObjectOfType<ToastManager>();
+        lastLifeScore = 0;
+        lastLife = false;
     }
 
     void Update()
@@ -88,6 +83,11 @@ public class GameManager : MonoBehaviour {
         if(GameManager.getLevelName()=="TIME_LAPSE")
         {
             setTimer();
+        }
+
+        if(life==1)
+        {
+            lastLife = true;
         }
     }
 
@@ -197,6 +197,10 @@ public class GameManager : MonoBehaviour {
     public static void incrementScore()
     {
         score++;
+        if(lastLife)
+        {
+            lastLifeScore++;
+        }
     }
 
     public static int getScore()
@@ -299,9 +303,9 @@ public class GameManager : MonoBehaviour {
 
     void checkForAchievements()
     {
-        if (Application.loadedLevel == 3)
+        if (getLevelName()=="ONE_DIRECTION")
         {
-            Social.ReportProgress(ONE_DIRECTION_NOOB, 100, (bool sucess) => {
+            Social.ReportProgress(GPGSIds.achievement_one_way_noob, 100, (bool sucess) => {
                 if (sucess)
                 {
                     Debug.Log("One Direction noob unlocked");
@@ -311,11 +315,70 @@ public class GameManager : MonoBehaviour {
                     Debug.Log("Achievement failed");
                 }
             });
+
+            if (score == 200)
+            {
+                Social.ReportProgress(GPGSIds.achievement_one_way_pro, 100, (bool sucess) => {
+                    if (sucess)
+                    {
+                        Debug.Log("Achievement Success");
+                    }
+                    else
+                    {
+                        Debug.Log("Achievement failed");
+                    }
+                });
+            }
+
+            if (score == 500)
+            {
+                Social.ReportProgress(GPGSIds.achievement_one_way_master, 100, (bool sucess) => {
+                    if (sucess)
+                    {
+                        Debug.Log("Achievement Success");
+                    }
+                    else
+                    {
+                        Debug.Log("Achievement failed");
+                    }
+                });
+            }
+
+            if (score == 1000)
+            {
+                Social.ReportProgress(GPGSIds.achievement_one_way_legend, 100, (bool sucess) =>
+                {
+                    if (sucess)
+                    {
+                        Debug.Log("Achievement Success");
+                    }
+                    else
+                    {
+                        Debug.Log("Achievement failed");
+                    }
+                });
+            }
+
+            if (lastLife && lastLifeScore==100)
+            {
+                Social.ReportProgress(GPGSIds.achievement_one_way_survivor, 100, (bool sucess) =>
+                {
+                    if (sucess)
+                    {
+                        Debug.Log("Achievement Success");
+                    }
+                    else
+                    {
+                        Debug.Log("Achievement failed");
+                    }
+                });
+            }
+
         }
 
-        else if (Application.loadedLevel == 4)
+        else if (getLevelName()=="ARCADE")
         {
-            Social.ReportProgress(ARCADE_NOOB, 100, (bool sucess) => {
+            Social.ReportProgress(GPGSIds.achievement_boom_noob, 100, (bool sucess) => {
                 if (sucess)
                 {
                     Debug.Log("ARCADE noob unlocked");
@@ -325,11 +388,27 @@ public class GameManager : MonoBehaviour {
                     Debug.Log("Achievement failed");
                 }
             });
+
+            if (score == 200)
+            {
+                Social.ReportProgress(GPGSIds.achievement_bomb_diffuser, 100, (bool sucess) =>
+                {
+                    if (sucess)
+                    {
+                        Debug.Log("Achievement Success");
+                    }
+                    else
+                    {
+                        Debug.Log("Achievement failed");
+                    }
+                });
+            }
+
         }
 
-        else if (Application.loadedLevel == 5)
+        else if (getLevelName()=="FAST_ESCAPE")
         {
-            Social.ReportProgress(FAST_ESCAPE_NOOB, 100, (bool sucess) => {
+            Social.ReportProgress(GPGSIds.achievement_escape_noob, 100, (bool sucess) => {
                 if (sucess)
                 {
                     Debug.Log("Fast escape noob unlocked");
@@ -339,11 +418,70 @@ public class GameManager : MonoBehaviour {
                     Debug.Log("Achievement failed");
                 }
             });
+
+            if (score == 20)
+            {
+                Social.ReportProgress(GPGSIds.achievement_escape_pro, 100, (bool sucess) => {
+                    if (sucess)
+                    {
+                        Debug.Log("Achievement Success");
+                    }
+                    else
+                    {
+                        Debug.Log("Achievement failed");
+                    }
+                });
+            }
+
+            if (score == 50)
+            {
+                Social.ReportProgress(GPGSIds.achievement_escape_master, 100, (bool sucess) => {
+                    if (sucess)
+                    {
+                        Debug.Log("Achievement Success");
+                    }
+                    else
+                    {
+                        Debug.Log("Achievement failed");
+                    }
+                });
+            }
+
+            if (score == 100)
+            {
+                Social.ReportProgress(GPGSIds.achievement_escape_legend, 100, (bool sucess) =>
+                {
+                    if (sucess)
+                    {
+                        Debug.Log("Achievement Success");
+                    }
+                    else
+                    {
+                        Debug.Log("Achievement failed");
+                    }
+                });
+            }
+
+            if(lastLife && lastLifeScore==20)
+            {
+                Social.ReportProgress(GPGSIds.achievement_escape_survivor, 100, (bool sucess) =>
+                {
+                    if (sucess)
+                    {
+                        Debug.Log("Achievement Success");
+                    }
+                    else
+                    {
+                        Debug.Log("Achievement failed");
+                    }
+                });
+            }
+
         }
 
-        else if (Application.loadedLevel == 6)
+        else if (getLevelName()=="EQUALS")
         {
-            Social.ReportProgress(EQUALS_NOOB, 100, (bool sucess) => {
+            Social.ReportProgress(GPGSIds.achievement_equals_noob, 100, (bool sucess) => {
                 if (sucess)
                 {
                     Debug.Log("Equals noob unlocked");
@@ -353,11 +491,53 @@ public class GameManager : MonoBehaviour {
                     Debug.Log("Achievement failed");
                 }
             });
+
+            if(EnemySpawner.getWaveNumber()==20)
+            {
+                Social.ReportProgress(GPGSIds.achievement_equals_pro, 100, (bool sucess) => {
+                    if (sucess)
+                    {
+                        Debug.Log("Achievement Success");
+                    }
+                    else
+                    {
+                        Debug.Log("Achievement failed");
+                    }
+                });
+            }
+
+            if (EnemySpawner.getWaveNumber() == 50)
+            {
+                Social.ReportProgress(GPGSIds.achievement_equals_master, 100, (bool sucess) => {
+                    if (sucess)
+                    {
+                        Debug.Log("Achievement Success");
+                    }
+                    else
+                    {
+                        Debug.Log("Achievement failed");
+                    }
+                });
+            }
+
+            if (EnemySpawner.getWaveNumber() == 100)
+            {
+                Social.ReportProgress(GPGSIds.achievement_equals_legend, 100, (bool sucess) => {
+                    if (sucess)
+                    {
+                        Debug.Log("Achievement success");
+                    }
+                    else
+                    {
+                        Debug.Log("Achievement failed");
+                    }
+                });
+            }
         }
 
-        else if (Application.loadedLevel == 7)
+        else if (getLevelName()=="TIME_LAPSE")
         {
-            Social.ReportProgress(TIME_LAPSE_NOOB, 100, (bool sucess) => {
+            Social.ReportProgress(GPGSIds.achievement_lapse_noob, 100, (bool sucess) => {
                 if (sucess)
                 {
                     Debug.Log("Time lapse noob unlocked");

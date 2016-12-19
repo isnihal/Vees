@@ -24,10 +24,24 @@
 
 public static class GPGSIds
 {
-        public const string achievement_one_direction_noob = "CgkIiY779uUNEAIQAQ"; // <GPGSID>
-        public const string achievement_escape_noob = "CgkIiY779uUNEAIQAw"; // <GPGSID>
+        public const string achievement_escape_pro = "CgkIiY779uUNEAIQDA"; // <GPGSID>
         public const string achievement_boom_noob = "CgkIiY779uUNEAIQBQ"; // <GPGSID>
+        public const string achievement_one_way_pro = "CgkIiY779uUNEAIQCQ"; // <GPGSID>
+        public const string achievement_one_way_noob = "CgkIiY779uUNEAIQAQ"; // <GPGSID>
+        public const string achievement_escape_master = "CgkIiY779uUNEAIQDQ"; // <GPGSID>
+        public const string achievement_lapse_love = "CgkIiY779uUNEAIQEQ"; // <GPGSID>
+        public const string achievement_equals_legend = "CgkIiY779uUNEAIQCA"; // <GPGSID>
+        public const string achievement_escape_survivor = "CgkIiY779uUNEAIQEA"; // <GPGSID>
+        public const string achievement_equals_pro = "CgkIiY779uUNEAIQBg"; // <GPGSID>
+        public const string achievement_equals_master = "CgkIiY779uUNEAIQBw"; // <GPGSID>
+        public const string achievement_one_way_master = "CgkIiY779uUNEAIQCg"; // <GPGSID>
         public const string achievement_equals_noob = "CgkIiY779uUNEAIQAg"; // <GPGSID>
+        public const string achievement_escape_legend = "CgkIiY779uUNEAIQDg"; // <GPGSID>
+        public const string achievement_one_way_survivor = "CgkIiY779uUNEAIQDw"; // <GPGSID>
         public const string achievement_lapse_noob = "CgkIiY779uUNEAIQBA"; // <GPGSID>
+        public const string achievement_one_way_legend = "CgkIiY779uUNEAIQCw"; // <GPGSID>
+        public const string achievement_escape_noob = "CgkIiY779uUNEAIQAw"; // <GPGSID>
+        public const string achievement_bomb_diffuser = "CgkIiY779uUNEAIQEg"; // <GPGSID>
+
 }
 
