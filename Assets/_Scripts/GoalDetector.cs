@@ -17,6 +17,18 @@ public class GoalDetector : MonoBehaviour {
             GameManager.setLife(0);
         }
 
+        else if(GameManager.getLevelName()=="TUTORIAL")
+        {
+            if (collider.gameObject.GetComponent<EnemyFormation>())
+            {
+                EnemySpawner.decreaseSpawnedCount();
+            }
+            else if(collider.gameObject.GetComponent<PlayerFormation>())
+            {
+                PlayerSpawner.decreaseSpawnedVees();
+            }
+        }
+
         //For other levels
         else
         {

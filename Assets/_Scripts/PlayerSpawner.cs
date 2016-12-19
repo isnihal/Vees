@@ -149,4 +149,9 @@ public class PlayerSpawner : MonoBehaviour {
     {
         return spawnedVees;
     }
+
+    public static void decreaseSpawnedVees()
+    {
+        spawnedVees--;
+    }
 }
