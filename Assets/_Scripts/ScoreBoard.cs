@@ -6,12 +6,18 @@ using System.Collections;
 public class ScoreBoard : MonoBehaviour {
 
     static int showRewardedAdAfter=6, showNoRewardAdAfter=3,numberOfGames=0,numberOfLapseGames=0;
-    
+
+    const string oneWayLeaderBoardID = "CgkIiY779uUNEAIQEw";
+    const string equalsLeaderBoardID = "CgkIiY779uUNEAIQFA";
+    const string escapeLeaderBoardID = "CgkIiY779uUNEAIQFQ";
+    const string lapseLeaderBoardID = "CgkIiY779uUNEAIQFg";
+    const string boomLeaderBoardID = "CgkIiY779uUNEAIQFw";
+
     //Set scoreboard for gameOver level
-    
-	// Use this for initialization
-	void Start () {
-        
+
+    // Use this for initialization
+    void Start () {
+        postScoreToLeaderBoard();
         if (GameManager.hasGameBeenRestarted())
         {
             numberOfGames = 0;
@@ -102,5 +108,73 @@ public class ScoreBoard : MonoBehaviour {
             });
         }
 
+    }
+
+    public void postScoreToLeaderBoard()
+    {
+        switch (LevelManager.getFromLevel())
+        {
+            case 3:
+                Social.ReportScore(GameManager.getScore(), oneWayLeaderBoardID, (bool success) => {
+                    if (success)
+                    {
+                        Debug.Log("Success in posting score to leaderboard");
+                    }
+                    else
+                    {
+                        Debug.Log("Failure in posting score to leaderboard");
+                    }
+                });
+
+                break;
+            case 6:
+                Social.ReportScore(GameManager.getScore(), equalsLeaderBoardID, (bool success) => {
+                    if (success)
+                    {
+                        Debug.Log("Success in posting score to leaderboard");
+                    }
+                    else
+                    {
+                        Debug.Log("Failure in posting score to leaderboard");
+                    }
+                });
+                break;
+            case 5:
+                Social.ReportScore(GameManager.getScore(), escapeLeaderBoardID, (bool success) => {
+                    if (success)
+                    {
+                        Debug.Log("Success in posting score to leaderboard");
+                    }
+                    else
+                    {
+                        Debug.Log("Failure in posting score to leaderboard");
+                    }
+                });
+                break;
+            case 7:
+                Social.ReportScore(GameManager.getScore(), lapseLeaderBoardID, (bool success) => {
+                    if (success)
+                    {
+                        Debug.Log("Success in posting score to leaderboard");
+                    }
+                    else
+                    {
+                        Debug.Log("Failure in posting score to leaderboard");
+                    }
+                });
+                break;
+            case 4:
+                Social.ReportScore(GameManager.getScore(), boomLeaderBoardID, (bool success) => {
+                    if (success)
+                    {
+                        Debug.Log("Success in posting score to leaderboard");
+                    }
+                    else
+                    {
+                        Debug.Log("Failure in posting score to leaderboard");
+                    }
+                });
+                break;
+        }
     }
 }

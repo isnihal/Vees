@@ -121,7 +121,7 @@ public class GameManager : MonoBehaviour {
             }
             else
             {
-                SceneManager.LoadScene("GAME_OVER");
+                SceneManager.LoadScene("GAME_OVER");                
             }
         }
     }
@@ -653,4 +653,5 @@ public class GameManager : MonoBehaviour {
                 break;
         }
     }
+
 }

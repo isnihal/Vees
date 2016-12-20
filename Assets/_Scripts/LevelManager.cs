@@ -198,4 +198,9 @@ public class LevelManager : MonoBehaviour {
     {
         Social.ShowLeaderboardUI();
     }
+
+    public void showAchievementBoard()
+    {
+        Social.ShowAchievementsUI();
+    }
 }
