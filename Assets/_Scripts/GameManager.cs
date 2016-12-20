@@ -552,14 +552,18 @@ public class GameManager : MonoBehaviour {
 
     public void continueGameWithAd()
     {
-        if(Advertisement.IsReady())
+        Debug.Log("Has user Purchased:" + IAPManager.hasUserPurchasedVees());
+        if (!IAPManager.hasUserPurchasedVees())
         {
-            Advertisement.Show("video", new ShowOptions() { resultCallback = handleAdResult });
-            hasRestarted = true;
-        }
-        else
-        {
-            toastManager.showToastOnUiThread("Check Your Internet Connection");
+            if (Advertisement.IsReady())
+            {
+                Advertisement.Show("video", new ShowOptions() { resultCallback = handleAdResult });
+                hasRestarted = true;
+            }
+            else
+            {
+                toastManager.showToastOnUiThread("Check Your Internet Connection");
+            }
         }
     }
 

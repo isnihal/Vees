@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.Purchasing;
 
 
-public class Purchaser : MonoBehaviour, IStoreListener
+public class IAPManager : MonoBehaviour, IStoreListener
 {
     private static IStoreController m_StoreController;          // The Unity Purchasing system.
     private static IExtensionProvider m_StoreExtensionProvider; // The store-specific Purchasing subsystems.
@@ -18,20 +19,96 @@ public class Purchaser : MonoBehaviour, IStoreListener
 
     static bool hasUserPurchased;
 
+    int iapIndex;
+    //Minor bug avoidance 
+    float timeLeft;
+    bool startTimer,timerFinsihed;
+    //--------------
+    enum States {first,second,third};
+    States currentState;
+    public GameObject instructionText, priceText, increaseButton, decreaseButton;
 
     // Google Play Store-specific product identifier subscription product.
     private static string kProductNameGooglePlaySubscription = "com.truffleandcaffeine.vees";
 
     void Start()
     {
+        hasUserPurchased = false;
         // If we haven't set up the Unity Purchasing reference
         if (m_StoreController == null)
         {
             // Begin to configure our connection to Purchasing
             InitializePurchasing();
         }
+        if(Application.loadedLevel!=1)
+        {
+            currentState = States.first;
+        }
 
-        hasUserPurchased = false;
+        iapIndex = 1;
+        timeLeft = 1f;
+        startTimer = false;
+        timerFinsihed = false;
+    }
+
+    void Update()
+    {
+        if(Application.loadedLevel==1)
+        {
+            return;
+        }
+
+        if (!hasUserPurchased)
+        {
+            switch (currentState)
+            {
+                case States.first:
+                    instructionText.GetComponent<Text>().text = "We are a young and passionate team committed to making awesome games.";
+                    if (Input.GetMouseButtonDown(0))
+                    {
+                        currentState = States.second;
+                    }
+                    break;
+                case States.second:
+                    instructionText.GetComponent<Text>().text = "If you think the game's worth it, Help us buy a beer and we will remove the ads for you :)";
+                    if (Input.GetMouseButtonDown(0))
+                    {
+                        currentState = States.third;
+                    }
+                    break;
+                case States.third:
+                    startTimer = true;
+                    if (startTimer)
+                    {
+                        timeLeft -= Time.deltaTime;
+                        if (timeLeft <= 0)
+                        {
+                            startTimer = false;
+                            timerFinsihed = true;
+                        }
+                    }
+                    if (iapIndex == 1)
+                    {
+                        instructionText.GetComponent<Text>().text = "1 Beer";
+                    }
+                    else
+                    {
+                        instructionText.GetComponent<Text>().text = iapIndex + " Beers";
+                    }
+                    priceText.active = true;
+                    increaseButton.active = true;
+                    decreaseButton.active = true;
+                    priceText.GetComponent<Text>().text = (iapIndex - 0.01) + " $";
+                    break;
+            }
+        }
+        else
+        {
+            instructionText.GetComponent<Text>().text = "Thank you for purchasing Vees,Your game will now be ad free :)";
+            priceText.active = false;
+            increaseButton.active = false;
+            decreaseButton.active = false;
+        }
     }
 
     public void InitializePurchasing()
@@ -59,34 +136,37 @@ public class Purchaser : MonoBehaviour, IStoreListener
         UnityPurchasing.Initialize(this, builder);
     }
 
-
     private bool IsInitialized()
     {
         // Only say we are initialized if both the Purchasing references are set.
         return m_StoreController != null && m_StoreExtensionProvider != null;
     }
 
-    public void BuyNonConsumable(string productId)
+    public void BuyNonConsumable()
     {
         // Buy the non-consumable product using its general identifier. Expect a response either 
         // through ProcessPurchase or OnPurchaseFailed asynchronously.
-        switch (productId)
+
+        if (currentState == States.third && timerFinsihed)
         {
-            case "beer1":
-                BuyProductID(oneBeer);
-                break;
-            case "beer2":
-                BuyProductID(twoBeer);
-                break;
-            case "beer3":
-                BuyProductID(threeBeer);
-                break;
-            case "beer4":
-                BuyProductID(fourBeer);
-                break;
-            case "beer5":
-                BuyProductID(fiveBeer);
-                break;
+            switch (iapIndex)
+            {
+                case 1:
+                    BuyProductID(oneBeer);
+                    break;
+                case 2:
+                    BuyProductID(twoBeer);
+                    break;
+                case 3:
+                    BuyProductID(threeBeer);
+                    break;
+                case 4:
+                    BuyProductID(fourBeer);
+                    break;
+                case 5:
+                    BuyProductID(fiveBeer);
+                    break;
+            }
         }
     }
 
@@ -202,5 +282,26 @@ public class Purchaser : MonoBehaviour, IStoreListener
         // A product purchase attempt did not succeed. Check failureReason for more detail. Consider sharing 
         // this reason with the user to guide their troubleshooting actions.
         Debug.Log(string.Format("OnPurchaseFailed: FAIL. Product: '{0}', PurchaseFailureReason: {1}", product.definition.storeSpecificId, failureReason));
+    }
+
+    public static bool hasUserPurchasedVees()
+    {
+        return hasUserPurchased;
+    }
+
+    public void increaseIndex()
+    {
+        if (iapIndex < 5)
+        {
+            iapIndex++;
+        }
+    }
+
+    public void decreaseIndex()
+    {
+        if (iapIndex > 1)
+        {
+            iapIndex--;
+        }
     }
 }

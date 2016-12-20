@@ -6,11 +6,12 @@ using System.Collections;
 public class ScoreBoard : MonoBehaviour {
 
     static int showRewardedAdAfter=6, showNoRewardAdAfter=3,numberOfGames=0,numberOfLapseGames=0;
-
+    
     //Set scoreboard for gameOver level
-
+    
 	// Use this for initialization
 	void Start () {
+        
         if (GameManager.hasGameBeenRestarted())
         {
             numberOfGames = 0;
@@ -19,10 +20,14 @@ public class ScoreBoard : MonoBehaviour {
         {
             numberOfGames++;
         }
+
         //Ad Script
-        if(numberOfGames % showNoRewardAdAfter==0 && !GameManager.hasGameBeenRestarted() && Advertisement.IsReady())//Show ad only if user didnt view ad for restarting
+        if (!IAPManager.hasUserPurchasedVees())
         {
-            AdManager.showNoRewardedAd();
+            if (numberOfGames % showNoRewardAdAfter == 0 && !GameManager.hasGameBeenRestarted() && Advertisement.IsReady())//Show ad only if user didnt view ad for restarting
+            {
+                AdManager.showNoRewardedAd();
+            }
         }
 
         if (!VolumeManager.getIsMuted())
