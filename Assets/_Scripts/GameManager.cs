@@ -267,7 +267,7 @@ public class GameManager : MonoBehaviour {
                     goalDetector[i].active = false;
                 }
             }
-            if (getLevelName() == "ARCADE")
+            if (getLevelName() == "ARCADE" || getLevelName()=="TIME_LAPSE")
             {
                 bombSpawner.active = false;
             }
