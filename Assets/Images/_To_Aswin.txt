@@ -1,0 +1,21 @@
+TODO
+-----
+1)Replace all existing images with new ones
+
+Extra Add ons
+-------------
+0)T&C Logo
+1)Replay with ad button
+2)Exit without playing ad button
+3)Extra backgrounds
+4)Red colored icon for android
+5)Developer Icon(T&C Logo) 
+512 x 512
+32-bit PNG (with alpha)
+6)Header Image(Will refer it further)
+4096 x 2304
+JPG or 24-bit PNG (no alpha)
+9)Screenshots edited(Will provide details)
+10)High-res icon
+11)Feature Graphic
+12)Video frames(Will provide details)

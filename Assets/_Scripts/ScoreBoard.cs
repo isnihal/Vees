@@ -128,7 +128,7 @@ public class ScoreBoard : MonoBehaviour {
 
                 break;
             case 6:
-                Social.ReportScore(GameManager.getScore(), equalsLeaderBoardID, (bool success) => {
+                Social.ReportScore(EnemySpawner.getWaveNumber(), equalsLeaderBoardID, (bool success) => {
                     if (success)
                     {
                         Debug.Log("Success in posting score to leaderboard");
