@@ -3,7 +3,7 @@ using System.Collections;
 
 public class BombSpawner : MonoBehaviour {
 
-    float bombingFrequency,spawningX,bombVelocity,probability;
+    float bombingFrequency,spawningX,bombVelocity,probability,minFrequency,maxFrequency;
     public GameObject bombPrefab,parent;
     public AudioClip bombClip;
     GameObject bombFormation;
@@ -11,14 +11,19 @@ public class BombSpawner : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+        
         if (GameManager.getLevelName() == "ARCADE")
         {
-            bombingFrequency = 0.35f;
+            minFrequency = 0.15f;
+            maxFrequency = 0.5f;
+            bombingFrequency = minFrequency;
             bombVelocity = -6;
         }
         else
         {
-            bombingFrequency = 0.05f;
+            minFrequency = 0.05f;
+            maxFrequency = 0.5f;
+            bombingFrequency = minFrequency;
             bombVelocity = -4.45f;
         }
 	}
@@ -39,11 +44,17 @@ public class BombSpawner : MonoBehaviour {
             }
             if (GameManager.getLevelName() != "TIME_LAPSE")
             {
-                bombingFrequency += 0.05f;
+                if (bombingFrequency <= maxFrequency)
+                {
+                    bombingFrequency += 0.05f;
+                }
             }
             else
             {
-                bombingFrequency += 0.005f;
+                if (bombingFrequency <= maxFrequency)
+                {
+                    bombingFrequency += 0.005f;
+                }
             }
         }
 	}
