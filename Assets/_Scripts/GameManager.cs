@@ -653,4 +653,12 @@ public class GameManager : MonoBehaviour {
                 break;
         }
     }
+
+    void OnApplicationPause(bool pauseStatus)
+    {
+        if(pauseStatus)
+        {
+            pauseGame();
+        }
+    }
 }
