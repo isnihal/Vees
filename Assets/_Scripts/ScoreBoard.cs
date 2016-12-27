@@ -5,7 +5,7 @@ using System.Collections;
 
 public class ScoreBoard : MonoBehaviour {
 
-    static int showRewardedAdAfter=6, showNoRewardAdAfter=3,numberOfGames=0,numberOfLapseGames=0;
+    static int showRewardedAdAfter=6, showNoRewardAdAfter=7,numberOfGames=0,numberOfLapseGames=0;
 
     const string oneWayLeaderBoardID = "CgkIiY779uUNEAIQEw";
     const string equalsLeaderBoardID = "CgkIiY779uUNEAIQFA";
