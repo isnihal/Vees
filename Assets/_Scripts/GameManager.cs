@@ -555,6 +555,11 @@ public class GameManager : MonoBehaviour {
         Debug.Log("Has user Purchased:" + IAPManager.hasUserPurchasedVees());
         if (!IAPManager.hasUserPurchasedVees())
         {
+            if (!Advertisement.IsReady())
+            {
+                Advertisement.Initialize("d1e526e4-74a8-4471-a21b-900add8423eb");
+            }
+
             if (Advertisement.IsReady())
             {
                 Advertisement.Show("video", new ShowOptions() { resultCallback = handleAdResult });

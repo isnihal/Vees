@@ -18,6 +18,10 @@ public class ScoreBoard : MonoBehaviour {
     // Use this for initialization
     void Start () {
         postScoreToLeaderBoard();
+        if (!Advertisement.IsReady())
+        {
+            Advertisement.Initialize("d1e526e4-74a8-4471-a21b-900add8423eb");
+        }
         if (GameManager.hasGameBeenRestarted())
         {
             numberOfGames = 0;
