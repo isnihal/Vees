@@ -16,7 +16,13 @@ public class TouchManager : MonoBehaviour {
     static float startTime, endTime,xVelocity,yVelocity;
     PlayerSpawner playerSpawner;
     Vector3 playerPosition, playerVelocity;
-    float dragLength, dragDuration, dragHeight,minimumDragLength=45,minimumDragHeight=15;
+    float dragLength, dragDuration, dragHeight,minimumDragLength,minimumDragHeight;
+
+    void Start()
+    {
+        minimumDragLength = 15;
+        minimumDragHeight = 15;
+    }
 
     void DragStart()
     {
