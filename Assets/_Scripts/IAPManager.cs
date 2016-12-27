@@ -58,6 +58,8 @@ public class IAPManager : MonoBehaviour, IStoreListener
             return;
         }
 
+        updateHasUserPurchased();
+
         if (!hasUserPurchased)
         {
             switch (currentState)
@@ -108,6 +110,44 @@ public class IAPManager : MonoBehaviour, IStoreListener
             priceText.active = false;
             increaseButton.active = false;
             decreaseButton.active = false;
+        }
+    }
+
+    void updateHasUserPurchased()
+    {
+        Product beer1 = m_StoreController.products.WithID(oneBeer);
+        if (beer1 != null && beer1.hasReceipt)
+        {
+            // Owned Non Consumables and Subscriptions should always have receipts.
+            // So here the Non Consumable product has already been bought.
+            hasUserPurchased = true;
+        }
+
+        Product beer2 = m_StoreController.products.WithID(twoBeer);
+        if (beer2 != null && beer2.hasReceipt)
+        {
+            hasUserPurchased = true;
+        }
+
+        Product beer3 = m_StoreController.products.WithID(threeBeer);
+        if (beer3 != null && beer3.hasReceipt)
+        {
+            
+            hasUserPurchased = true;
+        }
+
+        Product beer4 = m_StoreController.products.WithID(fourBeer);
+        if (beer4 != null && beer4.hasReceipt)
+        {
+            
+            hasUserPurchased = true;
+        }
+
+        Product beer5 = m_StoreController.products.WithID(fiveBeer);
+        if (beer5 != null && beer5.hasReceipt)
+        {
+            
+            hasUserPurchased = true;
         }
     }
 
