@@ -557,7 +557,7 @@ public class GameManager : MonoBehaviour {
         {
             if (!Advertisement.IsReady())
             {
-                Advertisement.Initialize("d1e526e4-74a8-4471-a21b-900add8423eb");
+                Advertisement.Initialize("1235581");
             }
 
             if (Advertisement.IsReady())
@@ -621,7 +621,7 @@ public class GameManager : MonoBehaviour {
             return ("GAME_OVER");
         }
 
-        else if(Application.loadedLevel==10)
+        else if(Application.loadedLevel==9)
         {
             return ("TUTORIAL");
         }
