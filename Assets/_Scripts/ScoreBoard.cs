@@ -20,7 +20,7 @@ public class ScoreBoard : MonoBehaviour {
         postScoreToLeaderBoard();
         if (!Advertisement.IsReady())
         {
-            Advertisement.Initialize("1235581");
+            Advertisement.Initialize("1215854",true);
         }
         if (GameManager.hasGameBeenRestarted())
         {

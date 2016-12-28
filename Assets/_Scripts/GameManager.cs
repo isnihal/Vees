@@ -107,6 +107,10 @@ public class GameManager : MonoBehaviour {
     {
         if(life<=0 && life!=-99)//-99 as a flag
         {
+            if (!Advertisement.IsReady())
+            {
+                Advertisement.Initialize("1215854");
+            }
             if (!hasRestarted)//Play more by viewing ad (Only once)
             {
                 //Show the UI Buttons
@@ -555,10 +559,7 @@ public class GameManager : MonoBehaviour {
         Debug.Log("Has user Purchased:" + IAPManager.hasUserPurchasedVees());
         if (!IAPManager.hasUserPurchasedVees())
         {
-            if (!Advertisement.IsReady())
-            {
-                Advertisement.Initialize("1235581");
-            }
+            
 
             if (Advertisement.IsReady())
             {
