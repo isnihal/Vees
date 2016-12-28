@@ -664,6 +664,7 @@ public class GameManager : MonoBehaviour {
     {
         if(pauseStatus)
         {
+            isPaused = false;
             pauseGame();
         }
     }
