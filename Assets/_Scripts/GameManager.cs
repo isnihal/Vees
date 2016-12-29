@@ -571,6 +571,7 @@ public class GameManager : MonoBehaviour {
         }
         else
         {
+            hasRestarted = true;
             restartGame();
             life = 4;
             if (GameManager.getLevelName() == "TIME_LAPSE")
