@@ -326,7 +326,41 @@ public class IAPManager : MonoBehaviour, IStoreListener
 
     public static bool hasUserPurchasedVees()
     {
-        return hasUserPurchased;
+        Product beer1 = m_StoreController.products.WithID(oneBeer);
+        if (beer1 != null && beer1.hasReceipt)
+        {
+            // Owned Non Consumables and Subscriptions should always have receipts.
+            // So here the Non Consumable product has already been bought.
+            return true;
+        }
+
+        Product beer2 = m_StoreController.products.WithID(twoBeer);
+        if (beer2 != null && beer2.hasReceipt)
+        {
+            return true;
+        }
+
+        Product beer3 = m_StoreController.products.WithID(threeBeer);
+        if (beer3 != null && beer3.hasReceipt)
+        {
+
+            return true;
+        }
+
+        Product beer4 = m_StoreController.products.WithID(fourBeer);
+        if (beer4 != null && beer4.hasReceipt)
+        {
+
+            return true;
+        }
+
+        Product beer5 = m_StoreController.products.WithID(fiveBeer);
+        if (beer5 != null && beer5.hasReceipt)
+        {
+
+            return true;
+        }
+        return false;
     }
 
     public void increaseIndex()

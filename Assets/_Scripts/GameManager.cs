@@ -559,8 +559,6 @@ public class GameManager : MonoBehaviour {
         Debug.Log("Has user Purchased:" + IAPManager.hasUserPurchasedVees());
         if (!IAPManager.hasUserPurchasedVees())
         {
-            
-
             if (Advertisement.IsReady())
             {
                 Advertisement.Show("video", new ShowOptions() { resultCallback = handleAdResult });
@@ -569,6 +567,15 @@ public class GameManager : MonoBehaviour {
             else
             {
                 toastManager.showToastOnUiThread("Check Your Internet Connection");
+            }
+        }
+        else
+        {
+            restartGame();
+            life = 4;
+            if (GameManager.getLevelName() == "TIME_LAPSE")
+            {
+                timeLeft = 20f;
             }
         }
     }
