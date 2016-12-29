@@ -56,7 +56,7 @@ public class TutorialManager : MonoBehaviour {
 
         else if (currentState == States.Battery)
         {
-            instructionBoard.text = "KEEP AN EYE ON THE BATTEY,VEES COST BATTERY AND REFILS WITH TIME";
+            instructionBoard.text = "KEEP AN EYE ON THE BATTERY,VEES COST BATTERY AND REFILS WITH TIME";
         }
 
         else if(currentState==States.END)

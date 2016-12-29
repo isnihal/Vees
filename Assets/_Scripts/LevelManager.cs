@@ -158,7 +158,7 @@ public class LevelManager : MonoBehaviour {
 
     void showTutorial()
     {
-        SceneManager.LoadScene(10);
+        SceneManager.LoadScene(9);
     }
 
     bool isSplash()
