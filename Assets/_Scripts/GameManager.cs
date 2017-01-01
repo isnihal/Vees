@@ -116,9 +116,9 @@ public class GameManager : MonoBehaviour {
             Advertisement.Initialize("1215854");
         }
 
-        if (life<=0 && life!=-99 && Advertisement.IsReady())//-99 as a flag
+        if (life<=0 && life!=-99)//-99 as a flag
         {         
-            if (!hasRestarted)//Play more by viewing ad (Only once)
+            if (!hasRestarted && Advertisement.IsReady())//Play more by viewing ad (Only once)
             {
                 //Show the UI Buttons
                 pauseGame();
@@ -134,10 +134,6 @@ public class GameManager : MonoBehaviour {
             {
                 SceneManager.LoadScene("GAME_OVER");                
             }
-        }
-        else
-        {
-            SceneManager.LoadScene("GAME_OVER");
         }
     }
 
