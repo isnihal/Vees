@@ -1,8 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.SceneManagement;
-using Google;
 using GooglePlayGames;
-using System.Collections;
 
 public class LevelManager : MonoBehaviour {
 
@@ -143,7 +141,7 @@ public class LevelManager : MonoBehaviour {
 
     void loadMainMenu()
     {
-        Invoke("loadNextLevel", 5f);
+        Invoke("loadNextLevel",1.5f);
     }
 
     void loadNextLevel()
@@ -203,4 +201,6 @@ public class LevelManager : MonoBehaviour {
     {
         Social.ShowAchievementsUI();
     }
+
+  
 }

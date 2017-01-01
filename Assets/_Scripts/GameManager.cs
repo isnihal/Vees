@@ -2,6 +2,7 @@
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using UnityEngine.Advertisements;
+using System;
 using System.Collections;
 
 public class GameManager : MonoBehaviour {
@@ -73,6 +74,11 @@ public class GameManager : MonoBehaviour {
         toastManager = FindObjectOfType<ToastManager>();
         lastLifeScore = 0;
         lastLife = false;
+
+        if (!Advertisement.IsReady())
+        {
+            Advertisement.Initialize("1215854");
+        }
     }
 
     void Update()
@@ -105,12 +111,13 @@ public class GameManager : MonoBehaviour {
 
     void isGameOver()
     {
-        if(life<=0 && life!=-99)//-99 as a flag
+        if (!Advertisement.IsReady())
         {
-            if (!Advertisement.IsReady())
-            {
-                Advertisement.Initialize("1215854");
-            }
+            Advertisement.Initialize("1215854");
+        }
+
+        if (life<=0 && life!=-99 && Advertisement.IsReady())//-99 as a flag
+        {         
             if (!hasRestarted)//Play more by viewing ad (Only once)
             {
                 //Show the UI Buttons
@@ -127,6 +134,10 @@ public class GameManager : MonoBehaviour {
             {
                 SceneManager.LoadScene("GAME_OVER");                
             }
+        }
+        else
+        {
+            SceneManager.LoadScene("GAME_OVER");
         }
     }
 
@@ -674,6 +685,20 @@ public class GameManager : MonoBehaviour {
         {
             isPaused = false;
             pauseGame();
+        }
+    }
+
+    IEnumerator checkInternetConnection(Action<bool> action)
+    {
+        WWW www = new WWW("http://google.com");
+        yield return www;
+        if (www.error != null)
+        {
+            action(false);
+        }
+        else
+        {
+            action(true);
         }
     }
 }
