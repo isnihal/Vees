@@ -5,7 +5,7 @@ using System.Collections;
 
 public class ScoreBoard : MonoBehaviour {
 
-    static int showRewardedAdAfter=6, showNoRewardAdAfter=7,numberOfGames=0,numberOfLapseGames=0;
+    static int showRewardedAdAfter = 6, showNoRewardAdAfter = 7, numberOfGames = 0, numberOfLapseGames = 0;
 
     const string oneWayLeaderBoardID = "CgkIiY779uUNEAIQEw";
     const string equalsLeaderBoardID = "CgkIiY779uUNEAIQFA";
@@ -16,11 +16,11 @@ public class ScoreBoard : MonoBehaviour {
     //Set scoreboard for gameOver level
 
     // Use this for initialization
-    void Start () {
+    void Start() {
         postScoreToLeaderBoard();
         if (!Advertisement.IsReady())
         {
-            Advertisement.Initialize("1215854",true);
+            Advertisement.Initialize("1215854", true);
         }
         if (GameManager.hasGameBeenRestarted())
         {
@@ -45,46 +45,47 @@ public class ScoreBoard : MonoBehaviour {
             VolumeManager.setMusicPlayerOnIfSilent();
         }
 
-        string language = PlayerPrefsManager.getLanguage();
-        if(language=="")
-        {
-            language = "ENGLISH";
-        }
-        if (GoalDetector.fromEquals)
+        if (LevelManager.getFromLevel() == 6)
         {
             //Wave number for level EQUALS
-            switch (PlayerPrefsManager.getLanguage())
-            {
-                case "ENGLISH":
-                    gameObject.GetComponent<Text>().text = "WAVE\n" + EnemySpawner.getWaveNumber().ToString();
-                    break;
-                case "CHINEESE":
-                    gameObject.GetComponent<Text>().text = "波\n" + EnemySpawner.getWaveNumber().ToString();
-                    break;
-            }
+            gameObject.GetComponent<Text>().text = "WAVE\n" + EnemySpawner.getWaveNumber().ToString();
             GoalDetector.fromEquals = false;
         }
         else
         {
-            switch (language)
+            if (LevelManager.getFromLevel() != 5)
             {
-                case "ENGLISH":
-                    if (LevelManager.getFromLevel() != 5)
-                    {
-                        gameObject.GetComponent<Text>().text = "HITS\n" + GameManager.getScore().ToString();
-                    }
-                    else
-                    {
-                        gameObject.GetComponent<Text>().text = "ESCAPES\n" + GameManager.getScore().ToString();
-                    }
-                    break;
-                case "CHINEESE":
-                    gameObject.GetComponent<Text>().text = "得分了\n" + GameManager.getScore().ToString();
-                    break;
+                gameObject.GetComponent<Text>().text = "HITS\n" + GameManager.getScore().ToString();
             }
-           
+            else
+            {
+                gameObject.GetComponent<Text>().text = "ESCAPES\n" + GameManager.getScore().ToString();
+            }
         }
-	}
+    }
+
+
+    void Update()
+    {
+        if (LevelManager.getFromLevel()==6)
+        {
+            //Wave number for level EQUALS
+            gameObject.GetComponent<Text>().text = "WAVE\n" + EnemySpawner.getWaveNumber().ToString();
+            GoalDetector.fromEquals = false;
+        }
+        else
+        {
+            if (LevelManager.getFromLevel() != 5)
+            {
+                gameObject.GetComponent<Text>().text = "HITS\n" + GameManager.getScore().ToString();
+            }
+            else
+            {
+                gameObject.GetComponent<Text>().text = "ESCAPES\n" + GameManager.getScore().ToString();
+            }
+        }
+    }
+
 
 
     void checkForAchievements()
