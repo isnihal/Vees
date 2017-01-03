@@ -85,6 +85,7 @@ public class GameManager : MonoBehaviour {
     {
         setScoreBoardDisplay();
         setLifeDisplay();
+        checkForAchievements();
         isGameOver();
         if(GameManager.getLevelName()=="TIME_LAPSE")
         {
