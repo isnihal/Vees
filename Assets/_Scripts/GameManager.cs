@@ -327,7 +327,7 @@ public class GameManager : MonoBehaviour {
                 }
             });
 
-            if (score == 200)
+            if (score >= 200)
             {
                 Social.ReportProgress(GPGSIds.achievement_one_way_pro, 100, (bool sucess) => {
                     if (sucess)
@@ -341,7 +341,7 @@ public class GameManager : MonoBehaviour {
                 });
             }
 
-            if (score == 500)
+            if (score >= 500)
             {
                 Social.ReportProgress(GPGSIds.achievement_one_way_master, 100, (bool sucess) => {
                     if (sucess)
@@ -355,7 +355,7 @@ public class GameManager : MonoBehaviour {
                 });
             }
 
-            if (score == 1000)
+            if (score >= 1000)
             {
                 Social.ReportProgress(GPGSIds.achievement_one_way_legend, 100, (bool sucess) =>
                 {
@@ -370,39 +370,9 @@ public class GameManager : MonoBehaviour {
                 });
             }
 
-            if (lastLife && lastLifeScore==100)
+            if (lastLife && lastLifeScore>=100)
             {
                 Social.ReportProgress(GPGSIds.achievement_one_way_survivor, 100, (bool sucess) =>
-                {
-                    if (sucess)
-                    {
-                        Debug.Log("Achievement Success");
-                    }
-                    else
-                    {
-                        Debug.Log("Achievement failed");
-                    }
-                });
-            }
-
-        }
-
-        else if (getLevelName()=="ARCADE")
-        {
-            Social.ReportProgress(GPGSIds.achievement_boom_noob, 100, (bool sucess) => {
-                if (sucess)
-                {
-                    Debug.Log("ARCADE noob unlocked");
-                }
-                else
-                {
-                    Debug.Log("Achievement failed");
-                }
-            });
-
-            if (score == 200)
-            {
-                Social.ReportProgress(GPGSIds.achievement_bomb_diffuser, 100, (bool sucess) =>
                 {
                     if (sucess)
                     {
@@ -430,7 +400,7 @@ public class GameManager : MonoBehaviour {
                 }
             });
 
-            if (score == 20)
+            if (score >= 20)
             {
                 Social.ReportProgress(GPGSIds.achievement_escape_pro, 100, (bool sucess) => {
                     if (sucess)
@@ -444,7 +414,7 @@ public class GameManager : MonoBehaviour {
                 });
             }
 
-            if (score == 50)
+            if (score >= 50)
             {
                 Social.ReportProgress(GPGSIds.achievement_escape_master, 100, (bool sucess) => {
                     if (sucess)
@@ -458,7 +428,7 @@ public class GameManager : MonoBehaviour {
                 });
             }
 
-            if (score == 100)
+            if (score >= 100)
             {
                 Social.ReportProgress(GPGSIds.achievement_escape_legend, 100, (bool sucess) =>
                 {
@@ -473,7 +443,7 @@ public class GameManager : MonoBehaviour {
                 });
             }
 
-            if(lastLife && lastLifeScore==20)
+            if(lastLife && lastLifeScore>=20)
             {
                 Social.ReportProgress(GPGSIds.achievement_escape_survivor, 100, (bool sucess) =>
                 {
@@ -503,7 +473,7 @@ public class GameManager : MonoBehaviour {
                 }
             });
 
-            if(EnemySpawner.getWaveNumber()==20)
+            if(EnemySpawner.getWaveNumber()>=20)
             {
                 Social.ReportProgress(GPGSIds.achievement_equals_pro, 100, (bool sucess) => {
                     if (sucess)
@@ -517,7 +487,7 @@ public class GameManager : MonoBehaviour {
                 });
             }
 
-            if (EnemySpawner.getWaveNumber() == 50)
+            if (EnemySpawner.getWaveNumber() >= 50)
             {
                 Social.ReportProgress(GPGSIds.achievement_equals_master, 100, (bool sucess) => {
                     if (sucess)
@@ -531,7 +501,7 @@ public class GameManager : MonoBehaviour {
                 });
             }
 
-            if (EnemySpawner.getWaveNumber() == 100)
+            if (EnemySpawner.getWaveNumber() >= 100)
             {
                 Social.ReportProgress(GPGSIds.achievement_equals_legend, 100, (bool sucess) => {
                     if (sucess)
@@ -563,7 +533,17 @@ public class GameManager : MonoBehaviour {
 
     public void continueGameWithAd()
     {
-        Debug.Log("Has user Purchased:" + IAPManager.hasUserPurchasedVees());
+        //Unlock veeplay achievement
+        Social.ReportProgress(GPGSIds.achievement_veeplay, 100, (bool sucess) => {
+            if (sucess)
+            {
+                Debug.Log("Veeplay achievement unlocked");
+            }
+            else
+            {
+                Debug.Log("Achievement failed");
+            }
+        });
         if (!IAPManager.hasUserPurchasedVees())
         {
             if (Advertisement.IsReady())

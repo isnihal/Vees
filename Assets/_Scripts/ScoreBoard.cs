@@ -5,7 +5,7 @@ using System.Collections;
 
 public class ScoreBoard : MonoBehaviour {
 
-    static int showRewardedAdAfter = 6, showNoRewardAdAfter = 7, numberOfGames = 0, numberOfLapseGames = 0;
+    static int showRewardedAdAfter = 6, showNoRewardAdAfter = 7, numberOfGames = 0, numberOfLapseGames = 0,numberOfEqualsGames;
 
     const string oneWayLeaderBoardID = "CgkIiY779uUNEAIQEw";
     const string equalsLeaderBoardID = "CgkIiY779uUNEAIQFA";
@@ -15,13 +15,15 @@ public class ScoreBoard : MonoBehaviour {
 
     //Set scoreboard for gameOver level
 
-    // Use this for initialization
     void Start() {
         postScoreToLeaderBoard();
+        checkForAchievements();
+
         if (!Advertisement.IsReady())
         {
             Advertisement.Initialize("1215854", true);
         }
+
         if (GameManager.hasGameBeenRestarted())
         {
             numberOfGames = 0;
@@ -64,7 +66,6 @@ public class ScoreBoard : MonoBehaviour {
         }
     }
 
-
     void Update()
     {
         if (LevelManager.getFromLevel()==6)
@@ -85,8 +86,6 @@ public class ScoreBoard : MonoBehaviour {
             }
         }
     }
-
-
 
     void checkForAchievements()
     {
@@ -113,6 +112,29 @@ public class ScoreBoard : MonoBehaviour {
             });
         }
 
+
+        if (LevelManager.getFromLevel() == 6)
+        {
+            numberOfEqualsGames++;
+        }
+        else
+        {
+            numberOfEqualsGames = 0;
+        }
+        if (numberOfEqualsGames == 10)
+        {
+            Social.ReportProgress(GPGSIds.achievement_equals_love, 100, (bool sucess) =>
+            {
+                if (sucess)
+                {
+                    Debug.Log("Achievement Success");
+                }
+                else
+                {
+                    Debug.Log("Achievement failed");
+                }
+            });
+        }
     }
 
     public void postScoreToLeaderBoard()
