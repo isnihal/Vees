@@ -141,7 +141,7 @@ public class LevelManager : MonoBehaviour {
 
     void loadMainMenu()
     {
-        Invoke("loadNextLevel",1.5f);
+        Invoke("loadNextLevel",4f);
     }
 
     void loadNextLevel()
