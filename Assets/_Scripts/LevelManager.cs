@@ -7,9 +7,9 @@ public class LevelManager : MonoBehaviour {
     //Replay Setting
     static int fromLevel;
     bool startTimer,firstTap;
-    float ButtonCooler; //Time before reset
+    float ButtonCooler,splashDelay; //Time before reset
     int ButtonCount;
-    bool doubleTapped;
+    bool doubleTapped,firstTime;
 
     ToastManager toastManager;
 
@@ -17,15 +17,18 @@ public class LevelManager : MonoBehaviour {
 
     void Start()
     {
+        firstTime = false;
+        splashDelay = 4.5f;
         //Load main menu if current level is splash screen
         //Load Tutorial if game is loaded for the first time
-        /*if(PlayerPrefsManager.isFirstTime())
+        if(PlayerPrefsManager.isFirstTime() && !PlayerPrefsManager.hasFirstTimeKey())
         {
             PlayerPrefsManager.setFirstTime();
-            SceneManager.LoadScene("00A_TUTORIAL");
-        }*/
+            firstTime = true;
+            loadTutorial();
+        }
 
-        if (isSplash())
+        if (isSplash() && !firstTime)
         {
             loadMainMenu();
         }
@@ -141,7 +144,7 @@ public class LevelManager : MonoBehaviour {
 
     void loadMainMenu()
     {
-        Invoke("loadNextLevel",4f);
+        Invoke("loadNextLevel",splashDelay);
     }
 
     void loadNextLevel()
@@ -151,7 +154,7 @@ public class LevelManager : MonoBehaviour {
 
     void loadTutorial()
     {
-        Invoke("showTutorial", 5f); 
+        Invoke("showTutorial", splashDelay); 
     }
 
     void showTutorial()

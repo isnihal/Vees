@@ -42,12 +42,25 @@ public class PlayerPrefsManager : MonoBehaviour {
     public static void setFirstTime()
     {
         PlayerPrefs.SetInt(FIRST_TIME_KEY, 1);
+        PlayerPrefs.Save();
     }
 
     public static bool isFirstTime()
     {
         Debug.Log("First time:" + PlayerPrefs.GetInt(FIRST_TIME_KEY));
         if(PlayerPrefs.GetInt(FIRST_TIME_KEY)!=1)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    public static bool hasFirstTimeKey()
+    {
+        if(PlayerPrefs.HasKey(FIRST_TIME_KEY))
         {
             return true;
         }
