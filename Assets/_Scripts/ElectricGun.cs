@@ -80,6 +80,7 @@ public class ElectricGun : MonoBehaviour {
                 }
                 GameManager.decrementLife();
                 resetCharge();
+                isReseting = false;
             }
         }
 	}

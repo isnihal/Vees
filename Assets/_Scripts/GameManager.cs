@@ -96,6 +96,10 @@ public class GameManager : MonoBehaviour {
         {
             lastLife = true;
         }
+        else
+        {
+            lastLife = false;
+        }
     }
 
     void setLevelProperties()
