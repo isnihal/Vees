@@ -9,7 +9,7 @@ public class ElectricGun : MonoBehaviour {
     float currentTime, lastIncrementedTime, timeToCharge ,resetCoolDownTime;
     bool isReseting,oneTime;
     public GameObject[] batteryBars;
-    public AudioClip rechargeClip;
+    public AudioClip rechargeClip,boomClip;
 
 	// Use this for initialization
 	void Start () {
@@ -47,22 +47,39 @@ public class ElectricGun : MonoBehaviour {
 
         if(charge==0)
         {
-            isReseting = true;
-            if (oneTime)
+            if (GameManager.getLevelName() == "TIME_LAPSE")
             {
-                if (!VolumeManager.getIsMuted())
+                isReseting = true;
+                if (oneTime)
                 {
-                    AudioSource.PlayClipAtPoint(rechargeClip, Vector3.zero);
+                    if (!VolumeManager.getIsMuted())
+                    {
+                        AudioSource.PlayClipAtPoint(rechargeClip, Vector3.zero);
+                    }
+                    oneTime = false;
                 }
-                oneTime = false;
+                //Reset after a cooldown time
+                resetCoolDownTime -= Time.deltaTime;
+                if (resetCoolDownTime <= 0)
+                {
+                    resetCharge();
+                    resetCoolDownTime = 3.75f;
+                    isReseting = false;
+                }
             }
-            //Reset after a cooldown time
-            resetCoolDownTime -= Time.deltaTime;
-            if(resetCoolDownTime<=0)
+            else
             {
+                isReseting = true;
+                if (oneTime)
+                {
+                    if (!VolumeManager.getIsMuted())
+                    {
+                        AudioSource.PlayClipAtPoint(boomClip, Vector3.zero);
+                    }
+                    oneTime = false;
+                }
+                GameManager.decrementLife();
                 resetCharge();
-                resetCoolDownTime = 3.75f;
-                isReseting = false;
             }
         }
 	}
