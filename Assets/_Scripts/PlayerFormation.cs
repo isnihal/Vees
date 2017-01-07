@@ -35,6 +35,19 @@ public class PlayerFormation : MonoBehaviour {
             {
                 DestroyEnemyVees(collider);
             }
+
+            if(collider.gameObject.GetComponent<GoldenVee>())
+            {
+                if (GameManager.getLevelName() == "ONE_DIRECTION")
+                {
+                    GameManager.incrementLife();
+                }
+                else
+                {
+                    GameManager.incrementScoreBy(49);
+                }
+                DestroyEnemyVees(collider);
+            }
         }
 
         //For equals only

@@ -1,3 +1,14 @@
+## [1.9.3] - 2017-01-03
+### Added
+- Windows Store - support for UWP apps running while logged-out of Windows Store. Now fetches app's product metadata if logged out, and requests user sign in to make purchase or to fetch user's purchase history.
+- Editor - diagnostic log at build-time when IAP Service disabled: "Unity IAP plugin is installed, but Unity IAP is not enabled. Please enable Unity IAP in the Services window." Fewer redundant errors.
+
+### Fixed
+- Editor - checkmarks refresh for Targeted Android Store after Editor Play/Stop
+- Editor - hides spurious Component MenuItems
+- Linux Editor - BillingMode.json path case-sensitivity 
+- IAP Catalog - clearer text for Export button: "App Store Export"
+
 ## [1.9.2] - 2016-11-29
 ### Fixed
 - GooglePlay - addresses warning about usage of WebViewClient.onReceivedSslError if CloudMoolah.aar is included

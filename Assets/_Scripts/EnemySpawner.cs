@@ -8,7 +8,7 @@ public class EnemySpawner : MonoBehaviour {
     //Spawns enemy according to each level properties
     //TODO:FUNCTIONAL REFACTORING
 
-    public GameObject EnemyPrefab,parent;
+    public GameObject EnemyPrefab,parent,GoldenPrefab;
     public AudioClip enemyClip;
     public Text waveNumberText;
     public static bool resumeTrigger;
@@ -17,10 +17,11 @@ public class EnemySpawner : MonoBehaviour {
     GameObject enemyFormation;
     float enemySpawningPositionX, enemySpawningPositionY;
     Vector3 enemySpawningPosition;
-    float probability, spawnRate, formationVelocity;
+    float probability, spawnRate, formationVelocity,goldenProbability,goldenSpawnRate;
     Rigidbody2D formationRigidBody;
     enum Position {Top,Bottom,Left,Right};
-
+    bool goldenFlag;
+    int goldenScore;
 
 
     //Properties applicable to EQUALS
@@ -32,6 +33,7 @@ public class EnemySpawner : MonoBehaviour {
     // Use this for initialization
     void Start() {
         spawnRate = getSpawnFrequency();
+        goldenSpawnRate = 0.4f;
         setFormationVelocity();
         //Properties applicable to equals
         if (GameManager.getLevelName() == "EQUALS")
@@ -47,13 +49,16 @@ public class EnemySpawner : MonoBehaviour {
         {
             enemiesSpawned = 0;
         }
+        goldenFlag = false;
+        goldenScore = 50;
     }
 
     // Update is called once per frame
     void Update()
     {
         probability = spawnRate * Time.deltaTime;
-        
+        goldenProbability = goldenSpawnRate * Time.deltaTime;
+
         //Enemy Spawner for One Direction
         if (GameManager.getLevelName() == "ONE_DIRECTION")
         {
@@ -62,6 +67,17 @@ public class EnemySpawner : MonoBehaviour {
                 spawnEnemy(Position.Top);
                 spawnRate += 0.006f;
                 Mathf.Clamp(spawnRate, 1.5f, 8.5f);
+            }
+
+            if(GameManager.getScore()%goldenScore==0 && GameManager.getScore()!=0)
+            {
+                goldenFlag = true;
+            }
+
+            if(goldenProbability>Random.value && goldenFlag)
+            {
+                spawnGoldenVee();
+                goldenFlag = false;
             }
         }
 
@@ -146,6 +162,17 @@ public class EnemySpawner : MonoBehaviour {
                 {
                     spawnEnemy(Position.Bottom);
                 }
+            }
+
+            if (GameManager.getScore() % goldenScore == 0 && GameManager.getScore() != 0)
+            {
+                goldenFlag = true;
+            }
+
+            if (goldenProbability > Random.value && goldenFlag)
+            {
+                goldenFlag = false;
+                spawnGoldenVee();
             }
         }
 
@@ -274,5 +301,15 @@ public class EnemySpawner : MonoBehaviour {
     public static int getWaveNumber()
     {
         return waveNumber;
+    }
+
+    void spawnGoldenVee()
+    {
+        enemySpawningPositionX = Random.Range(ScreenManager.getLeftBoundary(), ScreenManager.getRightBoundary());
+        enemySpawningPosition = new Vector3(enemySpawningPositionX, transform.position.y, 0);
+        enemyFormation = Instantiate(GoldenPrefab, enemySpawningPosition, Quaternion.identity) as GameObject;
+        formationRigidBody = enemyFormation.GetComponent<Rigidbody2D>();
+        formationRigidBody.velocity = Vector3.down * 18.5f;
+        setEnemyFormationProperties();
     }
 }

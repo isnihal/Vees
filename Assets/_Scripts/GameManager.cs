@@ -77,10 +77,10 @@ public class GameManager : MonoBehaviour {
         lastLife = false;
         delayTrigger = false;
 
-        if (!Advertisement.IsReady())
+        /*if (!Advertisement.IsReady())
         {
             Advertisement.Initialize("1215854");
-        }
+        }*/
     }
 
     void Update()
@@ -120,10 +120,10 @@ public class GameManager : MonoBehaviour {
 
     void isGameOver()
     {
-        if (!Advertisement.IsReady())
+        /*if (!Advertisement.IsReady())
         {
             Advertisement.Initialize("1215854");
-        }
+        }*/
 
         if (life <= 0 && life != -99)//-99 as a flag
         {
@@ -223,6 +223,11 @@ public class GameManager : MonoBehaviour {
         }
     }
 
+    public static void incrementScoreBy(int howMuch)
+    {
+        score += howMuch;
+    }
+
     public static int getScore()
     {
         return score;
@@ -253,6 +258,11 @@ public class GameManager : MonoBehaviour {
     public static void setLife(int number)
     {
         life = number;
+    }
+
+    public static void incrementLife()
+    {
+        life++;
     }
 
     public static int getLife()
@@ -670,20 +680,6 @@ public class GameManager : MonoBehaviour {
         {
             isPaused = false;
             pauseGame();
-        }
-    }
-
-    IEnumerator checkInternetConnection(Action<bool> action)
-    {
-        WWW www = new WWW("http://google.com");
-        yield return www;
-        if (www.error != null)
-        {
-            action(false);
-        }
-        else
-        {
-            action(true);
         }
     }
 

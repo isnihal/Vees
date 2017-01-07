@@ -19,10 +19,10 @@ public class ScoreBoard : MonoBehaviour {
         postScoreToLeaderBoard();
         checkForAchievements();
 
-        if (!Advertisement.IsReady())
+        /*if (!Advertisement.IsReady())
         {
-            Advertisement.Initialize("1215854", true);
-        }
+            Advertisement.Initialize("1215854");
+        }*/
 
         if (GameManager.hasGameBeenRestarted())
         {
