@@ -9,35 +9,35 @@ public class GameManager : MonoBehaviour {
 
     //Most Critical script
 
-   /*Game Manager Functions
-    1)Score reseting,incrementing,fetching
-    2)Life reseting,decrementing,fetching & Set life to an integer
-    3)Set life to 5(for all levels),If life is zero gameOver gets triggered()
-    4)Set score
-    5)Manage gameOver Level,like setting score
-    6)Check for game over
-    7)Manage Life Display
-    8)Get level name
-    9)Pause game
-   */
+    /*Game Manager Functions
+     1)Score reseting,incrementing,fetching
+     2)Life reseting,decrementing,fetching & Set life to an integer
+     3)Set life to 5(for all levels),If life is zero gameOver gets triggered()
+     4)Set score
+     5)Manage gameOver Level,like setting score
+     6)Check for game over
+     7)Manage Life Display
+     8)Get level name
+     9)Pause game
+    */
 
 
-    public Text scoreBoard,timerText;
+    public Text scoreBoard, timerText;
     public GameObject[] lifeArray;
     static float enemySpawnFrequency;
-    static int score,life,lastLifeScore;
+    static int score, life, lastLifeScore;
     //Time Lapse property
     float timeLeft;
-    string language,defaultLanguage;
+    string language, defaultLanguage;
 
     public GameObject enemySpawner, playerSpawner, bombSpawner;
     public GameObject[] goalDetector;
 
-    static bool isPaused,hasRestarted,lastLife;
+    static bool isPaused, hasRestarted, lastLife,delayTrigger;
 
 
     //Show AD button and No
-    public GameObject gameOverPanel,pauseMenuPanel,pauseButton;
+    public GameObject gameOverPanel, pauseMenuPanel, pauseButton;
 
     public Sprite pauseImage, resumeImage;
 
@@ -53,7 +53,7 @@ public class GameManager : MonoBehaviour {
             //Only for time lapse
             timeLeft = 60f;
         }
-        else if(getLevelName() =="GAME_OVER")
+        else if (getLevelName() == "GAME_OVER")
         {
             scoreBoard = FindObjectOfType<ScoreBoard>().GetComponent<Text>();
         }
@@ -74,6 +74,7 @@ public class GameManager : MonoBehaviour {
         toastManager = FindObjectOfType<ToastManager>();
         lastLifeScore = 0;
         lastLife = false;
+        delayTrigger = false;
 
         if (!Advertisement.IsReady())
         {
@@ -87,12 +88,12 @@ public class GameManager : MonoBehaviour {
         setLifeDisplay();
         checkForAchievements();
         isGameOver();
-        if(GameManager.getLevelName()=="TIME_LAPSE")
+        if (GameManager.getLevelName() == "TIME_LAPSE")
         {
             setTimer();
         }
 
-        if(life==1)
+        if (life == 1)
         {
             lastLife = true;
         }
@@ -100,6 +101,8 @@ public class GameManager : MonoBehaviour {
         {
             lastLife = false;
         }
+
+        setPerformanceBonus();
     }
 
     void setLevelProperties()
@@ -108,7 +111,7 @@ public class GameManager : MonoBehaviour {
         setLife(5);
 
         //Game Over properties
-        if(getLevelName()=="GAME_OVER")
+        if (getLevelName() == "GAME_OVER")
         {
             FindObjectOfType<ScoreBoard>().GetComponent<Text>().text = getScore().ToString();
         }
@@ -121,8 +124,8 @@ public class GameManager : MonoBehaviour {
             Advertisement.Initialize("1215854");
         }
 
-        if (life<=0 && life!=-99)//-99 as a flag
-        {         
+        if (life <= 0 && life != -99)//-99 as a flag
+        {
             if (!hasRestarted && Advertisement.IsReady())//Play more by viewing ad (Only once)
             {
                 //Show the UI Buttons
@@ -137,7 +140,7 @@ public class GameManager : MonoBehaviour {
             }
             else
             {
-                SceneManager.LoadScene("GAME_OVER");                
+                SceneManager.LoadScene("GAME_OVER");
             }
         }
     }
@@ -155,15 +158,15 @@ public class GameManager : MonoBehaviour {
                     scoreBoard.text = "逃脱:" + score;
                     break;
             }
-            
+
         }
         else
         {
-            switch(language)
+            switch (language)
             {
                 case "ENGLISH":
-                        scoreBoard.text = "HITS:" + score;
-                        break;
+                    scoreBoard.text = "HITS:" + score;
+                    break;
                 case "CHINEESE":
                     scoreBoard.text = "杀死:" + score;
                     break;
@@ -173,7 +176,7 @@ public class GameManager : MonoBehaviour {
 
     void setLifeDisplay()
     {
-        if (GameManager.getLevelName()=="FAST_ESCAPE" || GameManager.getLevelName()=="ONE_DIRECTION")
+        if (GameManager.getLevelName() == "FAST_ESCAPE" || GameManager.getLevelName() == "ONE_DIRECTION")
         {
             for (int i = 0; i < lifeArray.Length; i++)
             {
@@ -191,14 +194,14 @@ public class GameManager : MonoBehaviour {
 
     void setTimer()
     {
-        if (!isGamePaused() && timeLeft<= 1000)
+        if (!isGamePaused() && timeLeft <= 1000)
         {
             timeLeft -= Time.deltaTime;
             int timeInSeconds = Mathf.RoundToInt(timeLeft);
             timerText.text = "TIME:00:" + timeInSeconds.ToString("00");
         }
 
-        if(timeLeft<=0)
+        if (timeLeft <= 0)
         {
             life = 0;
             timeLeft = 10000000;
@@ -213,7 +216,7 @@ public class GameManager : MonoBehaviour {
     public static void incrementScore()
     {
         score++;
-        if(lastLife)
+        if (lastLife)
         {
             lastLifeScore++;
         }
@@ -258,10 +261,10 @@ public class GameManager : MonoBehaviour {
 
     public void pauseGame()
     {
-        if(GameManager.getLevelName()=="EQUALS")
+        if (GameManager.getLevelName() == "EQUALS")
         {
             EnemyFormation enemiesOnScreen = FindObjectOfType<EnemyFormation>();
-            if(enemiesOnScreen!=null)
+            if (enemiesOnScreen != null)
             {
                 EnemySpawner.decreaseSpawnedCount();
             }
@@ -276,14 +279,14 @@ public class GameManager : MonoBehaviour {
             }
             playerSpawner.active = false;
             enemySpawner.active = false;
-            if(goalDetector!=null)
+            if (goalDetector != null)
             {
                 for (int i = 0; i < goalDetector.Length; i++)
                 {
                     goalDetector[i].active = false;
                 }
             }
-            if (getLevelName() == "ARCADE" || getLevelName()=="TIME_LAPSE")
+            if (getLevelName() == "ARCADE" || getLevelName() == "TIME_LAPSE")
             {
                 bombSpawner.active = false;
             }
@@ -319,7 +322,7 @@ public class GameManager : MonoBehaviour {
 
     void checkForAchievements()
     {
-        if (getLevelName()=="ONE_DIRECTION")
+        if (getLevelName() == "ONE_DIRECTION")
         {
             Social.ReportProgress(GPGSIds.achievement_one_way_noob, 100, (bool sucess) => {
                 if (sucess)
@@ -375,7 +378,7 @@ public class GameManager : MonoBehaviour {
                 });
             }
 
-            if (lastLife && lastLifeScore>=100)
+            if (lastLife && lastLifeScore >= 100)
             {
                 Social.ReportProgress(GPGSIds.achievement_one_way_survivor, 100, (bool sucess) =>
                 {
@@ -392,7 +395,7 @@ public class GameManager : MonoBehaviour {
 
         }
 
-        else if (getLevelName()=="FAST_ESCAPE")
+        else if (getLevelName() == "FAST_ESCAPE")
         {
             Social.ReportProgress(GPGSIds.achievement_escape_noob, 100, (bool sucess) => {
                 if (sucess)
@@ -448,7 +451,7 @@ public class GameManager : MonoBehaviour {
                 });
             }
 
-            if(lastLife && lastLifeScore>=20)
+            if (lastLife && lastLifeScore >= 20)
             {
                 Social.ReportProgress(GPGSIds.achievement_escape_survivor, 100, (bool sucess) =>
                 {
@@ -465,7 +468,7 @@ public class GameManager : MonoBehaviour {
 
         }
 
-        else if (getLevelName()=="EQUALS")
+        else if (getLevelName() == "EQUALS")
         {
             Social.ReportProgress(GPGSIds.achievement_equals_noob, 100, (bool sucess) => {
                 if (sucess)
@@ -478,7 +481,7 @@ public class GameManager : MonoBehaviour {
                 }
             });
 
-            if(EnemySpawner.getWaveNumber()>=20)
+            if (EnemySpawner.getWaveNumber() >= 20)
             {
                 Social.ReportProgress(GPGSIds.achievement_equals_pro, 100, (bool sucess) => {
                     if (sucess)
@@ -521,7 +524,7 @@ public class GameManager : MonoBehaviour {
             }
         }
 
-        else if (getLevelName()=="TIME_LAPSE")
+        else if (getLevelName() == "TIME_LAPSE")
         {
             Social.ReportProgress(GPGSIds.achievement_lapse_noob, 100, (bool sucess) => {
                 if (sucess)
@@ -587,42 +590,42 @@ public class GameManager : MonoBehaviour {
 
     public static string getLevelName()
     {
-        if(Application.loadedLevel==3)
+        if (Application.loadedLevel == 3)
         {
-        
+
             return ("ONE_DIRECTION");
         }
 
-        else if(Application.loadedLevel==4)
+        else if (Application.loadedLevel == 4)
         {
-            
+
             return ("ARCADE");
         }
 
-        else if(Application.loadedLevel==5)
+        else if (Application.loadedLevel == 5)
         {
-            
+
             return ("FAST_ESCAPE");
         }
 
-        else if(Application.loadedLevel==6)
+        else if (Application.loadedLevel == 6)
         {
-           
+
             return ("EQUALS");
         }
 
-        else if(Application.loadedLevel==7)
+        else if (Application.loadedLevel == 7)
         {
-           
+
             return ("TIME_LAPSE");
         }
 
-        else if(Application.loadedLevel==8)
+        else if (Application.loadedLevel == 8)
         {
             return ("GAME_OVER");
         }
 
-        else if(Application.loadedLevel==9)
+        else if (Application.loadedLevel == 9)
         {
             return ("TUTORIAL");
         }
@@ -662,7 +665,7 @@ public class GameManager : MonoBehaviour {
 
     void OnApplicationPause(bool pauseStatus)
     {
-        if(pauseStatus)
+        if (pauseStatus)
         {
             isPaused = false;
             pauseGame();
@@ -680,6 +683,41 @@ public class GameManager : MonoBehaviour {
         else
         {
             action(true);
+        }
+    }
+
+    void setPerformanceBonus()
+    {
+        switch (getLevelName())
+        {
+            case "ONE_DIRECTION":
+                if (score % 100 == 0 && !delayTrigger)
+                {
+                    delayTrigger = true;
+                    if (life < 5)
+                    {
+                        life++;
+                    }
+                }
+                else if (score % 100 != 0)
+                {
+                    delayTrigger = false;
+                }
+                break;
+            case "FAST_ESCAPE":
+                if(score%10==0 && !delayTrigger)
+                {
+                    delayTrigger = true;
+                    if (life < 5)
+                    {
+                        life++;
+                    }
+                }
+                else if (score % 10 != 0)
+                {
+                    delayTrigger = false;
+                }
+                break;
         }
     }
 }
