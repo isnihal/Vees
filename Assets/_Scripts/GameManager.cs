@@ -32,6 +32,7 @@ public class GameManager : MonoBehaviour {
 
     public GameObject enemySpawner, playerSpawner, bombSpawner;
     public GameObject[] goalDetector;
+    public AudioClip lifeGrantedMusic;
 
     static bool isPaused, hasRestarted, lastLife,delayTrigger;
 
@@ -691,9 +692,10 @@ public class GameManager : MonoBehaviour {
         switch (getLevelName())
         {
             case "ONE_DIRECTION":
-                if (score % 100 == 0 && !delayTrigger)
+                if (score % 100 == 0 && !delayTrigger && score!=0)
                 {
                     delayTrigger = true;
+                    AudioSource.PlayClipAtPoint(lifeGrantedMusic, Vector3.zero);
                     if (life < 5)
                     {
                         life++;
@@ -705,9 +707,10 @@ public class GameManager : MonoBehaviour {
                 }
                 break;
             case "FAST_ESCAPE":
-                if(score%10==0 && !delayTrigger)
+                if (score % 10 == 0 && !delayTrigger && score != 0)
                 {
                     delayTrigger = true;
+                    AudioSource.PlayClipAtPoint(lifeGrantedMusic, Vector3.zero);
                     if (life < 5)
                     {
                         life++;
