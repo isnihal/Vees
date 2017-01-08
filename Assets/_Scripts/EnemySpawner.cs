@@ -64,7 +64,7 @@ public class EnemySpawner : MonoBehaviour {
         {
             if (probability > Random.value)
             {
-                spawnEnemy(Position.Top);
+                spawnEnemy(Position.Top,0);
                 spawnRate += 0.006f;
                 Mathf.Clamp(spawnRate, 1.5f, 8.5f);
             }
@@ -91,12 +91,12 @@ public class EnemySpawner : MonoBehaviour {
                 Mathf.Clamp(spawnRate, 1.5f, 8.5f);
                 if (topOrBottom == 0)
                 {
-                    spawnEnemy(Position.Top);
+                    spawnEnemy(Position.Top,0);
                 }
 
                 else
                 {
-                    spawnEnemy(Position.Bottom);
+                    spawnEnemy(Position.Bottom,0);
                 }
             }
         }
@@ -107,7 +107,7 @@ public class EnemySpawner : MonoBehaviour {
         {
             if (probability > Random.value)
             {
-                spawnEnemy(Position.Left);
+                spawnEnemy(Position.Left,1);
             }
         }
 
@@ -123,11 +123,11 @@ public class EnemySpawner : MonoBehaviour {
                     int topOrBottom = Random.Range(0, 2);
                     if (topOrBottom == 0)
                     {
-                        spawnEnemy(Position.Top);
+                        spawnEnemy(Position.Top,0);
                     }
                     else
                     {
-                        spawnEnemy(Position.Bottom);
+                        spawnEnemy(Position.Bottom,0);
                     }
                 }
             }
@@ -155,12 +155,12 @@ public class EnemySpawner : MonoBehaviour {
                 int topOrBottom = Random.Range(0, 2);
                 if (topOrBottom == 0)
                 {
-                    spawnEnemy(Position.Top);
+                    spawnEnemy(Position.Top,0);
                 }
 
                 else
                 {
-                    spawnEnemy(Position.Bottom);
+                    spawnEnemy(Position.Bottom,0);
                 }
             }
 
@@ -183,14 +183,14 @@ public class EnemySpawner : MonoBehaviour {
             {
                 if (probability > Random.value)
                 {
-                    spawnEnemy(Position.Top);
+                    spawnEnemy(Position.Top,0);
                     enemiesSpawned++;
                 }
             }
         }
     }
 
-    void spawnEnemy(Position position)
+    void spawnEnemy(Position position,int topOffset)
     {
         switch(position)
         {
@@ -213,7 +213,7 @@ public class EnemySpawner : MonoBehaviour {
                 break;
 
             case Position.Left:
-                enemySpawningPositionY = Random.Range(ScreenManager.getBottomBoundary(), ScreenManager.getTopBoundary());
+                enemySpawningPositionY = Random.Range(ScreenManager.getBottomBoundary(), ScreenManager.getTopBoundary()-topOffset);               
                 enemySpawningPosition = new Vector3(transform.position.x, enemySpawningPositionY, 0);
                 enemyFormation = Instantiate(EnemyPrefab, enemySpawningPosition, Quaternion.Euler(new Vector3(0, 0, 90))) as GameObject;
                 formationRigidBody = enemyFormation.GetComponent<Rigidbody2D>();
