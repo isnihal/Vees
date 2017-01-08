@@ -1,6 +1,6 @@
 fileFormatVersion: 2
-guid: 31698421a843bf24c994cb7627d4ec3d
-timeCreated: 1481396454
+guid: 159c6c5be2a9ad741ab16ab8480a3022
+timeCreated: 1483861768
 licenseType: Free
 TrueTypeFontImporter:
   serializedVersion: 4
@@ -10,7 +10,7 @@ TrueTypeFontImporter:
   characterPadding: 1
   includeFontData: 1
   fontNames:
-  - Doodle Coffee Scents
+  - Coda
   fallbackFontReferences: []
   customCharacters: 
   fontRenderingMode: 0

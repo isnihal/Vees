@@ -38,10 +38,7 @@ public class GameManager : MonoBehaviour {
 
 
     //Show AD button and No
-    public GameObject gameOverPanel, pauseMenuPanel, pauseButton;
-
-    public Sprite pauseImage, resumeImage;
-
+    public GameObject gameOverPanel, pauseMenuPanel, pauseButton,headerPanel,gameOverScoreBoard;
     ToastManager toastManager;
 
     void Start()
@@ -136,6 +133,15 @@ public class GameManager : MonoBehaviour {
                     MusicPlayer.setVolume(0f);
                 }
                 pauseButton.active = false;
+                headerPanel.active = false;
+                if (getLevelName() == "EQUALS")
+                {
+                    gameOverScoreBoard.GetComponent<Text>().text = EnemySpawner.getWaveNumber() + "";
+                }
+                else
+                {
+                    gameOverScoreBoard.GetComponent<Text>().text = score + "";
+                }
                 gameOverPanel.active = true;
                 life = -99;//To avoid a bug
             }
@@ -148,30 +154,13 @@ public class GameManager : MonoBehaviour {
 
     void setScoreBoardDisplay()
     {
-        if (GameManager.getLevelName() == "FAST_ESCAPE")
+        if (getLevelName() == "EQUALS")
         {
-            switch (language)
-            {
-                case "ENGLISH":
-                    scoreBoard.text = "ESCAPES:" + score;
-                    break;
-                case "CHINEESE":
-                    scoreBoard.text = "逃脱:" + score;
-                    break;
-            }
-
+            scoreBoard.text = "HITS:" + score;
         }
         else
         {
-            switch (language)
-            {
-                case "ENGLISH":
-                    scoreBoard.text = "HITS:" + score;
-                    break;
-                case "CHINEESE":
-                    scoreBoard.text = "杀死:" + score;
-                    break;
-            }
+            scoreBoard.text = score + "";
         }
     }
 
@@ -283,11 +272,11 @@ public class GameManager : MonoBehaviour {
         if (!isGamePaused())
         {
             isPaused = true;
-            pauseButton.GetComponent<Image>().sprite = resumeImage;
             if (life > 0)
             {
                 pauseMenuPanel.active = true;
             }
+            pauseButton.active = false;
             playerSpawner.active = false;
             enemySpawner.active = false;
             if (goalDetector != null)
@@ -305,11 +294,11 @@ public class GameManager : MonoBehaviour {
         else if (isGamePaused())
         {
             isPaused = false;
-            pauseButton.GetComponent<Image>().sprite = pauseImage;
             if (life > 0)
             {
                 pauseMenuPanel.active = false;
             }
+            pauseButton.active = true;
             playerSpawner.active = true;
             enemySpawner.active = true;
             if (goalDetector != null)
@@ -596,6 +585,7 @@ public class GameManager : MonoBehaviour {
             MusicPlayer.setVolume(0.5f);
         }
         pauseButton.active = true;
+        headerPanel.active = true;
         gameOverPanel.active = false;
     }
 

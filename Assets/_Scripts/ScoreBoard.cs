@@ -50,18 +50,18 @@ public class ScoreBoard : MonoBehaviour {
         if (LevelManager.getFromLevel() == 6)
         {
             //Wave number for level EQUALS
-            gameObject.GetComponent<Text>().text = "WAVE\n" + EnemySpawner.getWaveNumber().ToString();
+            gameObject.GetComponent<Text>().text = EnemySpawner.getWaveNumber().ToString();
             GoalDetector.fromEquals = false;
         }
         else
         {
             if (LevelManager.getFromLevel() != 5)
             {
-                gameObject.GetComponent<Text>().text = "HITS\n" + GameManager.getScore().ToString();
+                gameObject.GetComponent<Text>().text = GameManager.getScore().ToString();
             }
             else
             {
-                gameObject.GetComponent<Text>().text = "ESCAPES\n" + GameManager.getScore().ToString();
+                gameObject.GetComponent<Text>().text = GameManager.getScore().ToString();
             }
         }
     }
@@ -71,18 +71,18 @@ public class ScoreBoard : MonoBehaviour {
         if (LevelManager.getFromLevel()==6)
         {
             //Wave number for level EQUALS
-            gameObject.GetComponent<Text>().text = "WAVE\n" + EnemySpawner.getWaveNumber().ToString();
+            gameObject.GetComponent<Text>().text = EnemySpawner.getWaveNumber().ToString();
             GoalDetector.fromEquals = false;
         }
         else
         {
             if (LevelManager.getFromLevel() != 5)
             {
-                gameObject.GetComponent<Text>().text = "HITS\n" + GameManager.getScore().ToString();
+                gameObject.GetComponent<Text>().text = GameManager.getScore().ToString();
             }
             else
             {
-                gameObject.GetComponent<Text>().text = "ESCAPES\n" + GameManager.getScore().ToString();
+                gameObject.GetComponent<Text>().text = GameManager.getScore().ToString();
             }
         }
     }

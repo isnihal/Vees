@@ -295,7 +295,7 @@ public class EnemySpawner : MonoBehaviour {
 
     void setWaveNumberText()
     {
-        waveNumberText.text = "WAVE:" + waveNumber;
+        waveNumberText.text = ""+ waveNumber;
     }
 
     public static int getWaveNumber()
