@@ -18,12 +18,7 @@ public class ScoreBoard : MonoBehaviour {
     void Start() {
         postScoreToLeaderBoard();
         checkForAchievements();
-
-        /*if (!Advertisement.IsReady())
-        {
-            Advertisement.Initialize("1215854");
-        }*/
-
+        checkIfHighScore();
         if (GameManager.hasGameBeenRestarted())
         {
             numberOfGames = 0;
@@ -51,18 +46,13 @@ public class ScoreBoard : MonoBehaviour {
         {
             //Wave number for level EQUALS
             gameObject.GetComponent<Text>().text = EnemySpawner.getWaveNumber().ToString();
+            PlayerPrefsManager.saveHighScore(EnemySpawner.getWaveNumber(), LevelManager.getFromLevel());
             GoalDetector.fromEquals = false;
         }
         else
         {
-            if (LevelManager.getFromLevel() != 5)
-            {
-                gameObject.GetComponent<Text>().text = GameManager.getScore().ToString();
-            }
-            else
-            {
-                gameObject.GetComponent<Text>().text = GameManager.getScore().ToString();
-            }
+            PlayerPrefsManager.saveHighScore(GameManager.getScore(), LevelManager.getFromLevel());
+            gameObject.GetComponent<Text>().text = GameManager.getScore().ToString();
         }
     }
 
@@ -103,11 +93,11 @@ public class ScoreBoard : MonoBehaviour {
             {
                 if (sucess)
                 {
-                    Debug.Log("Achievement Success");
+                  
                 }
                 else
                 {
-                    Debug.Log("Achievement failed");
+                   
                 }
             });
         }
@@ -127,11 +117,11 @@ public class ScoreBoard : MonoBehaviour {
             {
                 if (sucess)
                 {
-                    Debug.Log("Achievement Success");
+                 
                 }
                 else
                 {
-                    Debug.Log("Achievement failed");
+                  
                 }
             });
         }
@@ -145,11 +135,11 @@ public class ScoreBoard : MonoBehaviour {
                 Social.ReportScore(GameManager.getScore(), oneWayLeaderBoardID, (bool success) => {
                     if (success)
                     {
-                        Debug.Log("Success in posting score to leaderboard");
+                       
                     }
                     else
                     {
-                        Debug.Log("Failure in posting score to leaderboard");
+                       
                     }
                 });
 
@@ -158,11 +148,11 @@ public class ScoreBoard : MonoBehaviour {
                 Social.ReportScore(EnemySpawner.getWaveNumber(), equalsLeaderBoardID, (bool success) => {
                     if (success)
                     {
-                        Debug.Log("Success in posting score to leaderboard");
+                     
                     }
                     else
                     {
-                        Debug.Log("Failure in posting score to leaderboard");
+                      
                     }
                 });
                 break;
@@ -170,11 +160,10 @@ public class ScoreBoard : MonoBehaviour {
                 Social.ReportScore(GameManager.getScore(), escapeLeaderBoardID, (bool success) => {
                     if (success)
                     {
-                        Debug.Log("Success in posting score to leaderboard");
+                      
                     }
                     else
-                    {
-                        Debug.Log("Failure in posting score to leaderboard");
+                    {  
                     }
                 });
                 break;
@@ -182,11 +171,11 @@ public class ScoreBoard : MonoBehaviour {
                 Social.ReportScore(GameManager.getScore(), lapseLeaderBoardID, (bool success) => {
                     if (success)
                     {
-                        Debug.Log("Success in posting score to leaderboard");
+                       
                     }
                     else
                     {
-                        Debug.Log("Failure in posting score to leaderboard");
+                       
                     }
                 });
                 break;
@@ -194,14 +183,32 @@ public class ScoreBoard : MonoBehaviour {
                 Social.ReportScore(GameManager.getScore(), boomLeaderBoardID, (bool success) => {
                     if (success)
                     {
-                        Debug.Log("Success in posting score to leaderboard");
+                       
                     }
                     else
                     {
-                        Debug.Log("Failure in posting score to leaderboard");
+                      
                     }
                 });
                 break;
+        }
+    }
+
+    void checkIfHighScore()
+    {
+        if(LevelManager.getFromLevel()==6)
+        {
+            if(PlayerPrefsManager.isHighScore(EnemySpawner.getWaveNumber(), LevelManager.getFromLevel()))
+            {
+                //Set the animation trigger
+            }
+        }
+        else
+        {
+            if(PlayerPrefsManager.isHighScore(GameManager.getScore(), LevelManager.getFromLevel()))
+            {
+                //Set the animation trigger
+            }
         }
     }
 }

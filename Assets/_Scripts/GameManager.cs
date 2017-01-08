@@ -22,7 +22,7 @@ public class GameManager : MonoBehaviour {
     */
 
 
-    public Text scoreBoard, timerText;
+    public Text scoreBoard, timerText,highScoreText;
     public GameObject[] lifeArray;
     static float enemySpawnFrequency;
     static int score, life, lastLifeScore;
@@ -128,6 +128,8 @@ public class GameManager : MonoBehaviour {
             {
                 //Show the UI Buttons
                 pauseGame();
+                setHighScoreDisplay();
+                Debug.Log("Alert:"+ PlayerPrefsManager.getHighScore(3));
                 if (!VolumeManager.getIsMuted())
                 {
                     MusicPlayer.setVolume(0f);
@@ -188,7 +190,7 @@ public class GameManager : MonoBehaviour {
         {
             timeLeft -= Time.deltaTime;
             int timeInSeconds = Mathf.RoundToInt(timeLeft);
-            timerText.text = "TIME:00:" + timeInSeconds.ToString("00");
+            timerText.text = "00:" + timeInSeconds.ToString("00");
         }
 
         if (timeLeft <= 0)
@@ -327,11 +329,11 @@ public class GameManager : MonoBehaviour {
             Social.ReportProgress(GPGSIds.achievement_one_way_noob, 100, (bool sucess) => {
                 if (sucess)
                 {
-                    Debug.Log("One Direction noob unlocked");
+                    
                 }
                 else
                 {
-                    Debug.Log("Achievement failed");
+                
                 }
             });
 
@@ -340,11 +342,11 @@ public class GameManager : MonoBehaviour {
                 Social.ReportProgress(GPGSIds.achievement_one_way_pro, 100, (bool sucess) => {
                     if (sucess)
                     {
-                        Debug.Log("Achievement Success");
+                        
                     }
                     else
                     {
-                        Debug.Log("Achievement failed");
+                      
                     }
                 });
             }
@@ -354,11 +356,11 @@ public class GameManager : MonoBehaviour {
                 Social.ReportProgress(GPGSIds.achievement_one_way_master, 100, (bool sucess) => {
                     if (sucess)
                     {
-                        Debug.Log("Achievement Success");
+                        
                     }
                     else
                     {
-                        Debug.Log("Achievement failed");
+                      
                     }
                 });
             }
@@ -369,11 +371,11 @@ public class GameManager : MonoBehaviour {
                 {
                     if (sucess)
                     {
-                        Debug.Log("Achievement Success");
+                        
                     }
                     else
                     {
-                        Debug.Log("Achievement failed");
+                       
                     }
                 });
             }
@@ -384,11 +386,11 @@ public class GameManager : MonoBehaviour {
                 {
                     if (sucess)
                     {
-                        Debug.Log("Achievement Success");
+                     
                     }
                     else
                     {
-                        Debug.Log("Achievement failed");
+                       
                     }
                 });
             }
@@ -400,11 +402,11 @@ public class GameManager : MonoBehaviour {
             Social.ReportProgress(GPGSIds.achievement_escape_noob, 100, (bool sucess) => {
                 if (sucess)
                 {
-                    Debug.Log("Fast escape noob unlocked");
+                   
                 }
                 else
                 {
-                    Debug.Log("Achievement failed");
+                    
                 }
             });
 
@@ -413,11 +415,11 @@ public class GameManager : MonoBehaviour {
                 Social.ReportProgress(GPGSIds.achievement_escape_pro, 100, (bool sucess) => {
                     if (sucess)
                     {
-                        Debug.Log("Achievement Success");
+                        
                     }
                     else
                     {
-                        Debug.Log("Achievement failed");
+                        
                     }
                 });
             }
@@ -427,11 +429,11 @@ public class GameManager : MonoBehaviour {
                 Social.ReportProgress(GPGSIds.achievement_escape_master, 100, (bool sucess) => {
                     if (sucess)
                     {
-                        Debug.Log("Achievement Success");
+                        
                     }
                     else
                     {
-                        Debug.Log("Achievement failed");
+                        
                     }
                 });
             }
@@ -442,11 +444,11 @@ public class GameManager : MonoBehaviour {
                 {
                     if (sucess)
                     {
-                        Debug.Log("Achievement Success");
+                        
                     }
                     else
                     {
-                        Debug.Log("Achievement failed");
+                      
                     }
                 });
             }
@@ -457,11 +459,11 @@ public class GameManager : MonoBehaviour {
                 {
                     if (sucess)
                     {
-                        Debug.Log("Achievement Success");
+                        
                     }
                     else
                     {
-                        Debug.Log("Achievement failed");
+                        
                     }
                 });
             }
@@ -473,11 +475,11 @@ public class GameManager : MonoBehaviour {
             Social.ReportProgress(GPGSIds.achievement_equals_noob, 100, (bool sucess) => {
                 if (sucess)
                 {
-                    Debug.Log("Equals noob unlocked");
+                    
                 }
                 else
                 {
-                    Debug.Log("Achievement failed");
+                  
                 }
             });
 
@@ -486,11 +488,11 @@ public class GameManager : MonoBehaviour {
                 Social.ReportProgress(GPGSIds.achievement_equals_pro, 100, (bool sucess) => {
                     if (sucess)
                     {
-                        Debug.Log("Achievement Success");
+                       
                     }
                     else
                     {
-                        Debug.Log("Achievement failed");
+                      
                     }
                 });
             }
@@ -500,11 +502,11 @@ public class GameManager : MonoBehaviour {
                 Social.ReportProgress(GPGSIds.achievement_equals_master, 100, (bool sucess) => {
                     if (sucess)
                     {
-                        Debug.Log("Achievement Success");
+                     
                     }
                     else
                     {
-                        Debug.Log("Achievement failed");
+                        
                     }
                 });
             }
@@ -514,11 +516,11 @@ public class GameManager : MonoBehaviour {
                 Social.ReportProgress(GPGSIds.achievement_equals_legend, 100, (bool sucess) => {
                     if (sucess)
                     {
-                        Debug.Log("Achievement success");
+                        
                     }
                     else
                     {
-                        Debug.Log("Achievement failed");
+                     
                     }
                 });
             }
@@ -529,11 +531,11 @@ public class GameManager : MonoBehaviour {
             Social.ReportProgress(GPGSIds.achievement_lapse_noob, 100, (bool sucess) => {
                 if (sucess)
                 {
-                    Debug.Log("Time lapse noob unlocked");
+                    
                 }
                 else
                 {
-                    Debug.Log("Achievement failed");
+                   
                 }
             });
         }
@@ -545,11 +547,11 @@ public class GameManager : MonoBehaviour {
         Social.ReportProgress(GPGSIds.achievement_veeplay, 100, (bool sucess) => {
             if (sucess)
             {
-                Debug.Log("Veeplay achievement unlocked");
+              
             }
             else
             {
-                Debug.Log("Achievement failed");
+                
             }
         });
         if (!IAPManager.hasUserPurchasedVees())
@@ -706,6 +708,25 @@ public class GameManager : MonoBehaviour {
                 {
                     delayTrigger = false;
                 }
+                break;
+        }
+    }
+
+    void setHighScoreDisplay()
+    {
+        switch(getLevelName())
+        {
+            case "ONE_DIRECTION":
+                highScoreText.text=""+PlayerPrefsManager.getHighScore(3);
+                break;
+            case "FAST_ESCAPE":
+                highScoreText.text = "" + PlayerPrefsManager.getHighScore(5);
+                break;
+            case "EQUALS":
+                highScoreText.text = "" + PlayerPrefsManager.getHighScore(6);
+                break;
+            case "TIME_LAPSE":
+                highScoreText.text = "" + PlayerPrefsManager.getHighScore(7);
                 break;
         }
     }
