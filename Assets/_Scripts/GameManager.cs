@@ -646,7 +646,7 @@ public class GameManager : MonoBehaviour {
         else if (Application.loadedLevel == 4)
         {
 
-            return ("ARCADE");
+            return ("HOW_TO");
         }
 
         else if (Application.loadedLevel == 5)
