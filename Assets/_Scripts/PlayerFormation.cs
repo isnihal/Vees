@@ -5,7 +5,7 @@ public class PlayerFormation : MonoBehaviour {
 
     //Destroy enemies colliding with player except for levels FAST_ESCAPE
 
-    public AudioClip destroyClip,blastClip;
+    public AudioClip destroyClip,blastClip,lifeGrantedClip;
     static int totalEnemiesKilledInThisWave;
 
     void Start()
@@ -40,6 +40,7 @@ public class PlayerFormation : MonoBehaviour {
             {
                 if (GameManager.getLevelName() == "ONE_DIRECTION")
                 {
+                    AudioSource.PlayClipAtPoint(lifeGrantedClip, Vector3.zero);
                     GameManager.incrementLife();
                 }
                 else

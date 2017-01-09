@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.SceneManagement;
 using GooglePlayGames;
+using UnityEngine.Advertisements;
 
 public class LevelManager : MonoBehaviour {
 
@@ -35,22 +36,25 @@ public class LevelManager : MonoBehaviour {
         
         else if(isMainMenu())
         {
-            PlayGamesPlatform.Activate();
-            Social.localUser.Authenticate((bool success) =>
+            if (Advertisement.IsReady())
             {
-                if (success)
+                PlayGamesPlatform.Activate();
+                Social.localUser.Authenticate((bool success) =>
                 {
-                    Debug.Log("Google sign in failed");
-                }
-                else
-                {
-                    Debug.Log("Google sign in success :D");
-                }
-            });
+                    if (success)
+                    {
+                       
+                    }
+                    else
+                    {
+                        
+                    }
+                });
 
-            if (!VolumeManager.getIsMuted())
-            {
-                VolumeManager.setMusicPlayerOnIfSilent();
+                if (!VolumeManager.getIsMuted())
+                {
+                    VolumeManager.setMusicPlayerOnIfSilent();
+                }
             }
         }
 

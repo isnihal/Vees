@@ -253,7 +253,7 @@ public class GameManager : MonoBehaviour {
 
     public static void incrementLife()
     {
-        life++;
+        life++;  
     }
 
     public static int getLife()
@@ -686,7 +686,7 @@ public class GameManager : MonoBehaviour {
                     AudioSource.PlayClipAtPoint(lifeGrantedMusic, Vector3.zero);
                     if (life < 5)
                     {
-                        life++;
+                        incrementLife();
                     }
                 }
                 else if (score % 100 != 0)
@@ -701,7 +701,7 @@ public class GameManager : MonoBehaviour {
                     AudioSource.PlayClipAtPoint(lifeGrantedMusic, Vector3.zero);
                     if (life < 5)
                     {
-                        life++;
+                        incrementLife();
                     }
                 }
                 else if (score % 10 != 0)
