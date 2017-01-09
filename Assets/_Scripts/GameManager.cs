@@ -41,6 +41,10 @@ public class GameManager : MonoBehaviour {
     public GameObject gameOverPanel, pauseMenuPanel, pauseButton,headerPanel,gameOverScoreBoard;
     ToastManager toastManager;
 
+    bool startNoResponseCounter;
+    float noResponseTime;
+    public Text responseTimer;
+
     void Start()
     {
         if (getLevelName() != "GAME_OVER")//Properties of equals set in enemy spawner
@@ -78,6 +82,9 @@ public class GameManager : MonoBehaviour {
         {
             Advertisement.Initialize("1215854");
         }*/
+
+        startNoResponseCounter = false;
+        noResponseTime = 7f;
     }
 
     void Update()
@@ -101,6 +108,7 @@ public class GameManager : MonoBehaviour {
         }
 
         setPerformanceBonus();
+        setNoResponseCounter();
     }
 
     void setLevelProperties()
@@ -145,6 +153,7 @@ public class GameManager : MonoBehaviour {
                 }
                 gameOverPanel.active = true;
                 life = -99;//To avoid a bug
+                startNoResponseCounter = true;
             }
             else
             {
@@ -153,11 +162,26 @@ public class GameManager : MonoBehaviour {
         }
     }
 
+    void setNoResponseCounter()
+    {
+        if (startNoResponseCounter)
+        {
+            noResponseTime -= Time.deltaTime;
+            int timeInSeconds = Mathf.RoundToInt(noResponseTime);
+            responseTimer.text = timeInSeconds + "";
+        }
+
+        if (noResponseTime <= 0)
+        {
+            SceneManager.LoadScene("GAME_OVER");
+        }
+    }
+
     void setScoreBoardDisplay()
     {
         if (getLevelName() == "EQUALS")
         {
-            scoreBoard.text = "HITS:" + score;
+            scoreBoard.text = "HITS:" + score;   
         }
         else
         {
@@ -273,6 +297,7 @@ public class GameManager : MonoBehaviour {
         if (!isGamePaused())
         {
             isPaused = true;
+            MusicPlayer.setVolume(0);
             if (life > 0)
             {
                 pauseMenuPanel.active = true;
@@ -295,6 +320,10 @@ public class GameManager : MonoBehaviour {
         else if (isGamePaused())
         {
             isPaused = false;
+            if (!VolumeManager.getIsMuted())
+            {
+                MusicPlayer.setVolume(0.5f);
+            }
             if (life > 0)
             {
                 pauseMenuPanel.active = false;
@@ -556,6 +585,7 @@ public class GameManager : MonoBehaviour {
 
     public void continueGameWithAd()
     {
+        
         //Unlock veeplay achievement
         Social.ReportProgress(GPGSIds.achievement_veeplay, 100, (bool sucess) => {
             if (sucess)
@@ -593,7 +623,8 @@ public class GameManager : MonoBehaviour {
 
     void restartGame()
     {
-        pauseGame();
+        startNoResponseCounter = false;
+        pauseGame();//Unpause in this context
         ElectricGun.setMaximumCharge();
         if (!VolumeManager.getIsMuted())
         {
