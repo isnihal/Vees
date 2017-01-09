@@ -5,6 +5,8 @@ using System.Collections;
 
 public class ScoreBoard : MonoBehaviour {
 
+    public Text typeBoard;
+
     static int showRewardedAdAfter = 6, showNoRewardAdAfter = 7, numberOfGames = 0, numberOfLapseGames = 0,numberOfEqualsGames;
 
     const string oneWayLeaderBoardID = "CgkIiY779uUNEAIQEw";
@@ -48,9 +50,18 @@ public class ScoreBoard : MonoBehaviour {
             gameObject.GetComponent<Text>().text = EnemySpawner.getWaveNumber().ToString();
             PlayerPrefsManager.saveHighScore(EnemySpawner.getWaveNumber(), LevelManager.getFromLevel());
             GoalDetector.fromEquals = false;
+            typeBoard.text = "WAVE";
         }
+        else if(LevelManager.getFromLevel()==5)
+        {
+            typeBoard.text = "ESCAPES";
+            PlayerPrefsManager.saveHighScore(GameManager.getScore(), LevelManager.getFromLevel());
+            gameObject.GetComponent<Text>().text = GameManager.getScore().ToString();
+        }
+
         else
         {
+            typeBoard.text = "HITS";
             PlayerPrefsManager.saveHighScore(GameManager.getScore(), LevelManager.getFromLevel());
             gameObject.GetComponent<Text>().text = GameManager.getScore().ToString();
         }
