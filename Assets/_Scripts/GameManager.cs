@@ -129,7 +129,6 @@ public class GameManager : MonoBehaviour {
                 //Show the UI Buttons
                 pauseGame();
                 setHighScoreDisplay();
-                Debug.Log("Alert:"+ PlayerPrefsManager.getHighScore(3));
                 if (!VolumeManager.getIsMuted())
                 {
                     MusicPlayer.setVolume(0f);
@@ -324,220 +323,234 @@ public class GameManager : MonoBehaviour {
 
     void checkForAchievements()
     {
-        if (getLevelName() == "ONE_DIRECTION")
+        if (Advertisement.IsReady())
         {
-            Social.ReportProgress(GPGSIds.achievement_one_way_noob, 100, (bool sucess) => {
-                if (sucess)
+            if (getLevelName() == "ONE_DIRECTION")
+            {
+                Social.ReportProgress(GPGSIds.achievement_one_way_noob, 100, (bool sucess) =>
                 {
-                    
+                    if (sucess)
+                    {
+
+                    }
+                    else
+                    {
+
+                    }
+                });
+
+                if (score >= 200)
+                {
+                    Social.ReportProgress(GPGSIds.achievement_one_way_pro, 100, (bool sucess) =>
+                    {
+                        if (sucess)
+                        {
+
+                        }
+                        else
+                        {
+
+                        }
+                    });
                 }
-                else
+
+                if (score >= 500)
                 {
-                
+                    Social.ReportProgress(GPGSIds.achievement_one_way_master, 100, (bool sucess) =>
+                    {
+                        if (sucess)
+                        {
+
+                        }
+                        else
+                        {
+
+                        }
+                    });
                 }
-            });
 
-            if (score >= 200)
-            {
-                Social.ReportProgress(GPGSIds.achievement_one_way_pro, 100, (bool sucess) => {
-                    if (sucess)
-                    {
-                        
-                    }
-                    else
-                    {
-                      
-                    }
-                });
-            }
-
-            if (score >= 500)
-            {
-                Social.ReportProgress(GPGSIds.achievement_one_way_master, 100, (bool sucess) => {
-                    if (sucess)
-                    {
-                        
-                    }
-                    else
-                    {
-                      
-                    }
-                });
-            }
-
-            if (score >= 1000)
-            {
-                Social.ReportProgress(GPGSIds.achievement_one_way_legend, 100, (bool sucess) =>
+                if (score >= 1000)
                 {
-                    if (sucess)
+                    Social.ReportProgress(GPGSIds.achievement_one_way_legend, 100, (bool sucess) =>
                     {
-                        
-                    }
-                    else
-                    {
-                       
-                    }
-                });
-            }
+                        if (sucess)
+                        {
 
-            if (lastLife && lastLifeScore >= 100)
-            {
-                Social.ReportProgress(GPGSIds.achievement_one_way_survivor, 100, (bool sucess) =>
-                {
-                    if (sucess)
-                    {
-                     
-                    }
-                    else
-                    {
-                       
-                    }
-                });
-            }
+                        }
+                        else
+                        {
 
-        }
-
-        else if (getLevelName() == "FAST_ESCAPE")
-        {
-            Social.ReportProgress(GPGSIds.achievement_escape_noob, 100, (bool sucess) => {
-                if (sucess)
-                {
-                   
+                        }
+                    });
                 }
-                else
+
+                if (lastLife && lastLifeScore >= 100)
                 {
-                    
+                    Social.ReportProgress(GPGSIds.achievement_one_way_survivor, 100, (bool sucess) =>
+                    {
+                        if (sucess)
+                        {
+
+                        }
+                        else
+                        {
+
+                        }
+                    });
                 }
-            });
 
-            if (score >= 20)
-            {
-                Social.ReportProgress(GPGSIds.achievement_escape_pro, 100, (bool sucess) => {
-                    if (sucess)
-                    {
-                        
-                    }
-                    else
-                    {
-                        
-                    }
-                });
             }
 
-            if (score >= 50)
+            else if (getLevelName() == "FAST_ESCAPE")
             {
-                Social.ReportProgress(GPGSIds.achievement_escape_master, 100, (bool sucess) => {
-                    if (sucess)
-                    {
-                        
-                    }
-                    else
-                    {
-                        
-                    }
-                });
-            }
-
-            if (score >= 100)
-            {
-                Social.ReportProgress(GPGSIds.achievement_escape_legend, 100, (bool sucess) =>
+                Social.ReportProgress(GPGSIds.achievement_escape_noob, 100, (bool sucess) =>
                 {
                     if (sucess)
                     {
-                        
+
                     }
                     else
                     {
-                      
+
                     }
                 });
-            }
 
-            if (lastLife && lastLifeScore >= 20)
-            {
-                Social.ReportProgress(GPGSIds.achievement_escape_survivor, 100, (bool sucess) =>
+                if (score >= 20)
                 {
-                    if (sucess)
+                    Social.ReportProgress(GPGSIds.achievement_escape_pro, 100, (bool sucess) =>
                     {
-                        
-                    }
-                    else
-                    {
-                        
-                    }
-                });
-            }
+                        if (sucess)
+                        {
 
-        }
+                        }
+                        else
+                        {
 
-        else if (getLevelName() == "EQUALS")
-        {
-            Social.ReportProgress(GPGSIds.achievement_equals_noob, 100, (bool sucess) => {
-                if (sucess)
-                {
-                    
+                        }
+                    });
                 }
-                else
-                {
-                  
-                }
-            });
 
-            if (EnemySpawner.getWaveNumber() >= 20)
+                if (score >= 50)
+                {
+                    Social.ReportProgress(GPGSIds.achievement_escape_master, 100, (bool sucess) =>
+                    {
+                        if (sucess)
+                        {
+
+                        }
+                        else
+                        {
+
+                        }
+                    });
+                }
+
+                if (score >= 100)
+                {
+                    Social.ReportProgress(GPGSIds.achievement_escape_legend, 100, (bool sucess) =>
+                    {
+                        if (sucess)
+                        {
+
+                        }
+                        else
+                        {
+
+                        }
+                    });
+                }
+
+                if (lastLife && lastLifeScore >= 20)
+                {
+                    Social.ReportProgress(GPGSIds.achievement_escape_survivor, 100, (bool sucess) =>
+                    {
+                        if (sucess)
+                        {
+
+                        }
+                        else
+                        {
+
+                        }
+                    });
+                }
+
+            }
+
+            else if (getLevelName() == "EQUALS")
             {
-                Social.ReportProgress(GPGSIds.achievement_equals_pro, 100, (bool sucess) => {
+                Social.ReportProgress(GPGSIds.achievement_equals_noob, 100, (bool sucess) =>
+                {
                     if (sucess)
                     {
-                       
+
                     }
                     else
                     {
-                      
+
                     }
                 });
+
+                if (EnemySpawner.getWaveNumber() >= 20)
+                {
+                    Social.ReportProgress(GPGSIds.achievement_equals_pro, 100, (bool sucess) =>
+                    {
+                        if (sucess)
+                        {
+
+                        }
+                        else
+                        {
+
+                        }
+                    });
+                }
+
+                if (EnemySpawner.getWaveNumber() >= 50)
+                {
+                    Social.ReportProgress(GPGSIds.achievement_equals_master, 100, (bool sucess) =>
+                    {
+                        if (sucess)
+                        {
+
+                        }
+                        else
+                        {
+
+                        }
+                    });
+                }
+
+                if (EnemySpawner.getWaveNumber() >= 100)
+                {
+                    Social.ReportProgress(GPGSIds.achievement_equals_legend, 100, (bool sucess) =>
+                    {
+                        if (sucess)
+                        {
+
+                        }
+                        else
+                        {
+
+                        }
+                    });
+                }
             }
 
-            if (EnemySpawner.getWaveNumber() >= 50)
+            else if (getLevelName() == "TIME_LAPSE")
             {
-                Social.ReportProgress(GPGSIds.achievement_equals_master, 100, (bool sucess) => {
+                Social.ReportProgress(GPGSIds.achievement_lapse_noob, 100, (bool sucess) =>
+                {
                     if (sucess)
                     {
-                     
+
                     }
                     else
                     {
-                        
+
                     }
                 });
             }
-
-            if (EnemySpawner.getWaveNumber() >= 100)
-            {
-                Social.ReportProgress(GPGSIds.achievement_equals_legend, 100, (bool sucess) => {
-                    if (sucess)
-                    {
-                        
-                    }
-                    else
-                    {
-                     
-                    }
-                });
-            }
-        }
-
-        else if (getLevelName() == "TIME_LAPSE")
-        {
-            Social.ReportProgress(GPGSIds.achievement_lapse_noob, 100, (bool sucess) => {
-                if (sucess)
-                {
-                    
-                }
-                else
-                {
-                   
-                }
-            });
         }
     }
 
@@ -683,7 +696,10 @@ public class GameManager : MonoBehaviour {
                 if (score % 100 == 0 && !delayTrigger && score!=0)
                 {
                     delayTrigger = true;
-                    AudioSource.PlayClipAtPoint(lifeGrantedMusic, Vector3.zero);
+                    if (!VolumeManager.getIsMuted())
+                    {
+                        AudioSource.PlayClipAtPoint(lifeGrantedMusic, Vector3.zero);
+                    }
                     if (life < 5)
                     {
                         incrementLife();
@@ -698,7 +714,10 @@ public class GameManager : MonoBehaviour {
                 if (score % 10 == 0 && !delayTrigger && score != 0)
                 {
                     delayTrigger = true;
-                    AudioSource.PlayClipAtPoint(lifeGrantedMusic, Vector3.zero);
+                    if (!VolumeManager.getIsMuted())
+                    {
+                        AudioSource.PlayClipAtPoint(lifeGrantedMusic, Vector3.zero);
+                    }
                     if (life < 5)
                     {
                         incrementLife();

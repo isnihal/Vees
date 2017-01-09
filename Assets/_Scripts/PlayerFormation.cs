@@ -40,7 +40,10 @@ public class PlayerFormation : MonoBehaviour {
             {
                 if (GameManager.getLevelName() == "ONE_DIRECTION")
                 {
-                    AudioSource.PlayClipAtPoint(lifeGrantedClip, Vector3.zero);
+                    if (!VolumeManager.getIsMuted())
+                    {
+                        AudioSource.PlayClipAtPoint(lifeGrantedClip, Vector3.zero);
+                    }
                     GameManager.incrementLife();
                 }
                 else

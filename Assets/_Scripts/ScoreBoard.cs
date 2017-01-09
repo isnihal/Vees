@@ -90,51 +90,56 @@ public class ScoreBoard : MonoBehaviour {
 
     void checkForAchievements()
     {
-        if (LevelManager.getFromLevel() == 7)
+        if (Advertisement.IsReady())
         {
-            numberOfLapseGames++;
-        }
-        else
-        {
-            numberOfLapseGames = 0;
-        }
-        if (numberOfLapseGames == 10)
-        {
-            Social.ReportProgress(GPGSIds.achievement_lapse_love, 100, (bool sucess) =>
+            if (LevelManager.getFromLevel() == 7)
             {
-                if (sucess)
+                numberOfLapseGames++;
+            }
+            else
+            {
+                numberOfLapseGames = 0;
+            }
+            if (numberOfLapseGames == 10)
+            {
+                Social.ReportProgress(GPGSIds.achievement_lapse_love, 100, (bool sucess) =>
                 {
-                  
-                }
-                else
-                {
-                   
-                }
-            });
-        }
+                    if (sucess)
+                    {
+
+                    }
+                    else
+                    {
+
+                    }
+                });
+
+            }
 
 
-        if (LevelManager.getFromLevel() == 6)
-        {
-            numberOfEqualsGames++;
-        }
-        else
-        {
-            numberOfEqualsGames = 0;
-        }
-        if (numberOfEqualsGames == 10)
-        {
-            Social.ReportProgress(GPGSIds.achievement_equals_love, 100, (bool sucess) =>
+
+            if (LevelManager.getFromLevel() == 6)
             {
-                if (sucess)
+                numberOfEqualsGames++;
+            }
+            else
+            {
+                numberOfEqualsGames = 0;
+            }
+            if (numberOfEqualsGames == 10)
+            {
+                Social.ReportProgress(GPGSIds.achievement_equals_love, 100, (bool sucess) =>
                 {
-                 
-                }
-                else
-                {
-                  
-                }
-            });
+                    if (sucess)
+                    {
+
+                    }
+                    else
+                    {
+
+                    }
+                });
+            }
         }
     }
 

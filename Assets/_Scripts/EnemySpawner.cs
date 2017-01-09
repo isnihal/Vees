@@ -86,7 +86,7 @@ public class EnemySpawner : MonoBehaviour {
         {
             if (probability > Random.value)
             {
-                int topOrBottom = Random.Range(0, 2);
+                int topOrBottom = Random.Range(0, 2);           
                 spawnRate += 0.006f;
                 Mathf.Clamp(spawnRate, 1.5f, 8.5f);
                 if (topOrBottom == 0)
@@ -149,7 +149,7 @@ public class EnemySpawner : MonoBehaviour {
             if (probability > Random.value)
             {
                 //SPAWN RATE INCREASER 
-                spawnRate += 0.06f;
+                spawnRate += 0.06f;   
                 spawnRate = Mathf.Clamp(spawnRate, 0.4f, 8.5f);
                 //SPAWN RATE INCREASER
                 int topOrBottom = Random.Range(0, 2);

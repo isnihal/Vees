@@ -51,7 +51,6 @@ public class PlayerPrefsManager : MonoBehaviour {
 
     public static bool isFirstTime()
     {
-        Debug.Log("First time:" + PlayerPrefs.GetInt(FIRST_TIME_KEY));
         if(PlayerPrefs.GetInt(FIRST_TIME_KEY)!=1)
         {
             return true;
