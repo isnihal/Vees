@@ -18,6 +18,8 @@ public class ScoreBoard : MonoBehaviour {
     const string lapseLeaderBoardID = "CgkIiY779uUNEAIQFg";
     const string boomLeaderBoardID = "CgkIiY779uUNEAIQFw";
 
+    static string filePath = Application.persistentDataPath+"/p2483ds.dat";
+
     //Set scoreboard for gameOver level
 
     void Start() {
@@ -227,7 +229,7 @@ public class ScoreBoard : MonoBehaviour {
     public static void saveHighScore()
     {
         BinaryFormatter myBinaryFormatter = new BinaryFormatter();
-        FileStream file = File.Create(Application.persistentDataPath + "/test.dat");
+        FileStream file = File.Create(filePath);
 
         veesData obj = new veesData();
         //Save scores here
@@ -255,10 +257,10 @@ public class ScoreBoard : MonoBehaviour {
 
     public static float loadHighScore()
     {
-        if (File.Exists(Application.persistentDataPath + "/test.dat"))
+        if (File.Exists(filePath))
         {
             BinaryFormatter myBinaryFormatter = new BinaryFormatter();
-            FileStream file = File.Open(Application.persistentDataPath+"/test.dat", FileMode.Open);     
+            FileStream file = File.Open(filePath, FileMode.OpenOrCreate);     
             veesData obj = (veesData)myBinaryFormatter.Deserialize(file);
             file.Close();
             //Load Data Here
@@ -273,15 +275,16 @@ public class ScoreBoard : MonoBehaviour {
 
             //LoadData Here
         }
-        return 99;
+        return 0;
     }
+
 }
 
 [Serializable]
 public class veesData
 {
     public float sys;//One Way HighScore
-    public float cache;//Equals HighScore
-    public float config;//Escape HighScore
+    public float cache;//Escape HighScore
+    public float config;//Equals HighScore
     public float tmp;//Lapse HighScore
 }
