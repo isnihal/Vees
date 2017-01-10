@@ -271,6 +271,39 @@ public class ScoreBoard : MonoBehaviour
         file.Close();
     }
 
+    static void saveEscapeHigh(float score)
+    {
+        BinaryFormatter myBinaryFormatter = new BinaryFormatter();
+        FileStream file = File.Create(filePath);
+
+        veesData obj = new veesData();
+        obj.cache = score;
+        myBinaryFormatter.Serialize(file, obj);
+        file.Close();
+    }
+
+    static void saveEqualsHigh(int score)
+    {
+        BinaryFormatter myBinaryFormatter = new BinaryFormatter();
+        FileStream file = File.Create(filePath);
+
+        veesData obj = new veesData();
+        obj.config = score;
+        myBinaryFormatter.Serialize(file, obj);
+        file.Close();
+    }
+
+    static void saveLapseHigh(int score)
+    {
+        BinaryFormatter myBinaryFormatter = new BinaryFormatter();
+        FileStream file = File.Create(filePath);
+
+        veesData obj = new veesData();
+        obj.tmp = score;
+        myBinaryFormatter.Serialize(file, obj);
+        file.Close();
+    }
+
     public static void loadHighScore()
     {
         if (File.Exists(filePath))
@@ -281,19 +314,62 @@ public class ScoreBoard : MonoBehaviour
             file.Close();
 
             float oneWayHighScore = (obj.sys);
-            //float escapeHighScore = (obj.cache);
-            //float equalsHighScore = (obj.config);
-            //float lapseHighScore = (obj.tmp);
+            float escapeHighScore = (obj.cache);
+            float equalsHighScore = (obj.config);
+            float lapseHighScore = (obj.tmp);
 
             //If previousScore>HighScore without errors BINGO! commit here
-            if (GameManager.getScore()>oneWayHighScore)
+            switch (LevelManager.getFromLevel())
             {
-                saveOneWayHigh(GameManager.getScore());
+                case 3:
+                    if (GameManager.getScore() > oneWayHighScore)
+                    {
+                        saveOneWayHigh(GameManager.getScore());
+                    }
+                break;
+
+                case 5:
+                    if (GameManager.getScore() > escapeHighScore)
+                    {
+                        saveEscapeHigh(GameManager.getScore());
+                    }
+                    break;
+
+                case 6:
+                    if (GameManager.getScore() > equalsHighScore)
+                    {
+                        saveEqualsHigh(EnemySpawner.getWaveNumber());
+                    }
+                    break;
+
+                case 7:
+                    if (GameManager.getScore() > lapseHighScore)
+                    {
+                        saveLapseHigh(GameManager.getScore());
+                    }
+                    break;
             }
         }
         else
         {
-            saveOneWayHigh(GameManager.getScore());
+            switch(LevelManager.getFromLevel())
+            {
+                case 3:
+                    saveOneWayHigh(GameManager.getScore());
+                    break;
+
+                case 5:
+                    saveEscapeHigh(GameManager.getScore());
+                    break;
+
+                case 6:
+                    saveEqualsHigh(EnemySpawner.getWaveNumber());
+                    break;
+
+                case 7:
+                    saveLapseHigh(GameManager.getScore());
+                    break;
+            }
         }
     }
 
