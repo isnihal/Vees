@@ -160,73 +160,77 @@ public class ScoreBoard : MonoBehaviour
 
     public void postScoreToLeaderBoard()
     {
-        switch (LevelManager.getFromLevel())
+        if (Social.localUser.authenticated)
         {
-            case 3:
-                Social.ReportScore(GameManager.getScore(), oneWayLeaderBoardID, (bool success) =>
-                {
-                    if (success)
-                    {
+            switch (LevelManager.getFromLevel())
+            {
 
-                    }
-                    else
+                case 3:
+                    Social.ReportScore(GameManager.getScore(), oneWayLeaderBoardID, (bool success) =>
                     {
+                        if (success)
+                        {
 
-                    }
-                });
+                        }
+                        else
+                        {
 
-                break;
-            case 6:
-                Social.ReportScore(EnemySpawner.getWaveNumber(), equalsLeaderBoardID, (bool success) =>
-                {
-                    if (success)
+                        }
+                    });
+
+                    break;
+                case 6:
+                    Social.ReportScore(EnemySpawner.getWaveNumber(), equalsLeaderBoardID, (bool success) =>
                     {
+                        if (success)
+                        {
 
-                    }
-                    else
-                    {
+                        }
+                        else
+                        {
 
-                    }
-                });
-                break;
-            case 5:
-                Social.ReportScore(GameManager.getScore(), escapeLeaderBoardID, (bool success) =>
-                {
-                    if (success)
+                        }
+                    });
+                    break;
+                case 5:
+                    Social.ReportScore(GameManager.getScore(), escapeLeaderBoardID, (bool success) =>
                     {
+                        if (success)
+                        {
 
-                    }
-                    else
+                        }
+                        else
+                        {
+                        }
+                    });
+                    break;
+                case 7:
+                    Social.ReportScore(GameManager.getScore(), lapseLeaderBoardID, (bool success) =>
                     {
-                    }
-                });
-                break;
-            case 7:
-                Social.ReportScore(GameManager.getScore(), lapseLeaderBoardID, (bool success) =>
-                {
-                    if (success)
-                    {
+                        if (success)
+                        {
 
-                    }
-                    else
-                    {
+                        }
+                        else
+                        {
 
-                    }
-                });
-                break;
-            case 4:
-                Social.ReportScore(GameManager.getScore(), boomLeaderBoardID, (bool success) =>
-                {
-                    if (success)
+                        }
+                    });
+                    break;
+                case 4:
+                    Social.ReportScore(GameManager.getScore(), boomLeaderBoardID, (bool success) =>
                     {
+                        if (success)
+                        {
 
-                    }
-                    else
-                    {
+                        }
+                        else
+                        {
 
-                    }
-                });
-                break;
+                        }
+                    });
+                    break;
+            }
         }
     }
 

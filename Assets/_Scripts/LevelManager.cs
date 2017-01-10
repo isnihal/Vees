@@ -10,7 +10,7 @@ public class LevelManager : MonoBehaviour {
     bool startTimer,firstTap;
     float ButtonCooler,splashDelay; //Time before reset
     int ButtonCount;
-    bool doubleTapped,firstTime;
+    bool doubleTapped,firstTime,playServiceOnlyOnce;
 
     ToastManager toastManager;
 
@@ -31,6 +31,7 @@ public class LevelManager : MonoBehaviour {
 
         if (isSplash() && !firstTime)
         {
+            playServiceOnlyOnce = true;
             loadMainMenu();
         }
         
@@ -38,24 +39,27 @@ public class LevelManager : MonoBehaviour {
         {
             if (Advertisement.IsReady())
             {
-                PlayGamesPlatform.Activate();
-                Social.localUser.Authenticate((bool success) =>
+                if (playServiceOnlyOnce)
                 {
-                    if (success)
+                    playServiceOnlyOnce = false;
+                    PlayGamesPlatform.Activate();
+                    Social.localUser.Authenticate((bool success) =>
                     {
-                       
-                    }
-                    else
-                    {
-                        
-                    }
-                });
+                        if (success)
+                        {
 
-                if (!VolumeManager.getIsMuted())
-                {
-                    VolumeManager.setMusicPlayerOnIfSilent();
+                        }
+                        else
+                        {
+
+                        }
+                    });
                 }
             }
+                    if (!VolumeManager.getIsMuted())
+                    {
+                        VolumeManager.setMusicPlayerOnIfSilent();
+                    }
         }
 
 
