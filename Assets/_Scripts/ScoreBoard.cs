@@ -19,7 +19,7 @@ public class ScoreBoard : MonoBehaviour
     const string lapseLeaderBoardID = "CgkIiY779uUNEAIQFg";
     const string boomLeaderBoardID = "CgkIiY779uUNEAIQFw";
 
-    static string filePath = Application.persistentDataPath + "/c092s88d383sj.dat";
+    static string filePath = Application.persistentDataPath + "/csd.dat";
 
     //Set scoreboard for gameOver level
 
@@ -233,40 +233,13 @@ public class ScoreBoard : MonoBehaviour
         return (Mathf.Pow(10, input));
     }
 
-    /*public static void saveHighScore()
-    {
-        BinaryFormatter myBinaryFormatter = new BinaryFormatter();
-        FileStream file = File.Create(filePath);
-
-        veesData obj = new veesData();
-        //Save scores here
-        switch (LevelManager.getFromLevel())
-        {
-            case 3:
-                obj._sys = (GameManager.getScore());
-                break;
-            case 5:
-                obj._cache = (GameManager.getScore());
-                break;
-            case 6:
-                obj._config = (EnemySpawner.getWaveNumber());
-                break;
-            case 7:
-                obj._tmp = (GameManager.getScore());
-                break;
-        }
-        //Save scores here
-        myBinaryFormatter.Serialize(file, obj);
-        file.Close();
-    }*/
-
     static void saveOneWayHigh(float score)
     {
         BinaryFormatter myBinaryFormatter = new BinaryFormatter();
         FileStream file = File.Create(filePath);
 
         veesData obj = new veesData();
-        obj.sys = score;
+        obj.sys = nihalEncryption(score);
         myBinaryFormatter.Serialize(file, obj);
         file.Close();
     }
@@ -277,7 +250,7 @@ public class ScoreBoard : MonoBehaviour
         FileStream file = File.Create(filePath);
 
         veesData obj = new veesData();
-        obj.cache = score;
+        obj.cache = nihalEncryption(score);
         myBinaryFormatter.Serialize(file, obj);
         file.Close();
     }
@@ -288,7 +261,7 @@ public class ScoreBoard : MonoBehaviour
         FileStream file = File.Create(filePath);
 
         veesData obj = new veesData();
-        obj.config = score;
+        obj.config = nihalEncryption(score);
         myBinaryFormatter.Serialize(file, obj);
         file.Close();
     }
@@ -299,7 +272,7 @@ public class ScoreBoard : MonoBehaviour
         FileStream file = File.Create(filePath);
 
         veesData obj = new veesData();
-        obj.tmp = score;
+        obj.tmp = nihalEncryption(score);
         myBinaryFormatter.Serialize(file, obj);
         file.Close();
     }
@@ -313,10 +286,10 @@ public class ScoreBoard : MonoBehaviour
             veesData obj = (veesData)myBinaryFormatter.Deserialize(file);
             file.Close();
 
-            float oneWayHighScore = (obj.sys);
-            float escapeHighScore = (obj.cache);
-            float equalsHighScore = (obj.config);
-            float lapseHighScore = (obj.tmp);
+            float oneWayHighScore = nihalDecryption(obj.sys);
+            float escapeHighScore = nihalDecryption(obj.cache);
+            float equalsHighScore = nihalDecryption(obj.config);
+            float lapseHighScore =  nihalDecryption(obj.tmp);
 
             //If previousScore>HighScore without errors BINGO! commit here
             switch (LevelManager.getFromLevel())
@@ -383,10 +356,10 @@ public class ScoreBoard : MonoBehaviour
             file.Close();
             switch (LevelManager.getFromLevel())
             {
-                case 3: return ((obj.sys));
-                case 5: return ((obj.cache));
-                case 6: return ((obj.config));
-                case 7: return ((obj.tmp));
+                case 3: return (nihalDecryption(obj.sys));
+                case 5: return (nihalDecryption(obj.cache));
+                case 6: return (nihalDecryption(obj.config));
+                case 7: return (nihalDecryption(obj.tmp));
             }
         }
         return 0;
