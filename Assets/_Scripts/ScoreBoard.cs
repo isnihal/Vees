@@ -10,6 +10,7 @@ public class ScoreBoard : MonoBehaviour
 {
 
     public Text typeBoard;
+    public Animator animator;
 
     static int showRewardedAdAfter = 6, showNoRewardAdAfter = 7, numberOfGames = 0, numberOfLapseGames = 0, numberOfEqualsGames;
 
@@ -19,7 +20,13 @@ public class ScoreBoard : MonoBehaviour
     const string lapseLeaderBoardID = "CgkIiY779uUNEAIQFg";
     const string boomLeaderBoardID = "CgkIiY779uUNEAIQFw";
 
-    static string filePath = Application.persistentDataPath + "/csd.dat";
+    string filePath;
+
+    void Awake()
+    {
+        filePath = Application.persistentDataPath + "/log.dat";
+    }
+
 
     //Set scoreboard for gameOver level
 
@@ -233,7 +240,7 @@ public class ScoreBoard : MonoBehaviour
         return (Mathf.Pow(10, input));
     }
 
-    static void saveOneWayHigh(float score,float escape,float equals,float lapse)
+    void saveOneWayHigh(float score,float escape,float equals,float lapse)
     {
         BinaryFormatter myBinaryFormatter = new BinaryFormatter();
         FileStream file = File.Create(filePath);
@@ -247,7 +254,7 @@ public class ScoreBoard : MonoBehaviour
         file.Close();
     }
 
-    static void saveEscapeHigh(float score,float one,float equals,float lapse)
+    void saveEscapeHigh(float score,float one,float equals,float lapse)
     {
         BinaryFormatter myBinaryFormatter = new BinaryFormatter();
         FileStream file = File.Create(filePath);
@@ -261,7 +268,7 @@ public class ScoreBoard : MonoBehaviour
         file.Close();
     }
 
-    static void saveEqualsHigh(int score, float one, float escape, float lapse)
+    void saveEqualsHigh(int score, float one, float escape, float lapse)
     {
         BinaryFormatter myBinaryFormatter = new BinaryFormatter();
         FileStream file = File.Create(filePath);
@@ -275,7 +282,7 @@ public class ScoreBoard : MonoBehaviour
         file.Close();
     }
 
-    static void saveLapseHigh(int score, float one, float escape, float equals)
+    void saveLapseHigh(int score, float one, float escape, float equals)
     {
         BinaryFormatter myBinaryFormatter = new BinaryFormatter();
         FileStream file = File.Create(filePath);
@@ -289,7 +296,7 @@ public class ScoreBoard : MonoBehaviour
         file.Close();
     }
 
-    public static void loadHighScore()
+    void loadHighScore()
     {
         if (File.Exists(filePath))
         {
@@ -310,6 +317,7 @@ public class ScoreBoard : MonoBehaviour
                     if (GameManager.getScore() > oneWayHighScore)
                     {
                         saveOneWayHigh(GameManager.getScore(),escapeHighScore,equalsHighScore,lapseHighScore);
+                        animator.SetTrigger("isHighScore");
                     }
                 break;
 
@@ -317,6 +325,7 @@ public class ScoreBoard : MonoBehaviour
                     if (GameManager.getScore() > escapeHighScore)
                     {
                         saveEscapeHigh(GameManager.getScore(),oneWayHighScore, equalsHighScore, lapseHighScore);
+                        animator.SetTrigger("isHighScore");
                     }
                     break;
 
@@ -324,6 +333,7 @@ public class ScoreBoard : MonoBehaviour
                     if (EnemySpawner.getWaveNumber() > equalsHighScore)
                     {
                         saveEqualsHigh(EnemySpawner.getWaveNumber(),oneWayHighScore,escapeHighScore,lapseHighScore);
+                        animator.SetTrigger("isHighScore");
                     }
                     break;
 
@@ -331,6 +341,7 @@ public class ScoreBoard : MonoBehaviour
                     if (GameManager.getScore() > lapseHighScore)
                     {
                         saveLapseHigh(GameManager.getScore(),oneWayHighScore,escapeHighScore,equalsHighScore);
+                        animator.SetTrigger("isHighScore");
                     }
                     break;
             }
@@ -341,18 +352,22 @@ public class ScoreBoard : MonoBehaviour
             {
                 case 3:
                     saveOneWayHigh(GameManager.getScore(), 0, 0, 0);
+                    animator.SetTrigger("isHighScore");
                     break;
 
                 case 5:
                     saveEscapeHigh(GameManager.getScore(), 0, 0, 0);
+                    animator.SetTrigger("isHighScore");
                     break;
 
                 case 6:
                     saveEqualsHigh(EnemySpawner.getWaveNumber(),0,0,0);
+                    animator.SetTrigger("isHighScore");
                     break;
 
                 case 7:
                     saveLapseHigh(GameManager.getScore(),0,0,0);
+                    animator.SetTrigger("isHighScore");
                     break;
             }
         }
@@ -360,6 +375,7 @@ public class ScoreBoard : MonoBehaviour
 
     public static float setHighScoreDisplay()
     {
+        string filePath = Application.persistentDataPath + "/log.dat"; ;
         if (File.Exists(filePath))
         {
             BinaryFormatter myBinaryFormatter = new BinaryFormatter();

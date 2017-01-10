@@ -45,6 +45,7 @@ public class GameManager : MonoBehaviour {
     float noResponseTime;
     public Text responseTimer;
 
+
     void Start()
     {
         if (getLevelName() != "GAME_OVER")//Properties of equals set in enemy spawner
@@ -762,27 +763,10 @@ public class GameManager : MonoBehaviour {
         }
     }
 
-    /*void setHighScoreDisplay()
-    {
-        switch(getLevelName())
-        {
-            case "ONE_DIRECTION":
-                highScoreText.text=""+PlayerPrefsManager.getHighScore(3);
-                break;
-            case "FAST_ESCAPE":
-                highScoreText.text = "" + PlayerPrefsManager.getHighScore(5);
-                break;
-            case "EQUALS":
-                highScoreText.text = "" + PlayerPrefsManager.getHighScore(6);
-                break;
-            case "TIME_LAPSE":
-                highScoreText.text = "" + PlayerPrefsManager.getHighScore(7);
-                break;
-        }
-    }*/
+
 
     void setHighScoreDisplay()
-    {
+    { 
         highScoreText.text = "" + Mathf.RoundToInt(ScoreBoard.setHighScoreDisplay());
     }
 }

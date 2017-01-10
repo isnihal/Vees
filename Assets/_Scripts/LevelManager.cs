@@ -191,6 +191,10 @@ public class LevelManager : MonoBehaviour {
 
     public void replayGame()
     {
+        if(!VolumeManager.getIsMuted())
+        {
+            MusicPlayer.setVolume(0.5f);
+        }
         SceneManager.LoadScene(fromLevel);
     }
 
