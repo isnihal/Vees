@@ -18,7 +18,10 @@ public class ScoreBoard : MonoBehaviour {
     const string lapseLeaderBoardID = "CgkIiY779uUNEAIQFg";
     const string boomLeaderBoardID = "CgkIiY779uUNEAIQFw";
 
-    static string filePath = Application.persistentDataPath+"/p2483ds.dat";
+    static string filePath = Application.persistentDataPath+"/px094g346f0ls.dat";
+
+    static float s1, s2, s3, s4;
+
 
     //Set scoreboard for gameOver level
 
@@ -236,22 +239,21 @@ public class ScoreBoard : MonoBehaviour {
         switch (LevelManager.getFromLevel())
         {
             case 3:
-                obj.sys = nihalEncryption(GameManager.getScore());
-                break;
+                    obj._sys = nihalEncryption(GameManager.getScore());
+                    break;
             case 5:
-                obj.cache = nihalEncryption(GameManager.getScore());
-                break;
+                    obj._cache = nihalEncryption(GameManager.getScore());
+                    break;
             case 6:
-                obj.config = nihalEncryption(EnemySpawner.getWaveNumber());
-                break;
+                    obj._config = nihalEncryption(EnemySpawner.getWaveNumber());
+                    break;
             case 7:
-                obj.tmp = nihalEncryption(GameManager.getScore());
-                break;
+                    obj._tmp = nihalEncryption(GameManager.getScore());
+                    break;
         }
         //Save scores here
         myBinaryFormatter.Serialize(file,obj);
         file.Close();
-        
     }
 
 
@@ -263,14 +265,13 @@ public class ScoreBoard : MonoBehaviour {
             FileStream file = File.Open(filePath, FileMode.OpenOrCreate);     
             veesData obj = (veesData)myBinaryFormatter.Deserialize(file);
             file.Close();
-            //Load Data Here
-           
+            
             switch (LevelManager.getFromLevel())
             {
-                case 3:return (nihalDecryption(obj.sys));
-                case 5: return (nihalDecryption(obj.cache));
-                case 6: return (nihalDecryption(obj.config));
-                case 7: return (nihalDecryption(obj.tmp));
+                case 3: return (nihalDecryption(obj._sys));
+                case 5: return (nihalDecryption(obj._cache));
+                case 6: return (nihalDecryption(obj._config));
+                case 7: return (nihalDecryption(obj._tmp));
             }
 
             //LoadData Here
@@ -278,6 +279,52 @@ public class ScoreBoard : MonoBehaviour {
         return 0;
     }
 
+    
+
+    static bool checkIfHighScore()
+    {
+        switch(LevelManager.getFromLevel())
+        {
+            case 3:
+                if(GameManager.getScore()>s1)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+
+            case 5:
+                if (GameManager.getScore() > s2)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            case 6:
+                if (EnemySpawner.getWaveNumber() > s3)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            case 7:
+                if (GameManager.getScore() > s4)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            default:return false;
+        }
+    }
 }
 
 [Serializable]
@@ -287,4 +334,9 @@ public class veesData
     public float cache;//Escape HighScore
     public float config;//Equals HighScore
     public float tmp;//Lapse HighScore
+
+    public float _sys;//One Way current score
+    public float _cache;//Escape current score
+    public float _config;//Equals current score
+    public float _tmp;//Lapse current score
 }
