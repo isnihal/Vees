@@ -231,21 +231,30 @@ public class ScoreBoard : MonoBehaviour {
             }
         }
     }*/
+    static float nihalEncryption(float input)
+    {
+        return (Mathf.Log10(input));
+    }
+
+    static float nihalDecryption(float input)
+    {
+        return (Mathf.Pow(10, input));
+    }
 
     public static void saveHighScore()
     {
         BinaryFormatter myBinaryFormatter = new BinaryFormatter();
         FileStream file = File.Create(Application.persistentDataPath + "/test.dat");
-
+       
         veesData obj = new veesData();
-        obj.sysInfo = GameManager.getScore();
-
+        obj.sysInfo = nihalEncryption(GameManager.getScore());
         myBinaryFormatter.Serialize(file,obj);
         file.Close();
+        
     }
 
 
-    public static int loadHighScore()
+    public static float loadHighScore()
     {
         if (File.Exists(Application.persistentDataPath + "/test.dat"))
         {
@@ -253,8 +262,8 @@ public class ScoreBoard : MonoBehaviour {
             FileStream file = File.Open(Application.persistentDataPath+"/test.dat", FileMode.Open);     
             veesData obj = (veesData)myBinaryFormatter.Deserialize(file);
             file.Close();
-
-            return(obj.sysInfo);
+            
+            return(nihalDecryption(obj.sysInfo));
         }
         return 99;
     }
@@ -263,5 +272,5 @@ public class ScoreBoard : MonoBehaviour {
 [Serializable]
 public class veesData
 {
-    public int sysInfo;
+    public float sysInfo;
 }
