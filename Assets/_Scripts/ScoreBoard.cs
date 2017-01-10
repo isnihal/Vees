@@ -19,7 +19,7 @@ public class ScoreBoard : MonoBehaviour
     const string lapseLeaderBoardID = "CgkIiY779uUNEAIQFg";
     const string boomLeaderBoardID = "CgkIiY779uUNEAIQFw";
 
-    static string filePath = Application.persistentDataPath + "/px094g346f0ls.dat";
+    static string filePath = Application.persistentDataPath + "/c092s88d383sj.dat";
 
     //Set scoreboard for gameOver level
 
@@ -27,7 +27,6 @@ public class ScoreBoard : MonoBehaviour
     {
         postScoreToLeaderBoard();
         checkForAchievements();
-        saveHighScore();
         loadHighScore();
         //checkIfHighScore();
         if (GameManager.hasGameBeenRestarted())
@@ -234,7 +233,7 @@ public class ScoreBoard : MonoBehaviour
         return (Mathf.Pow(10, input));
     }
 
-    public static void saveHighScore()
+    /*public static void saveHighScore()
     {
         BinaryFormatter myBinaryFormatter = new BinaryFormatter();
         FileStream file = File.Create(filePath);
@@ -259,11 +258,10 @@ public class ScoreBoard : MonoBehaviour
         //Save scores here
         myBinaryFormatter.Serialize(file, obj);
         file.Close();
-    }
+    }*/
 
     static void saveOneWayHigh(float score)
     {
-
         BinaryFormatter myBinaryFormatter = new BinaryFormatter();
         FileStream file = File.Create(filePath);
 
@@ -282,22 +280,20 @@ public class ScoreBoard : MonoBehaviour
             veesData obj = (veesData)myBinaryFormatter.Deserialize(file);
             file.Close();
 
-            float previousScoreOneWay = (obj._sys);
-            float previousScoreEscape = (obj._cache);
-            float previousScoreEquals = (obj._config);
-            float previousScoreLapse = (obj._tmp);
-
             float oneWayHighScore = (obj.sys);
-            float escapeHighScore = (obj.cache);
-            float equalsHighScore = (obj.config);
-            float lapseHighScore = (obj.tmp);
+            //float escapeHighScore = (obj.cache);
+            //float equalsHighScore = (obj.config);
+            //float lapseHighScore = (obj.tmp);
 
             //If previousScore>HighScore without errors BINGO! commit here
-            if (previousScoreOneWay > oneWayHighScore)
+            if (GameManager.getScore()>oneWayHighScore)
             {
-                Debug.Log("High Score Successful");
-                saveOneWayHigh(previousScoreOneWay);
+                saveOneWayHigh(GameManager.getScore());
             }
+        }
+        else
+        {
+            saveOneWayHigh(GameManager.getScore());
         }
     }
 
@@ -317,7 +313,7 @@ public class ScoreBoard : MonoBehaviour
                 case 7: return ((obj.tmp));
             }
         }
-        return 99;
+        return 0;
     }
 }
 
@@ -328,9 +324,4 @@ public class veesData
     public float cache;//Escape HighScore
     public float config;//Equals HighScore
     public float tmp;//Lapse HighScore
-
-    public float _sys;//One Way current score
-    public float _cache;//Escape current score
-    public float _config;//Equals current score
-    public float _tmp;//Lapse current score
 }
