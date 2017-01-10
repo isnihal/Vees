@@ -336,7 +336,7 @@ public class ScoreBoard : MonoBehaviour
                     break;
 
                 case 6:
-                    if (GameManager.getScore() > equalsHighScore)
+                    if (EnemySpawner.getWaveNumber() > equalsHighScore)
                     {
                         saveEqualsHigh(EnemySpawner.getWaveNumber());
                     }
