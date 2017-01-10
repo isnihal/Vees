@@ -265,7 +265,18 @@ public class ScoreBoard : MonoBehaviour {
             FileStream file = File.Open(filePath, FileMode.OpenOrCreate);     
             veesData obj = (veesData)myBinaryFormatter.Deserialize(file);
             file.Close();
-            
+
+            float previousScoreOneWay=nihalDecryption(obj._sys);
+            float previousScoreEscape = nihalDecryption(obj._cache);
+            float previousScoreEquals = nihalDecryption(obj._config);
+            float previousScoreLapse = nihalDecryption(obj._tmp);
+
+            float oneWayHighScore = nihalDecryption(obj.sys);
+            float escapeHighScore = nihalDecryption(obj.cache);
+            float equalsHighScore = nihalDecryption(obj.config);
+            float lapseHighScore = nihalDecryption(obj.tmp);
+
+            //If previousScore>HighScore without errors BINGO! commit here
             switch (LevelManager.getFromLevel())
             {
                 case 3: return (nihalDecryption(obj._sys));
