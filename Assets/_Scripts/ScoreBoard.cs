@@ -1,13 +1,16 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Advertisements;
-using System.Collections;
+using System;
+using System.Collections.Generic;
+using System.Runtime.Serialization.Formatters.Binary;
+using System.IO;
 
 public class ScoreBoard : MonoBehaviour {
 
     public Text typeBoard;
 
-    static int showRewardedAdAfter = 6, showNoRewardAdAfter = 7, numberOfGames = 0, numberOfLapseGames = 0,numberOfEqualsGames;
+    static int showRewardedAdAfter = 6, showNoRewardAdAfter = 7, numberOfGames = 0, numberOfLapseGames = 0, numberOfEqualsGames;
 
     const string oneWayLeaderBoardID = "CgkIiY779uUNEAIQEw";
     const string equalsLeaderBoardID = "CgkIiY779uUNEAIQFA";
@@ -20,7 +23,8 @@ public class ScoreBoard : MonoBehaviour {
     void Start() {
         postScoreToLeaderBoard();
         checkForAchievements();
-        checkIfHighScore();
+        saveHighScore();
+        //checkIfHighScore();
         if (GameManager.hasGameBeenRestarted())
         {
             numberOfGames = 0;
@@ -48,28 +52,28 @@ public class ScoreBoard : MonoBehaviour {
         {
             //Wave number for level EQUALS
             gameObject.GetComponent<Text>().text = EnemySpawner.getWaveNumber().ToString();
-            PlayerPrefsManager.saveHighScore(EnemySpawner.getWaveNumber(), LevelManager.getFromLevel());
+            //PlayerPrefsManager.saveHighScore(EnemySpawner.getWaveNumber(), LevelManager.getFromLevel());
             GoalDetector.fromEquals = false;
             typeBoard.text = "WAVE";
         }
-        else if(LevelManager.getFromLevel()==5)
+        else if (LevelManager.getFromLevel() == 5)
         {
             typeBoard.text = "ESCAPES";
-            PlayerPrefsManager.saveHighScore(GameManager.getScore(), LevelManager.getFromLevel());
+            //PlayerPrefsManager.saveHighScore(GameManager.getScore(), LevelManager.getFromLevel());
             gameObject.GetComponent<Text>().text = GameManager.getScore().ToString();
         }
 
         else
         {
             typeBoard.text = "HITS";
-            PlayerPrefsManager.saveHighScore(GameManager.getScore(), LevelManager.getFromLevel());
+            //PlayerPrefsManager.saveHighScore(GameManager.getScore(), LevelManager.getFromLevel());
             gameObject.GetComponent<Text>().text = GameManager.getScore().ToString();
         }
     }
 
     void Update()
     {
-        if (LevelManager.getFromLevel()==6)
+        if (LevelManager.getFromLevel() == 6)
         {
             //Wave number for level EQUALS
             gameObject.GetComponent<Text>().text = EnemySpawner.getWaveNumber().ToString();
@@ -151,11 +155,11 @@ public class ScoreBoard : MonoBehaviour {
                 Social.ReportScore(GameManager.getScore(), oneWayLeaderBoardID, (bool success) => {
                     if (success)
                     {
-                       
+
                     }
                     else
                     {
-                       
+
                     }
                 });
 
@@ -164,11 +168,11 @@ public class ScoreBoard : MonoBehaviour {
                 Social.ReportScore(EnemySpawner.getWaveNumber(), equalsLeaderBoardID, (bool success) => {
                     if (success)
                     {
-                     
+
                     }
                     else
                     {
-                      
+
                     }
                 });
                 break;
@@ -176,10 +180,10 @@ public class ScoreBoard : MonoBehaviour {
                 Social.ReportScore(GameManager.getScore(), escapeLeaderBoardID, (bool success) => {
                     if (success)
                     {
-                      
+
                     }
                     else
-                    {  
+                    {
                     }
                 });
                 break;
@@ -187,11 +191,11 @@ public class ScoreBoard : MonoBehaviour {
                 Social.ReportScore(GameManager.getScore(), lapseLeaderBoardID, (bool success) => {
                     if (success)
                     {
-                       
+
                     }
                     else
                     {
-                       
+
                     }
                 });
                 break;
@@ -199,18 +203,18 @@ public class ScoreBoard : MonoBehaviour {
                 Social.ReportScore(GameManager.getScore(), boomLeaderBoardID, (bool success) => {
                     if (success)
                     {
-                       
+
                     }
                     else
                     {
-                      
+
                     }
                 });
                 break;
         }
     }
 
-    void checkIfHighScore()
+    /*void checkIfHighScore()
     {
         if(LevelManager.getFromLevel()==6)
         {
@@ -226,5 +230,38 @@ public class ScoreBoard : MonoBehaviour {
                 //Set the animation trigger
             }
         }
+    }*/
+
+    public static void saveHighScore()
+    {
+        BinaryFormatter myBinaryFormatter = new BinaryFormatter();
+        FileStream file = File.Create(Application.persistentDataPath + "/test.dat");
+
+        veesData obj = new veesData();
+        obj.sysInfo = GameManager.getScore();
+
+        myBinaryFormatter.Serialize(file,obj);
+        file.Close();
     }
+
+
+    public static int loadHighScore()
+    {
+        if (File.Exists(Application.persistentDataPath + "/test.dat"))
+        {
+            BinaryFormatter myBinaryFormatter = new BinaryFormatter();
+            FileStream file = File.Open(Application.persistentDataPath+"/test.dat", FileMode.Open);     
+            veesData obj = (veesData)myBinaryFormatter.Deserialize(file);
+            file.Close();
+
+            return(obj.sysInfo);
+        }
+        return 99;
+    }
+}
+
+[Serializable]
+public class veesData
+{
+    public int sysInfo;
 }

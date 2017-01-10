@@ -73,7 +73,7 @@ public class PlayerPrefsManager : MonoBehaviour {
         }
     }
 
-    public static int getHighScore(int fromLevel)
+    /*public static int getHighScore(int fromLevel)
     {
         switch(fromLevel)
         {
@@ -192,5 +192,5 @@ public class PlayerPrefsManager : MonoBehaviour {
             default:return false;
         }
         return false;
-    }
+    }*/
 }

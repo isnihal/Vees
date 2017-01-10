@@ -762,7 +762,7 @@ public class GameManager : MonoBehaviour {
         }
     }
 
-    void setHighScoreDisplay()
+    /*void setHighScoreDisplay()
     {
         switch(getLevelName())
         {
@@ -779,5 +779,10 @@ public class GameManager : MonoBehaviour {
                 highScoreText.text = "" + PlayerPrefsManager.getHighScore(7);
                 break;
         }
+    }*/
+
+    void setHighScoreDisplay()
+    {
+        highScoreText.text = "" + ScoreBoard.loadHighScore();
     }
 }
