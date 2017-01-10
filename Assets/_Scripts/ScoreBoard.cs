@@ -6,7 +6,8 @@ using System.Collections.Generic;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.IO;
 
-public class ScoreBoard : MonoBehaviour {
+public class ScoreBoard : MonoBehaviour
+{
 
     public Text typeBoard;
 
@@ -18,17 +19,16 @@ public class ScoreBoard : MonoBehaviour {
     const string lapseLeaderBoardID = "CgkIiY779uUNEAIQFg";
     const string boomLeaderBoardID = "CgkIiY779uUNEAIQFw";
 
-    static string filePath = Application.persistentDataPath+"/px094g346f0ls.dat";
-
-    static float s1, s2, s3, s4;
-
+    static string filePath = Application.persistentDataPath + "/px094g346f0ls.dat";
 
     //Set scoreboard for gameOver level
 
-    void Start() {
+    void Start()
+    {
         postScoreToLeaderBoard();
         checkForAchievements();
         saveHighScore();
+        loadHighScore();
         //checkIfHighScore();
         if (GameManager.hasGameBeenRestarted())
         {
@@ -157,7 +157,8 @@ public class ScoreBoard : MonoBehaviour {
         switch (LevelManager.getFromLevel())
         {
             case 3:
-                Social.ReportScore(GameManager.getScore(), oneWayLeaderBoardID, (bool success) => {
+                Social.ReportScore(GameManager.getScore(), oneWayLeaderBoardID, (bool success) =>
+                {
                     if (success)
                     {
 
@@ -170,7 +171,8 @@ public class ScoreBoard : MonoBehaviour {
 
                 break;
             case 6:
-                Social.ReportScore(EnemySpawner.getWaveNumber(), equalsLeaderBoardID, (bool success) => {
+                Social.ReportScore(EnemySpawner.getWaveNumber(), equalsLeaderBoardID, (bool success) =>
+                {
                     if (success)
                     {
 
@@ -182,7 +184,8 @@ public class ScoreBoard : MonoBehaviour {
                 });
                 break;
             case 5:
-                Social.ReportScore(GameManager.getScore(), escapeLeaderBoardID, (bool success) => {
+                Social.ReportScore(GameManager.getScore(), escapeLeaderBoardID, (bool success) =>
+                {
                     if (success)
                     {
 
@@ -193,7 +196,8 @@ public class ScoreBoard : MonoBehaviour {
                 });
                 break;
             case 7:
-                Social.ReportScore(GameManager.getScore(), lapseLeaderBoardID, (bool success) => {
+                Social.ReportScore(GameManager.getScore(), lapseLeaderBoardID, (bool success) =>
+                {
                     if (success)
                     {
 
@@ -205,7 +209,8 @@ public class ScoreBoard : MonoBehaviour {
                 });
                 break;
             case 4:
-                Social.ReportScore(GameManager.getScore(), boomLeaderBoardID, (bool success) => {
+                Social.ReportScore(GameManager.getScore(), boomLeaderBoardID, (bool success) =>
+                {
                     if (success)
                     {
 
@@ -239,102 +244,80 @@ public class ScoreBoard : MonoBehaviour {
         switch (LevelManager.getFromLevel())
         {
             case 3:
-                    obj._sys = nihalEncryption(GameManager.getScore());
-                    break;
+                obj._sys = (GameManager.getScore());
+                break;
             case 5:
-                    obj._cache = nihalEncryption(GameManager.getScore());
-                    break;
+                obj._cache = (GameManager.getScore());
+                break;
             case 6:
-                    obj._config = nihalEncryption(EnemySpawner.getWaveNumber());
-                    break;
+                obj._config = (EnemySpawner.getWaveNumber());
+                break;
             case 7:
-                    obj._tmp = nihalEncryption(GameManager.getScore());
-                    break;
+                obj._tmp = (GameManager.getScore());
+                break;
         }
         //Save scores here
-        myBinaryFormatter.Serialize(file,obj);
+        myBinaryFormatter.Serialize(file, obj);
         file.Close();
     }
 
+    static void saveOneWayHigh(float score)
+    {
 
-    public static float loadHighScore()
+        BinaryFormatter myBinaryFormatter = new BinaryFormatter();
+        FileStream file = File.Create(filePath);
+
+        veesData obj = new veesData();
+        obj.sys = score;
+        myBinaryFormatter.Serialize(file, obj);
+        file.Close();
+    }
+
+    public static void loadHighScore()
     {
         if (File.Exists(filePath))
         {
             BinaryFormatter myBinaryFormatter = new BinaryFormatter();
-            FileStream file = File.Open(filePath, FileMode.OpenOrCreate);     
+            FileStream file = File.Open(filePath, FileMode.Open);
             veesData obj = (veesData)myBinaryFormatter.Deserialize(file);
             file.Close();
 
-            float previousScoreOneWay=nihalDecryption(obj._sys);
-            float previousScoreEscape = nihalDecryption(obj._cache);
-            float previousScoreEquals = nihalDecryption(obj._config);
-            float previousScoreLapse = nihalDecryption(obj._tmp);
+            float previousScoreOneWay = (obj._sys);
+            float previousScoreEscape = (obj._cache);
+            float previousScoreEquals = (obj._config);
+            float previousScoreLapse = (obj._tmp);
 
-            float oneWayHighScore = nihalDecryption(obj.sys);
-            float escapeHighScore = nihalDecryption(obj.cache);
-            float equalsHighScore = nihalDecryption(obj.config);
-            float lapseHighScore = nihalDecryption(obj.tmp);
+            float oneWayHighScore = (obj.sys);
+            float escapeHighScore = (obj.cache);
+            float equalsHighScore = (obj.config);
+            float lapseHighScore = (obj.tmp);
 
             //If previousScore>HighScore without errors BINGO! commit here
-            switch (LevelManager.getFromLevel())
+            if (previousScoreOneWay > oneWayHighScore)
             {
-                case 3: return (nihalDecryption(obj._sys));
-                case 5: return (nihalDecryption(obj._cache));
-                case 6: return (nihalDecryption(obj._config));
-                case 7: return (nihalDecryption(obj._tmp));
+                Debug.Log("High Score Successful");
+                saveOneWayHigh(previousScoreOneWay);
             }
-
-            //LoadData Here
         }
-        return 0;
     }
 
-    
-
-    static bool checkIfHighScore()
+    public static float setHighScoreDisplay()
     {
-        switch(LevelManager.getFromLevel())
+        if (File.Exists(filePath))
         {
-            case 3:
-                if(GameManager.getScore()>s1)
-                {
-                    return true;
-                }
-                else
-                {
-                    return false;
-                }
-
-            case 5:
-                if (GameManager.getScore() > s2)
-                {
-                    return true;
-                }
-                else
-                {
-                    return false;
-                }
-            case 6:
-                if (EnemySpawner.getWaveNumber() > s3)
-                {
-                    return true;
-                }
-                else
-                {
-                    return false;
-                }
-            case 7:
-                if (GameManager.getScore() > s4)
-                {
-                    return true;
-                }
-                else
-                {
-                    return false;
-                }
-            default:return false;
+            BinaryFormatter myBinaryFormatter = new BinaryFormatter();
+            FileStream file = File.Open(filePath, FileMode.Open);
+            veesData obj = (veesData)myBinaryFormatter.Deserialize(file);
+            file.Close();
+            switch (LevelManager.getFromLevel())
+            {
+                case 3: return ((obj.sys));
+                case 5: return ((obj.cache));
+                case 6: return ((obj.config));
+                case 7: return ((obj.tmp));
+            }
         }
+        return 99;
     }
 }
 

@@ -783,6 +783,6 @@ public class GameManager : MonoBehaviour {
 
     void setHighScoreDisplay()
     {
-        highScoreText.text = "" + Mathf.RoundToInt(ScoreBoard.loadHighScore());
+        highScoreText.text = "" + Mathf.RoundToInt(ScoreBoard.setHighScoreDisplay());
     }
 }
