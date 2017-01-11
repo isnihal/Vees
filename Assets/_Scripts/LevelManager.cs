@@ -10,7 +10,8 @@ public class LevelManager : MonoBehaviour {
     bool startTimer,firstTap;
     float ButtonCooler,splashDelay; //Time before reset
     int ButtonCount;
-    bool doubleTapped,firstTime,playServiceOnlyOnce;
+    bool doubleTapped, firstTime;
+    static bool playServiceOnlyOnce;
 
     ToastManager toastManager;
 
@@ -26,7 +27,9 @@ public class LevelManager : MonoBehaviour {
         {
             PlayerPrefsManager.setFirstTime();
             firstTime = true;
-            loadTutorial();
+            playServiceOnlyOnce = true;
+            loadMainMenu();
+            //loadTutorial();//Uncomment me
         }
 
         if (isSplash() && !firstTime)
@@ -37,26 +40,23 @@ public class LevelManager : MonoBehaviour {
         
         else if(isMainMenu())
         {
-            if (Advertisement.IsReady())
+            if (Advertisement.IsReady() && playServiceOnlyOnce)
             {
-                if (playServiceOnlyOnce)
+                PlayGamesPlatform.Activate();
+                Social.localUser.Authenticate((bool success) =>
                 {
-                    playServiceOnlyOnce = false;
-                    PlayGamesPlatform.Activate();
-                    Social.localUser.Authenticate((bool success) =>
+                    if (success)
                     {
-                        if (success)
-                        {
 
-                        }
-                        else
-                        {
-
-                        }
-                    });
-                }
+                    }
+                    else
+                    {
+               
+                    }
+                });
             }
-                    if (!VolumeManager.getIsMuted())
+
+            if (!VolumeManager.getIsMuted())
                     {
                         VolumeManager.setMusicPlayerOnIfSilent();
                     }
@@ -147,6 +147,7 @@ public class LevelManager : MonoBehaviour {
     public void setLevelIndex(int levelIndex)
     {
         fromLevel = levelIndex;
+        playServiceOnlyOnce = false;
     }
 
 

@@ -353,10 +353,8 @@ public class GameManager : MonoBehaviour {
 
     void checkForAchievements()
     {
-        if (Advertisement.IsReady())
+        if (Advertisement.IsReady() && Social.localUser.authenticated)
         {
-            if (Social.localUser.authenticated)
-            {
                 if (getLevelName() == "ONE_DIRECTION")
                 {
                     Social.ReportProgress(GPGSIds.achievement_one_way_noob, 100, (bool sucess) =>
@@ -584,7 +582,6 @@ public class GameManager : MonoBehaviour {
                         }
                     });
                 }
-            }
         }
     }
 
