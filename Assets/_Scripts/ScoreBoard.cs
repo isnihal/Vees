@@ -2,7 +2,6 @@
 using UnityEngine.UI;
 using UnityEngine.Advertisements;
 using System;
-using System.Collections.Generic;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.IO;
 
@@ -14,11 +13,10 @@ public class ScoreBoard : MonoBehaviour
 
     static int showRewardedAdAfter = 6, showNoRewardAdAfter = 7, numberOfGames = 0, numberOfLapseGames = 0, numberOfEqualsGames;
 
-    const string oneWayLeaderBoardID = "CgkIiY779uUNEAIQEw";
-    const string equalsLeaderBoardID = "CgkIiY779uUNEAIQFA";
-    const string escapeLeaderBoardID = "CgkIiY779uUNEAIQFQ";
-    const string lapseLeaderBoardID = "CgkIiY779uUNEAIQFg";
-    const string boomLeaderBoardID = "CgkIiY779uUNEAIQFw";
+    const string oneWayLeaderBoardID = "CgkIiY779uUNEAIQGA";
+    const string equalsLeaderBoardID = "CgkIiY779uUNEAIQGQ";
+    const string escapeLeaderBoardID = "CgkIiY779uUNEAIQGg";
+    const string lapseLeaderBoardID = "CgkIiY779uUNEAIQGw";
 
     string filePath;
 
@@ -216,20 +214,7 @@ public class ScoreBoard : MonoBehaviour
 
                         }
                     });
-                    break;
-                case 4:
-                    Social.ReportScore(GameManager.getScore(), boomLeaderBoardID, (bool success) =>
-                    {
-                        if (success)
-                        {
-
-                        }
-                        else
-                        {
-
-                        }
-                    });
-                    break;
+                    break;       
             }
         }
     }

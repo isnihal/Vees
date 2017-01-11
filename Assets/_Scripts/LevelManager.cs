@@ -51,18 +51,16 @@ public class LevelManager : MonoBehaviour {
                     }
                     else
                     {
-               
+                        playServiceOnlyOnce = false;
                     }
                 });
             }
 
             if (!VolumeManager.getIsMuted())
-                    {
-                        VolumeManager.setMusicPlayerOnIfSilent();
-                    }
+            {
+                VolumeManager.setMusicPlayerOnIfSilent();
+            }
         }
-
-
 
         doubleTapped = false;
         ButtonCooler = 2.5f;
