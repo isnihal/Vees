@@ -231,34 +231,37 @@ public class IAPManager : MonoBehaviour, IStoreListener
 
     void BuyProductID(string productId)
     {
-        // If Purchasing has been initialized ...
-        if (IsInitialized())
+        if (PlatformManager.platform == "ANDROID")
         {
-            // ... look up the Product reference with the general product identifier and the Purchasing 
-            // system's products collection.
-            Product product = m_StoreController.products.WithID(productId);
-
-            // If the look up found a product for this device's store and that product is ready to be sold ... 
-            if (product != null && product.availableToPurchase)
+            // If Purchasing has been initialized ...
+            if (IsInitialized())
             {
-                Debug.Log(string.Format("Purchasing product asychronously: '{0}'", product.definition.id));
-                // ... buy the product. Expect a response either through ProcessPurchase or OnPurchaseFailed 
-                // asynchronously.
-                m_StoreController.InitiatePurchase(product);
+                // ... look up the Product reference with the general product identifier and the Purchasing 
+                // system's products collection.
+                Product product = m_StoreController.products.WithID(productId);
+
+                // If the look up found a product for this device's store and that product is ready to be sold ... 
+                if (product != null && product.availableToPurchase)
+                {
+                    Debug.Log(string.Format("Purchasing product asychronously: '{0}'", product.definition.id));
+                    // ... buy the product. Expect a response either through ProcessPurchase or OnPurchaseFailed 
+                    // asynchronously.
+                    m_StoreController.InitiatePurchase(product);
+                }
+                // Otherwise ...
+                else
+                {
+                    // ... report the product look-up failure situation  
+                    Debug.Log("BuyProductID: FAIL. Not purchasing product, either is not found or is not available for purchase");
+                }
             }
             // Otherwise ...
             else
             {
-                // ... report the product look-up failure situation  
-                Debug.Log("BuyProductID: FAIL. Not purchasing product, either is not found or is not available for purchase");
+                // ... report the fact Purchasing has not succeeded initializing yet. Consider waiting longer or 
+                // retrying initiailization.
+                Debug.Log("BuyProductID FAIL. Not initialized.");
             }
-        }
-        // Otherwise ...
-        else
-        {
-            // ... report the fact Purchasing has not succeeded initializing yet. Consider waiting longer or 
-            // retrying initiailization.
-            Debug.Log("BuyProductID FAIL. Not initialized.");
         }
     }
 
@@ -267,84 +270,104 @@ public class IAPManager : MonoBehaviour, IStoreListener
     // Apple currently requires explicit purchase restoration for IAP, conditionally displaying a password prompt.
     public void RestorePurchases()
     {
-        // If Purchasing has not yet been set up ...
-        if (!IsInitialized())
+        if (PlatformManager.platform == "ANDROID")
         {
-            // ... report the situation and stop restoring. Consider either waiting longer, or retrying initialization.
-            Debug.Log("RestorePurchases FAIL. Not initialized.");
-            return;
+            // If Purchasing has not yet been set up ...
+            if (!IsInitialized())
+            {
+                // ... report the situation and stop restoring. Consider either waiting longer, or retrying initialization.
+                Debug.Log("RestorePurchases FAIL. Not initialized.");
+                return;
+            }
         }
     }
 
     public void OnInitialized(IStoreController controller, IExtensionProvider extensions)
     {
-        // Purchasing has succeeded initializing. Collect our Purchasing references.
-        Debug.Log("OnInitialized: PASS");
+        if (PlatformManager.platform == "ANDROID")
+        {
+            // Purchasing has succeeded initializing. Collect our Purchasing references.
+            Debug.Log("OnInitialized: PASS");
 
-        // Overall Purchasing system, configured with products for this application.
-        m_StoreController = controller;
-        // Store specific subsystem, for accessing device-specific store features.
-        m_StoreExtensionProvider = extensions;
+            // Overall Purchasing system, configured with products for this application.
+            m_StoreController = controller;
+            // Store specific subsystem, for accessing device-specific store features.
+            m_StoreExtensionProvider = extensions;
+        }
     }
 
     public void OnInitializeFailed(InitializationFailureReason error)
     {
-        // Purchasing set-up has not succeeded. Check error for reason. Consider sharing this reason with the user.
-        Debug.Log("OnInitializeFailed InitializationFailureReason:" + error);
+        if (PlatformManager.platform == "ANDROID")
+        {
+            // Purchasing set-up has not succeeded. Check error for reason. Consider sharing this reason with the user.
+            Debug.Log("OnInitializeFailed InitializationFailureReason:" + error);
+        }
     }
 
     public PurchaseProcessingResult ProcessPurchase(PurchaseEventArgs args)
     {
-        if (String.Equals(args.purchasedProduct.definition.id, oneBeer, StringComparison.Ordinal))
+        if (PlatformManager.platform == "ANDROID")
         {
-            Debug.Log("Alert: 1 Beer Purchased");
-            hasUserPurchased = true;
-        }
+            if (String.Equals(args.purchasedProduct.definition.id, oneBeer, StringComparison.Ordinal))
+            {
+                Debug.Log("Alert: 1 Beer Purchased");
+                hasUserPurchased = true;
+            }
 
-        else if (String.Equals(args.purchasedProduct.definition.id, twoBeer, StringComparison.Ordinal))
-        {
-            Debug.Log("Alert: 2 Beer Purchased");
-            hasUserPurchased = true;
-        }
+            else if (String.Equals(args.purchasedProduct.definition.id, twoBeer, StringComparison.Ordinal))
+            {
+                Debug.Log("Alert: 2 Beer Purchased");
+                hasUserPurchased = true;
+            }
 
-        else if (String.Equals(args.purchasedProduct.definition.id, threeBeer, StringComparison.Ordinal))
-        {
-            Debug.Log("Alert: 3 Beer Purchased");
-            hasUserPurchased = true;
-        }
+            else if (String.Equals(args.purchasedProduct.definition.id, threeBeer, StringComparison.Ordinal))
+            {
+                Debug.Log("Alert: 3 Beer Purchased");
+                hasUserPurchased = true;
+            }
 
-        else if (String.Equals(args.purchasedProduct.definition.id, fourBeer, StringComparison.Ordinal))
-        {
-            Debug.Log("Alert: 4 Beer Purchased");
-            hasUserPurchased = true;
-        }
+            else if (String.Equals(args.purchasedProduct.definition.id, fourBeer, StringComparison.Ordinal))
+            {
+                Debug.Log("Alert: 4 Beer Purchased");
+                hasUserPurchased = true;
+            }
 
-        else if (String.Equals(args.purchasedProduct.definition.id, fiveBeer, StringComparison.Ordinal))
-        {
-            Debug.Log("Alert: 5 Beer Purchased");
-            hasUserPurchased = true;
-        }
+            else if (String.Equals(args.purchasedProduct.definition.id, fiveBeer, StringComparison.Ordinal))
+            {
+                Debug.Log("Alert: 5 Beer Purchased");
+                hasUserPurchased = true;
+            }
 
+            else
+            {
+                Debug.Log("IAP Purchase fail");
+            }
+
+            // Return a flag indicating whether this product has completely been received, or if the application needs 
+            // to be reminded of this purchase at next app launch. Use PurchaseProcessingResult.Pending when still 
+            // saving purchased products to the cloud, and when that save is delayed. 
+            return PurchaseProcessingResult.Complete;
+        }
         else
         {
-            Debug.Log("IAP Purchase fail");
+            return PurchaseProcessingResult.Pending;
         }
-
-        // Return a flag indicating whether this product has completely been received, or if the application needs 
-        // to be reminded of this purchase at next app launch. Use PurchaseProcessingResult.Pending when still 
-        // saving purchased products to the cloud, and when that save is delayed. 
-        return PurchaseProcessingResult.Complete;
     }
 
     public void OnPurchaseFailed(Product product, PurchaseFailureReason failureReason)
     {
-        // A product purchase attempt did not succeed. Check failureReason for more detail. Consider sharing 
-        // this reason with the user to guide their troubleshooting actions.
-        Debug.Log(string.Format("OnPurchaseFailed: FAIL. Product: '{0}', PurchaseFailureReason: {1}", product.definition.storeSpecificId, failureReason));
+        if (PlatformManager.platform == "ANDROID")
+        {
+            // A product purchase attempt did not succeed. Check failureReason for more detail. Consider sharing 
+            // this reason with the user to guide their troubleshooting actions.
+            Debug.Log(string.Format("OnPurchaseFailed: FAIL. Product: '{0}', PurchaseFailureReason: {1}", product.definition.storeSpecificId, failureReason));
+        }
     }
 
     public static bool hasUserPurchasedVees()
     {
+
         if (PlatformManager.platform == "ANDROID")
         {
             Product beer1 = m_StoreController.products.WithID(oneBeer);
@@ -389,17 +412,23 @@ public class IAPManager : MonoBehaviour, IStoreListener
 
     public void increaseIndex()
     {
-        if (iapIndex < 5)
+        if (PlatformManager.platform == "ANDROID")
         {
-            iapIndex++;
+            if (iapIndex < 5)
+            {
+                iapIndex++;
+            }
         }
     }
 
     public void decreaseIndex()
     {
-        if (iapIndex > 1)
+        if (PlatformManager.platform == "ANDROID")
         {
-            iapIndex--;
+            if (iapIndex > 1)
+            {
+                iapIndex--;
+            }
         }
     }
 }
