@@ -123,7 +123,7 @@ public class GameManager : MonoBehaviour {
 
         if (life <= 0 && life != -99)//-99 as a flag
         {
-            if (!hasRestarted && Advertisement.IsReady())//Play more by viewing ad (Only once)
+            if (!hasRestarted && Advertisement.IsReady() && PlatformManager.platform=="ANDROID")//Play more by viewing ad (Only once)
                 //Comment Advertisement if ios
             {
                 //Show the UI Buttons

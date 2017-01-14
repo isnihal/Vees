@@ -5,6 +5,8 @@
 /*IOS instructions
 1)Turn off all services
 2)Change platform to iOS
+3)Delete the icon folder
+4)Override all icon and splash in build settings
  */
 public class PlatformManager : MonoBehaviour {
     public static string platform = "ANDROID"; //IOS OTHERWISE //CAPS
