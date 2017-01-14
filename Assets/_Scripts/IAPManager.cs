@@ -1,8 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.Purchasing;
+using UnityEngine.Purchasing;//Remove if iOS
 
 
 public class IAPManager : MonoBehaviour, IStoreListener
@@ -33,153 +32,170 @@ public class IAPManager : MonoBehaviour, IStoreListener
 
     void Start()
     {
-        hasUserPurchased = false;
-        // If we haven't set up the Unity Purchasing reference
-        if (m_StoreController == null)
+        if (PlatformManager.platform == "ANDROID")
         {
-            // Begin to configure our connection to Purchasing
-            InitializePurchasing();
-        }
-        if(Application.loadedLevel!=1)
-        {
-            currentState = States.first;
-        }
+            hasUserPurchased = false;
+            // If we haven't set up the Unity Purchasing reference
+            if (m_StoreController == null)
+            {
+                // Begin to configure our connection to Purchasing
+                InitializePurchasing();
+            }
+            if (Application.loadedLevel != 1)
+            {
+                currentState = States.first;
+            }
 
-        iapIndex = 1;
-        timeLeft = 1f;
-        startTimer = false;
-        timerFinsihed = false;
+            iapIndex = 1;
+            timeLeft = 1f;
+            startTimer = false;
+            timerFinsihed = false;
+        }
     }
 
     void Update()
     {
-        if(Application.loadedLevel==1)
+        if (PlatformManager.platform == "ANDROID")
         {
-            return;
-        }
-
-        updateHasUserPurchased();
-
-        if (!hasUserPurchased)
-        {
-            switch (currentState)
+            if (Application.loadedLevel == 1)
             {
-                case States.first:
-                    instructionText.GetComponent<Text>().text = "We are a young and passionate team committed to making awesome games.";
-                    if (Input.GetMouseButtonDown(0))
-                    {
-                        currentState = States.second;
-                    }
-                    break;
-                case States.second:
-                    instructionText.GetComponent<Text>().text = "If you think the game's worth it, Help us buy a beer and we will remove the ads for you :)";
-                    if (Input.GetMouseButtonDown(0))
-                    {
-                        currentState = States.third;
-                    }
-                    break;
-                case States.third:
-                    startTimer = true;
-                    if (startTimer)
-                    {
-                        timeLeft -= Time.deltaTime;
-                        if (timeLeft <= 0)
-                        {
-                            startTimer = false;
-                            timerFinsihed = true;
-                        }
-                    }
-                    if (iapIndex == 1)
-                    {
-                        instructionText.GetComponent<Text>().text = "1 Beer";
-                    }
-                    else
-                    {
-                        instructionText.GetComponent<Text>().text = iapIndex + " Beers";
-                    }
-                    priceText.active = true;
-                    increaseButton.active = true;
-                    decreaseButton.active = true;
-                    priceText.GetComponent<Text>().text = (iapIndex - 0.01) + " $";
-                    break;
+                return;
             }
-        }
-        else
-        {
-            instructionText.GetComponent<Text>().text = "Thank you for purchasing Vees,Your game will now be ad free :)";
-            priceText.active = false;
-            increaseButton.active = false;
-            decreaseButton.active = false;
+
+            updateHasUserPurchased();
+
+            if (!hasUserPurchased)
+            {
+                switch (currentState)
+                {
+                    case States.first:
+                        instructionText.GetComponent<Text>().text = "We are a young and passionate team committed to making awesome games.";
+                        if (Input.GetMouseButtonDown(0))
+                        {
+                            currentState = States.second;
+                        }
+                        break;
+                    case States.second:
+                        instructionText.GetComponent<Text>().text = "If you think the game's worth it, Help us buy a beer and we will remove the ads for you :)";
+                        if (Input.GetMouseButtonDown(0))
+                        {
+                            currentState = States.third;
+                        }
+                        break;
+                    case States.third:
+                        startTimer = true;
+                        if (startTimer)
+                        {
+                            timeLeft -= Time.deltaTime;
+                            if (timeLeft <= 0)
+                            {
+                                startTimer = false;
+                                timerFinsihed = true;
+                            }
+                        }
+                        if (iapIndex == 1)
+                        {
+                            instructionText.GetComponent<Text>().text = "1 Beer";
+                        }
+                        else
+                        {
+                            instructionText.GetComponent<Text>().text = iapIndex + " Beers";
+                        }
+                        priceText.active = true;
+                        increaseButton.active = true;
+                        decreaseButton.active = true;
+                        priceText.GetComponent<Text>().text = (iapIndex - 0.01) + " $";
+                        break;
+                }
+            }
+            else
+            {
+                instructionText.GetComponent<Text>().text = "Thank you for purchasing Vees,Your game will now be ad free :)";
+                priceText.active = false;
+                increaseButton.active = false;
+                decreaseButton.active = false;
+            }
         }
     }
 
     void updateHasUserPurchased()
     {
-        Product beer1 = m_StoreController.products.WithID(oneBeer);
-        if (beer1 != null && beer1.hasReceipt)
+        if (PlatformManager.platform == "ANDROID")
         {
-            // Owned Non Consumables and Subscriptions should always have receipts.
-            // So here the Non Consumable product has already been bought.
-            hasUserPurchased = true;
-        }
+            Product beer1 = m_StoreController.products.WithID(oneBeer);
+            if (beer1 != null && beer1.hasReceipt)
+            {
+                // Owned Non Consumables and Subscriptions should always have receipts.
+                // So here the Non Consumable product has already been bought.
+                hasUserPurchased = true;
+            }
 
-        Product beer2 = m_StoreController.products.WithID(twoBeer);
-        if (beer2 != null && beer2.hasReceipt)
-        {
-            hasUserPurchased = true;
-        }
+            Product beer2 = m_StoreController.products.WithID(twoBeer);
+            if (beer2 != null && beer2.hasReceipt)
+            {
+                hasUserPurchased = true;
+            }
 
-        Product beer3 = m_StoreController.products.WithID(threeBeer);
-        if (beer3 != null && beer3.hasReceipt)
-        {
-            
-            hasUserPurchased = true;
-        }
+            Product beer3 = m_StoreController.products.WithID(threeBeer);
+            if (beer3 != null && beer3.hasReceipt)
+            {
 
-        Product beer4 = m_StoreController.products.WithID(fourBeer);
-        if (beer4 != null && beer4.hasReceipt)
-        {
-            
-            hasUserPurchased = true;
-        }
+                hasUserPurchased = true;
+            }
 
-        Product beer5 = m_StoreController.products.WithID(fiveBeer);
-        if (beer5 != null && beer5.hasReceipt)
-        {
-            
-            hasUserPurchased = true;
+            Product beer4 = m_StoreController.products.WithID(fourBeer);
+            if (beer4 != null && beer4.hasReceipt)
+            {
+
+                hasUserPurchased = true;
+            }
+
+            Product beer5 = m_StoreController.products.WithID(fiveBeer);
+            if (beer5 != null && beer5.hasReceipt)
+            {
+
+                hasUserPurchased = true;
+            }
         }
     }
 
     public void InitializePurchasing()
     {
-        // If we have already connected to Purchasing ...
-        if (IsInitialized())
+        if (PlatformManager.platform == "ANDROID")
         {
-            // ... we are done here.
-            return;
+            // If we have already connected to Purchasing ...
+            if (IsInitialized())
+            {
+                // ... we are done here.
+                return;
+            }
+
+            // Create a builder, first passing in a suite of Unity provided stores.
+            var builder = ConfigurationBuilder.Instance(StandardPurchasingModule.Instance());
+
+            //TODO:Add all IAP Products here
+            builder.AddProduct(oneBeer, ProductType.NonConsumable);
+            builder.AddProduct(twoBeer, ProductType.NonConsumable);
+            builder.AddProduct(threeBeer, ProductType.NonConsumable);
+            builder.AddProduct(fourBeer, ProductType.NonConsumable);
+            builder.AddProduct(fiveBeer, ProductType.NonConsumable);
+
+
+            // Kick off the remainder of the set-up with an asynchrounous call, passing the configuration 
+            // and this class' instance. Expect a response either in OnInitialized or OnInitializeFailed.
+            UnityPurchasing.Initialize(this, builder);
         }
-
-        // Create a builder, first passing in a suite of Unity provided stores.
-        var builder = ConfigurationBuilder.Instance(StandardPurchasingModule.Instance());
-
-        //TODO:Add all IAP Products here
-        builder.AddProduct(oneBeer, ProductType.NonConsumable);
-        builder.AddProduct(twoBeer, ProductType.NonConsumable);
-        builder.AddProduct(threeBeer, ProductType.NonConsumable);
-        builder.AddProduct(fourBeer, ProductType.NonConsumable);
-        builder.AddProduct(fiveBeer, ProductType.NonConsumable);
-
-
-        // Kick off the remainder of the set-up with an asynchrounous call, passing the configuration 
-        // and this class' instance. Expect a response either in OnInitialized or OnInitializeFailed.
-        UnityPurchasing.Initialize(this, builder);
     }
 
     private bool IsInitialized()
     {
-        // Only say we are initialized if both the Purchasing references are set.
-        return m_StoreController != null && m_StoreExtensionProvider != null;
+        if (PlatformManager.platform == "ANDROID")
+        {
+            // Only say we are initialized if both the Purchasing references are set.
+            return m_StoreController != null && m_StoreExtensionProvider != null;
+        }
+        else
+            return false;
     }
 
     public void BuyNonConsumable()
@@ -187,25 +203,28 @@ public class IAPManager : MonoBehaviour, IStoreListener
         // Buy the non-consumable product using its general identifier. Expect a response either 
         // through ProcessPurchase or OnPurchaseFailed asynchronously.
 
-        if (currentState == States.third && timerFinsihed)
+        if (PlatformManager.platform == "ANDROID")
         {
-            switch (iapIndex)
+            if (currentState == States.third && timerFinsihed)
             {
-                case 1:
-                    BuyProductID(oneBeer);
-                    break;
-                case 2:
-                    BuyProductID(twoBeer);
-                    break;
-                case 3:
-                    BuyProductID(threeBeer);
-                    break;
-                case 4:
-                    BuyProductID(fourBeer);
-                    break;
-                case 5:
-                    BuyProductID(fiveBeer);
-                    break;
+                switch (iapIndex)
+                {
+                    case 1:
+                        BuyProductID(oneBeer);
+                        break;
+                    case 2:
+                        BuyProductID(twoBeer);
+                        break;
+                    case 3:
+                        BuyProductID(threeBeer);
+                        break;
+                    case 4:
+                        BuyProductID(fourBeer);
+                        break;
+                    case 5:
+                        BuyProductID(fiveBeer);
+                        break;
+                }
             }
         }
     }
@@ -326,41 +345,46 @@ public class IAPManager : MonoBehaviour, IStoreListener
 
     public static bool hasUserPurchasedVees()
     {
-        Product beer1 = m_StoreController.products.WithID(oneBeer);
-        if (beer1 != null && beer1.hasReceipt)
+        if (PlatformManager.platform == "ANDROID")
         {
-            // Owned Non Consumables and Subscriptions should always have receipts.
-            // So here the Non Consumable product has already been bought.
-            return true;
+            Product beer1 = m_StoreController.products.WithID(oneBeer);
+            if (beer1 != null && beer1.hasReceipt)
+            {
+                // Owned Non Consumables and Subscriptions should always have receipts.
+                // So here the Non Consumable product has already been bought.
+                return true;
+            }
+
+            Product beer2 = m_StoreController.products.WithID(twoBeer);
+            if (beer2 != null && beer2.hasReceipt)
+            {
+                return true;
+            }
+
+            Product beer3 = m_StoreController.products.WithID(threeBeer);
+            if (beer3 != null && beer3.hasReceipt)
+            {
+
+                return true;
+            }
+
+            Product beer4 = m_StoreController.products.WithID(fourBeer);
+            if (beer4 != null && beer4.hasReceipt)
+            {
+
+                return true;
+            }
+
+            Product beer5 = m_StoreController.products.WithID(fiveBeer);
+            if (beer5 != null && beer5.hasReceipt)
+            {
+
+                return true;
+            }
+            return false;
         }
-
-        Product beer2 = m_StoreController.products.WithID(twoBeer);
-        if (beer2 != null && beer2.hasReceipt)
-        {
-            return true;
-        }
-
-        Product beer3 = m_StoreController.products.WithID(threeBeer);
-        if (beer3 != null && beer3.hasReceipt)
-        {
-
-            return true;
-        }
-
-        Product beer4 = m_StoreController.products.WithID(fourBeer);
-        if (beer4 != null && beer4.hasReceipt)
-        {
-
-            return true;
-        }
-
-        Product beer5 = m_StoreController.products.WithID(fiveBeer);
-        if (beer5 != null && beer5.hasReceipt)
-        {
-
-            return true;
-        }
-        return false;
+        else
+            return false;
     }
 
     public void increaseIndex()

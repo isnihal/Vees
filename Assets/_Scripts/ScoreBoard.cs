@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.Advertisements;
+using UnityEngine.Advertisements;//Comment if ios
 using System;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.IO;
@@ -30,8 +30,11 @@ public class ScoreBoard : MonoBehaviour
 
     void Start()
     {
-        postScoreToLeaderBoard();
-        checkForAchievements();
+        if (PlatformManager.platform == "ANDROID")
+        {
+            postScoreToLeaderBoard();
+            checkForAchievements();
+        }
         loadHighScore();
         //checkIfHighScore();
         if (GameManager.hasGameBeenRestarted())
@@ -43,12 +46,15 @@ public class ScoreBoard : MonoBehaviour
             numberOfGames++;
         }
 
-        //Ad Script
-        if (!IAPManager.hasUserPurchasedVees())
+        if (PlatformManager.platform == "ANDROID")
         {
-            if (numberOfGames % showNoRewardAdAfter == 0 && !GameManager.hasGameBeenRestarted() && Advertisement.IsReady())//Show ad only if user didnt view ad for restarting
+            //Ad Script
+            if (!IAPManager.hasUserPurchasedVees())
             {
-                AdManager.showNoRewardedAd();
+                if (numberOfGames % showNoRewardAdAfter == 0 && !GameManager.hasGameBeenRestarted() && Advertisement.IsReady())//Show ad only if user didnt view ad for restarting
+                {//Comment Advertisement.IsReady() if iOS
+                    AdManager.showNoRewardedAd();
+                }
             }
         }
 
@@ -60,22 +66,19 @@ public class ScoreBoard : MonoBehaviour
         if (LevelManager.getFromLevel() == 6)
         {
             //Wave number for level EQUALS
-            gameObject.GetComponent<Text>().text = EnemySpawner.getWaveNumber().ToString();
-            //PlayerPrefsManager.saveHighScore(EnemySpawner.getWaveNumber(), LevelManager.getFromLevel());
+            gameObject.GetComponent<Text>().text = EnemySpawner.getWaveNumber().ToString(); 
             GoalDetector.fromEquals = false;
             typeBoard.text = "WAVE";
         }
         else if (LevelManager.getFromLevel() == 5)
         {
-            typeBoard.text = "ESCAPES";
-            //PlayerPrefsManager.saveHighScore(GameManager.getScore(), LevelManager.getFromLevel());
+            typeBoard.text = "ESCAPES";     
             gameObject.GetComponent<Text>().text = GameManager.getScore().ToString();
         }
 
         else
         {
             typeBoard.text = "HITS";
-            //PlayerPrefsManager.saveHighScore(GameManager.getScore(), LevelManager.getFromLevel());
             gameObject.GetComponent<Text>().text = GameManager.getScore().ToString();
         }
     }
@@ -103,118 +106,124 @@ public class ScoreBoard : MonoBehaviour
 
     void checkForAchievements()
     {
-        if (Advertisement.IsReady())
+        if (PlatformManager.platform == "ANDROID")
         {
-            if (LevelManager.getFromLevel() == 7)
+            if (Advertisement.IsReady())//Comment this if iOS
             {
-                numberOfLapseGames++;
-            }
-            else
-            {
-                numberOfLapseGames = 0;
-            }
-            if (numberOfLapseGames == 10)
-            {
-                Social.ReportProgress(GPGSIds.achievement_lapse_love, 100, (bool sucess) =>
+                if (LevelManager.getFromLevel() == 7)
                 {
-                    if (sucess)
-                    {
-
-                    }
-                    else
-                    {
-
-                    }
-                });
-
-            }
-
-
-
-            if (LevelManager.getFromLevel() == 6)
-            {
-                numberOfEqualsGames++;
-            }
-            else
-            {
-                numberOfEqualsGames = 0;
-            }
-            if (numberOfEqualsGames == 10)
-            {
-                Social.ReportProgress(GPGSIds.achievement_equals_love, 100, (bool sucess) =>
+                    numberOfLapseGames++;
+                }
+                else
                 {
-                    if (sucess)
+                    numberOfLapseGames = 0;
+                }
+                if (numberOfLapseGames == 10)
+                {
+                    Social.ReportProgress(GPGSIds.achievement_lapse_love, 100, (bool sucess) =>
                     {
+                        if (sucess)
+                        {
 
-                    }
-                    else
+                        }
+                        else
+                        {
+
+                        }
+                    });
+
+                }
+
+
+
+                if (LevelManager.getFromLevel() == 6)
+                {
+                    numberOfEqualsGames++;
+                }
+                else
+                {
+                    numberOfEqualsGames = 0;
+                }
+                if (numberOfEqualsGames == 10)
+                {
+                    Social.ReportProgress(GPGSIds.achievement_equals_love, 100, (bool sucess) =>
                     {
+                        if (sucess)
+                        {
 
-                    }
-                });
+                        }
+                        else
+                        {
+
+                        }
+                    });
+                }
             }
         }
     }
 
     public void postScoreToLeaderBoard()
     {
-        if (Social.localUser.authenticated)
+        if (PlatformManager.platform == "ANDROID")
         {
-            switch (LevelManager.getFromLevel())
+            if (Social.localUser.authenticated)
             {
+                switch (LevelManager.getFromLevel())
+                {
 
-                case 3:
-                    Social.ReportScore(GameManager.getScore(), oneWayLeaderBoardID, (bool success) =>
-                    {
-                        if (success)
+                    case 3:
+                        Social.ReportScore(GameManager.getScore(), oneWayLeaderBoardID, (bool success) =>
                         {
+                            if (success)
+                            {
 
-                        }
-                        else
+                            }
+                            else
+                            {
+
+                            }
+                        });
+
+                        break;
+                    case 6:
+                        Social.ReportScore(EnemySpawner.getWaveNumber(), equalsLeaderBoardID, (bool success) =>
                         {
+                            if (success)
+                            {
 
-                        }
-                    });
+                            }
+                            else
+                            {
 
-                    break;
-                case 6:
-                    Social.ReportScore(EnemySpawner.getWaveNumber(), equalsLeaderBoardID, (bool success) =>
-                    {
-                        if (success)
+                            }
+                        });
+                        break;
+                    case 5:
+                        Social.ReportScore(GameManager.getScore(), escapeLeaderBoardID, (bool success) =>
                         {
+                            if (success)
+                            {
 
-                        }
-                        else
+                            }
+                            else
+                            {
+                            }
+                        });
+                        break;
+                    case 7:
+                        Social.ReportScore(GameManager.getScore(), lapseLeaderBoardID, (bool success) =>
                         {
+                            if (success)
+                            {
 
-                        }
-                    });
-                    break;
-                case 5:
-                    Social.ReportScore(GameManager.getScore(), escapeLeaderBoardID, (bool success) =>
-                    {
-                        if (success)
-                        {
+                            }
+                            else
+                            {
 
-                        }
-                        else
-                        {
-                        }
-                    });
-                    break;
-                case 7:
-                    Social.ReportScore(GameManager.getScore(), lapseLeaderBoardID, (bool success) =>
-                    {
-                        if (success)
-                        {
-
-                        }
-                        else
-                        {
-
-                        }
-                    });
-                    break;       
+                            }
+                        });
+                        break;
+                }
             }
         }
     }

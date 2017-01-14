@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.SceneManagement;
-using GooglePlayGames;
-using UnityEngine.Advertisements;
+using GooglePlayGames;//Remove if ios
+using UnityEngine.Advertisements;//Remove if ios
 
 public class LevelManager : MonoBehaviour {
 
@@ -38,11 +38,11 @@ public class LevelManager : MonoBehaviour {
             loadMainMenu();
         }
         
-        else if(isMainMenu())
+        else if(isMainMenu() && PlatformManager.platform=="ANDROID")
         {
-            if (Advertisement.IsReady() && playServiceOnlyOnce)
+            if (Advertisement.IsReady() && playServiceOnlyOnce)//Comment Advertisement.IsReady if IOS
             {
-                PlayGamesPlatform.Activate();
+                PlayGamesPlatform.Activate();//Comment this if ios
                 Social.localUser.Authenticate((bool success) =>
                 {
                     if (success)
@@ -208,11 +208,17 @@ public class LevelManager : MonoBehaviour {
 
     public void showLeaderBoard()
     {
-        Social.ShowLeaderboardUI();
+        if (PlatformManager.platform == "ANDROID")
+        {
+            Social.ShowLeaderboardUI();
+        }
     }
 
     public void showAchievementBoard()
     {
-        Social.ShowAchievementsUI();
+        if (PlatformManager.platform == "ANDROID")
+        {
+            Social.ShowAchievementsUI();
+        }
     }
 }

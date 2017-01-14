@@ -1,9 +1,8 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
-using UnityEngine.Advertisements;
-using System;
-using System.Collections;
+using UnityEngine.Advertisements;//Comment if iOS
+
 
 public class GameManager : MonoBehaviour {
 
@@ -79,11 +78,6 @@ public class GameManager : MonoBehaviour {
         lastLife = false;
         delayTrigger = false;
 
-        /*if (!Advertisement.IsReady())
-        {
-            Advertisement.Initialize("1215854");
-        }*/
-
         startNoResponseCounter = false;
         noResponseTime = 7f;
     }
@@ -126,14 +120,11 @@ public class GameManager : MonoBehaviour {
 
     void isGameOver()
     {
-        /*if (!Advertisement.IsReady())
-        {
-            Advertisement.Initialize("1215854");
-        }*/
 
         if (life <= 0 && life != -99)//-99 as a flag
         {
             if (!hasRestarted && Advertisement.IsReady())//Play more by viewing ad (Only once)
+                //Comment Advertisement if ios
             {
                 //Show the UI Buttons
                 pauseGame();
@@ -353,8 +344,10 @@ public class GameManager : MonoBehaviour {
 
     void checkForAchievements()
     {
-        if (Advertisement.IsReady() && Social.localUser.authenticated)
+        if (PlatformManager.platform == "ANDROID")
         {
+            if (Advertisement.IsReady() && Social.localUser.authenticated)
+            {
                 if (getLevelName() == "ONE_DIRECTION")
                 {
                     Social.ReportProgress(GPGSIds.achievement_one_way_noob, 100, (bool sucess) =>
@@ -582,33 +575,37 @@ public class GameManager : MonoBehaviour {
                         }
                     });
                 }
+            }
         }
     }
 
     public void continueGameWithAd()
     {
-        
-        //Unlock veeplay achievement
-        Social.ReportProgress(GPGSIds.achievement_veeplay, 100, (bool sucess) => {
-            if (sucess)
-            {
-              
-            }
-            else
-            {
-                
-            }
-        });
-        if (!IAPManager.hasUserPurchasedVees())
+        if (PlatformManager.platform == "ANDROID")
         {
-            if (Advertisement.IsReady())
+            //Unlock veeplay achievement
+            Social.ReportProgress(GPGSIds.achievement_veeplay, 100, (bool sucess) =>
             {
-                Advertisement.Show("video", new ShowOptions() { resultCallback = handleAdResult });
-                hasRestarted = true;
-            }
-            else
+                if (sucess)
+                {
+
+                }
+                else
+                {
+
+                }
+            });
+            if (!IAPManager.hasUserPurchasedVees())
             {
-                toastManager.showToastOnUiThread("Check Your Internet Connection");
+                if (Advertisement.IsReady())
+                {
+                    Advertisement.Show("video", new ShowOptions() { resultCallback = handleAdResult });
+                    hasRestarted = true;
+                }
+                else
+                {
+                    toastManager.showToastOnUiThread("Check Your Internet Connection");
+                }
             }
         }
         else
@@ -686,6 +683,7 @@ public class GameManager : MonoBehaviour {
         return hasRestarted;
     }
 
+    //Comment this entire function if iOS
     void handleAdResult(ShowResult result)
     {
         switch (result)
