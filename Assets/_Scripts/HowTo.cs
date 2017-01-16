@@ -1,12 +1,14 @@
 ﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 
 public class HowTo : MonoBehaviour {
 
     public Text instructionText;
-
-	// Use this for initialization
+    enum States {one,two,three,four,five,six,seven,eight,nine,ten};
+    States currentState;
+	
 	void Start () {
 	    switch(LevelManager.getFromLevel())
         {
@@ -44,4 +46,9 @@ public class HowTo : MonoBehaviour {
 
         }
 	}
+
+    public void loadGame()
+    {
+        SceneManager.LoadScene(LevelManager.getFromLevel());
+    }
 }
