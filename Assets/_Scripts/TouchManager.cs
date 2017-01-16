@@ -20,18 +20,18 @@ public class TouchManager : MonoBehaviour {
 
     void Start()
     {
-        minimumDragLength = 15;
-        minimumDragHeight = 15;
+        minimumDragLength = 10;
+        minimumDragHeight = 10;
     }
 
-    void DragStart()
+    public void DragStart()
     {
         startPositon = Input.mousePosition;
         startTime = Time.time;
         playerSpawner = FindObjectOfType<PlayerSpawner>();
     }
 
-    void DragEnd()
+    public void DragEnd()
     {
         endPosition = Input.mousePosition;
         endTime = Time.time;

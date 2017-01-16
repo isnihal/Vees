@@ -28,8 +28,7 @@ public class LevelManager : MonoBehaviour {
             PlayerPrefsManager.setFirstTime();
             firstTime = true;
             playServiceOnlyOnce = true;
-            loadMainMenu();
-            //loadTutorial();//Uncomment me
+            loadTutorial();
         }
 
         if (isSplash() && !firstTime)

@@ -98,11 +98,10 @@ public class TutorialManager : MonoBehaviour {
     {
         switch(currentState)
         {
-            case States.Basic:return 1;
-                break;
-
-            case States.Basic_Enemy:return 2;
-                break;
+            case States.Basic:
+                return 1;
+            case States.Basic_Enemy:
+                return 2;
             case States.Tap_To_Continue:
                 return 3;
             case States.Score:
