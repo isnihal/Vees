@@ -61,6 +61,7 @@ public class LevelManager : MonoBehaviour {
             }
         }
 
+        loadTutorialIfFirstTime();
         doubleTapped = false;
         ButtonCooler = 2.5f;
         ButtonCount = 0;
@@ -218,6 +219,41 @@ public class LevelManager : MonoBehaviour {
         if (PlatformManager.platform == "ANDROID")
         {
             Social.ShowAchievementsUI();
+        }
+    }
+
+    void loadTutorialIfFirstTime()
+    {
+        switch(fromLevel)
+        {
+            case 3:
+                if (PlayerPrefsManager.isOneDirectionFirstTime() && !PlayerPrefsManager.hasOneDirectionFirstTimeKey())
+                {
+                    PlayerPrefsManager.setOneDirectionFirstTime();
+                    SceneManager.LoadScene(4);
+                }
+                break;
+            case 5:
+                if (PlayerPrefsManager.isEscapeFirstTime() && !PlayerPrefsManager.hasEscapeFirstTimeKey())
+                {
+                    PlayerPrefsManager.setEscapeFirstTime();
+                    SceneManager.LoadScene(4);
+                }
+                break;
+            case 6:
+                if (PlayerPrefsManager.isEqualsFirstTime() && !PlayerPrefsManager.hasEqualsFirstTimeKey())
+                {
+                    PlayerPrefsManager.setEqualsFirstTime();
+                    SceneManager.LoadScene(4);
+                }
+                break;
+            case 7:
+                if (PlayerPrefsManager.isLapseFirstTime() && !PlayerPrefsManager.hasLapseFirstTimeKey())
+                {
+                    PlayerPrefsManager.setLapseFirstTime();
+                    SceneManager.LoadScene(4);
+                }
+                break;
         }
     }
 }
