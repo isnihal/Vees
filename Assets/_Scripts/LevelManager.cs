@@ -60,8 +60,7 @@ public class LevelManager : MonoBehaviour {
                 VolumeManager.setMusicPlayerOnIfSilent();
             }
         }
-
-        loadTutorialIfFirstTime();
+        
         doubleTapped = false;
         ButtonCooler = 2.5f;
         ButtonCount = 0;
@@ -139,7 +138,15 @@ public class LevelManager : MonoBehaviour {
 
     public void loadLevel(string levelName)
     {
-        SceneManager.LoadScene(levelName);
+
+        if (loadTutorialIfFirstTime())
+        {
+            SceneManager.LoadScene(4);
+        }
+        else
+        {
+            SceneManager.LoadScene(levelName);
+        }
     }
 
     public void setLevelIndex(int levelIndex)
@@ -222,38 +229,51 @@ public class LevelManager : MonoBehaviour {
         }
     }
 
-    void loadTutorialIfFirstTime()
+    bool loadTutorialIfFirstTime()
     {
-        switch(fromLevel)
+        switch (fromLevel)
         {
             case 3:
                 if (PlayerPrefsManager.isOneDirectionFirstTime() && !PlayerPrefsManager.hasOneDirectionFirstTimeKey())
                 {
                     PlayerPrefsManager.setOneDirectionFirstTime();
-                    SceneManager.LoadScene(4);
+                    return true;
                 }
-                break;
+                else
+                {
+                    return false;
+                }
             case 5:
                 if (PlayerPrefsManager.isEscapeFirstTime() && !PlayerPrefsManager.hasEscapeFirstTimeKey())
                 {
                     PlayerPrefsManager.setEscapeFirstTime();
-                    SceneManager.LoadScene(4);
+                    return true;
                 }
-                break;
+                else
+                {
+                    return false;
+                }
             case 6:
                 if (PlayerPrefsManager.isEqualsFirstTime() && !PlayerPrefsManager.hasEqualsFirstTimeKey())
                 {
                     PlayerPrefsManager.setEqualsFirstTime();
-                    SceneManager.LoadScene(4);
+                    return true;
                 }
-                break;
+                else
+                {
+                    return false;
+                }
             case 7:
                 if (PlayerPrefsManager.isLapseFirstTime() && !PlayerPrefsManager.hasLapseFirstTimeKey())
                 {
                     PlayerPrefsManager.setLapseFirstTime();
-                    SceneManager.LoadScene(4);
+                    return true;
                 }
-                break;
+                else
+                {
+                    return false;
+                }
         }
+        return false;
     }
 }
