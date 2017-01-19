@@ -138,15 +138,7 @@ public class LevelManager : MonoBehaviour {
 
     public void loadLevel(string levelName)
     {
-
-        if (loadTutorialIfFirstTime())
-        {
-            SceneManager.LoadScene(4);
-        }
-        else
-        {
-            SceneManager.LoadScene(levelName);
-        }
+       SceneManager.LoadScene(levelName);
     }
 
     public void setLevelIndex(int levelIndex)
@@ -229,51 +221,5 @@ public class LevelManager : MonoBehaviour {
         }
     }
 
-    bool loadTutorialIfFirstTime()
-    {
-        switch (fromLevel)
-        {
-            case 3:
-                if (PlayerPrefsManager.isOneDirectionFirstTime() && !PlayerPrefsManager.hasOneDirectionFirstTimeKey())
-                {
-                    PlayerPrefsManager.setOneDirectionFirstTime();
-                    return true;
-                }
-                else
-                {
-                    return false;
-                }
-            case 5:
-                if (PlayerPrefsManager.isEscapeFirstTime() && !PlayerPrefsManager.hasEscapeFirstTimeKey())
-                {
-                    PlayerPrefsManager.setEscapeFirstTime();
-                    return true;
-                }
-                else
-                {
-                    return false;
-                }
-            case 6:
-                if (PlayerPrefsManager.isEqualsFirstTime() && !PlayerPrefsManager.hasEqualsFirstTimeKey())
-                {
-                    PlayerPrefsManager.setEqualsFirstTime();
-                    return true;
-                }
-                else
-                {
-                    return false;
-                }
-            case 7:
-                if (PlayerPrefsManager.isLapseFirstTime() && !PlayerPrefsManager.hasLapseFirstTimeKey())
-                {
-                    PlayerPrefsManager.setLapseFirstTime();
-                    return true;
-                }
-                else
-                {
-                    return false;
-                }
-        }
-        return false;
-    }
+    
 }

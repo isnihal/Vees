@@ -44,9 +44,16 @@ public class GameManager : MonoBehaviour {
     float noResponseTime;
     public Text responseTimer;
 
-
+    void Awake()
+    {
+        if (loadTutorialIfFirstTime() && getLevelName() != "TUTORIAL")
+        {
+            SceneManager.LoadScene(4);
+        }
+    }
     void Start()
     {
+        
         if (getLevelName() != "GAME_OVER")//Properties of equals set in enemy spawner
         {
             resetScore();
@@ -767,5 +774,53 @@ public class GameManager : MonoBehaviour {
     void setHighScoreDisplay()
     { 
         highScoreText.text = "" + Mathf.RoundToInt(ScoreBoard.setHighScoreDisplay());
+    }
+
+    bool loadTutorialIfFirstTime()
+    {
+        switch (LevelManager.getFromLevel())
+        {
+            case 3:
+                if (PlayerPrefsManager.isOneDirectionFirstTime())
+                {
+                    PlayerPrefsManager.setOneDirectionFirstTime();
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            case 5:
+                if (PlayerPrefsManager.isEscapeFirstTime())
+                {
+                    PlayerPrefsManager.setEscapeFirstTime();
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            case 6:
+                if (PlayerPrefsManager.isEqualsFirstTime())
+                {
+                    PlayerPrefsManager.setEqualsFirstTime();
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            case 7:
+                if (PlayerPrefsManager.isLapseFirstTime())
+                {
+                    PlayerPrefsManager.setLapseFirstTime();
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+        }
+        return true;
     }
 }
