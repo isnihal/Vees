@@ -1,10 +1,14 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using System.Runtime.Serialization.Formatters.Binary;
+using System.IO;
+using System;
 using UnityEngine.Advertisements;//Comment if iOS
 
 
-public class GameManager : MonoBehaviour {
+public class GameManager : MonoBehaviour
+{
 
     //Most Critical script
 
@@ -21,7 +25,7 @@ public class GameManager : MonoBehaviour {
     */
 
 
-    public Text scoreBoard, timerText,highScoreText;
+    public Text scoreBoard, timerText, highScoreText;
     public GameObject[] lifeArray;
     static float enemySpawnFrequency;
     static int score, life, lastLifeScore;
@@ -33,11 +37,11 @@ public class GameManager : MonoBehaviour {
     public GameObject[] goalDetector;
     public AudioClip lifeGrantedMusic;
 
-    static bool isPaused, hasRestarted, lastLife,delayTrigger;
+    static bool isPaused, hasRestarted, lastLife, delayTrigger;
 
 
     //Show AD button and No
-    public GameObject gameOverPanel, pauseMenuPanel, pauseButton,headerPanel,gameOverScoreBoard;
+    public GameObject gameOverPanel, pauseMenuPanel, pauseButton, headerPanel, gameOverScoreBoard;
     ToastManager toastManager;
 
     bool startNoResponseCounter;
@@ -53,7 +57,7 @@ public class GameManager : MonoBehaviour {
     }
     void Start()
     {
-        
+
         if (getLevelName() != "GAME_OVER")//Properties of equals set in enemy spawner
         {
             resetScore();
@@ -130,8 +134,8 @@ public class GameManager : MonoBehaviour {
 
         if (life <= 0 && life != -99)//-99 as a flag
         {
-            if (!hasRestarted && Advertisement.IsReady() && PlatformManager.platform=="ANDROID")//Play more by viewing ad (Only once)
-                //Comment Advertisement if ios
+            if (!hasRestarted && Advertisement.IsReady() && PlatformManager.platform == "ANDROID")//Play more by viewing ad (Only once)
+                                                                                                  //Comment Advertisement if ios
             {
                 //Show the UI Buttons
                 pauseGame();
@@ -180,7 +184,7 @@ public class GameManager : MonoBehaviour {
     {
         if (getLevelName() == "EQUALS")
         {
-            scoreBoard.text = "HITS:" + score;   
+            scoreBoard.text = "HITS:" + score;
         }
         else
         {
@@ -275,7 +279,7 @@ public class GameManager : MonoBehaviour {
 
     public static void incrementLife()
     {
-        life++;  
+        life++;
     }
 
     public static int getLife()
@@ -731,7 +735,7 @@ public class GameManager : MonoBehaviour {
         switch (getLevelName())
         {
             case "ONE_DIRECTION":
-                if (score % 100 == 0 && !delayTrigger && score!=0)
+                if (score % 100 == 0 && !delayTrigger && score != 0)
                 {
                     delayTrigger = true;
                     if (!VolumeManager.getIsMuted())
@@ -772,7 +776,7 @@ public class GameManager : MonoBehaviour {
 
 
     void setHighScoreDisplay()
-    { 
+    {
         highScoreText.text = "" + Mathf.RoundToInt(ScoreBoard.setHighScoreDisplay());
     }
 
@@ -781,9 +785,9 @@ public class GameManager : MonoBehaviour {
         switch (LevelManager.getFromLevel())
         {
             case 3:
-                if (PlayerPrefsManager.isOneDirectionFirstTime())
+                if (!loadOnePref())
                 {
-                    PlayerPrefsManager.setOneDirectionFirstTime();
+                    saveOnePref();
                     return true;
                 }
                 else
@@ -791,9 +795,9 @@ public class GameManager : MonoBehaviour {
                     return false;
                 }
             case 5:
-                if (PlayerPrefsManager.isEscapeFirstTime())
+                if (!loadEscapePref())
                 {
-                    PlayerPrefsManager.setEscapeFirstTime();
+                    saveEscapePref();
                     return true;
                 }
                 else
@@ -801,9 +805,9 @@ public class GameManager : MonoBehaviour {
                     return false;
                 }
             case 6:
-                if (PlayerPrefsManager.isEqualsFirstTime())
+                if (!loadEqualPref())
                 {
-                    PlayerPrefsManager.setEqualsFirstTime();
+                    saveEqualPref();
                     return true;
                 }
                 else
@@ -811,9 +815,9 @@ public class GameManager : MonoBehaviour {
                     return false;
                 }
             case 7:
-                if (PlayerPrefsManager.isLapseFirstTime())
+                if (!loadLapsePref())
                 {
-                    PlayerPrefsManager.setLapseFirstTime();
+                    saveLapsePref();
                     return true;
                 }
                 else
@@ -823,4 +827,117 @@ public class GameManager : MonoBehaviour {
         }
         return true;
     }
+
+    void saveOnePref()
+    {
+        BinaryFormatter myBinaryFormatter = new BinaryFormatter();
+        FileStream file = File.Create(Application.persistentDataPath + "/log1.dat");
+
+        veesData obj = new veesData();
+        obj.sys = (1);
+        obj.cache = (0);
+        obj.config = (0);
+        obj.tmp = (0);
+        myBinaryFormatter.Serialize(file, obj);
+        file.Close();
+    }
+
+    void saveEqualPref()
+    {
+        BinaryFormatter myBinaryFormatter = new BinaryFormatter();
+        FileStream file = File.Create(Application.persistentDataPath + "/log2.dat");
+
+        veesData obj = new veesData();
+        obj.sys = (0);
+        obj.cache = (1);
+        obj.config = (0);
+        obj.tmp = (0);
+        myBinaryFormatter.Serialize(file, obj);
+        file.Close();
+    }
+
+    void saveEscapePref()
+    {
+        BinaryFormatter myBinaryFormatter = new BinaryFormatter();
+        FileStream file = File.Create(Application.persistentDataPath + "/log3.dat");
+
+        veesData obj = new veesData();
+        obj.sys = (0);
+        obj.cache = (0);
+        obj.config = (1);
+        obj.tmp = (0);
+        myBinaryFormatter.Serialize(file, obj);
+        file.Close();
+    }
+
+    void saveLapsePref()
+    {
+        BinaryFormatter myBinaryFormatter = new BinaryFormatter();
+        FileStream file = File.Create(Application.persistentDataPath + "/log4.dat");
+
+        veesData obj = new veesData();
+        obj.sys = (0);
+        obj.cache = (0);
+        obj.config = (0);
+        obj.tmp = (1);
+        myBinaryFormatter.Serialize(file, obj);
+        file.Close();
+    }
+
+    bool loadOnePref()
+    {
+        if (File.Exists(Application.persistentDataPath + "/log1.dat"))
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    bool loadEqualPref()
+    {
+        if (File.Exists(Application.persistentDataPath + "/log2.dat"))
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    bool loadEscapePref()
+    {
+        if (File.Exists(Application.persistentDataPath + "/log3.dat"))
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    bool loadLapsePref()
+    {
+        if (File.Exists(Application.persistentDataPath + "/log4.dat"))
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+}
+
+    [Serializable]
+public class playerPrefs
+{
+    public float sys;//One Way pref
+    public float cache;//Escape pref
+    public float config;//Equals pref
+    public float tmp;//Lapse pref
 }

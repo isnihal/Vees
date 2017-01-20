@@ -10,10 +10,10 @@ public class PlayerPrefsManager : MonoBehaviour {
         LANGUAGE_KEY = "LANGUAGE";
         MUTE_KEY = "MUTE";
         FIRST_TIME_KEY = "FIRST_TIME";
-        ONE_FIRST = "ONE_FIRST";
-        EQUAL_FIRST = "EQUAL_FIRST";
-        ESCAPE_FIRST = "ESCAPE_FIRST";
-        LAPSE_FIRST = "LAPSE_FIRST";
+        ONE_FIRST = "onefirst";
+        EQUAL_FIRST = "equfirst";
+        ESCAPE_FIRST = "escfirst";
+        LAPSE_FIRST = "lapfirst";
     }
 
     public static void setLanguage(string selectedLanguage)
