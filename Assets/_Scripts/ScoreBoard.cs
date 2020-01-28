@@ -51,10 +51,10 @@ public class ScoreBoard : MonoBehaviour
             //Ad Script
             if (!IAPManager.hasUserPurchasedVees())
             {
-                if (numberOfGames % showNoRewardAdAfter == 0 && !GameManager.hasGameBeenRestarted() && Advertisement.IsReady())//Show ad only if user didnt view ad for restarting
-                {//Comment Advertisement.IsReady() if iOS
-                    AdManager.showNoRewardedAd();
-                }
+                //if (numberOfGames % showNoRewardAdAfter == 0 && !GameManager.hasGameBeenRestarted() && Advertisement.IsReady())//Show ad only if user didnt view ad for restarting
+                //{//Comment Advertisement.IsReady() if iOS
+                //    AdManager.showNoRewardedAd();
+                //}
             }
         }
 
@@ -108,7 +108,7 @@ public class ScoreBoard : MonoBehaviour
     {
         if (PlatformManager.platform == "ANDROID")
         {
-            if (Advertisement.IsReady())//Comment this if iOS
+            if (true)//Comment this if iOS
             {
                 if (LevelManager.getFromLevel() == 7)
                 {

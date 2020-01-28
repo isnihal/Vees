@@ -161,30 +161,30 @@ public class IAPManager : MonoBehaviour, IStoreListener
 
     public void InitializePurchasing()
     {
-        if (PlatformManager.platform == "ANDROID")
-        {
-            // If we have already connected to Purchasing ...
-            if (IsInitialized())
-            {
-                // ... we are done here.
-                return;
-            }
+        //if (PlatformManager.platform == "ANDROID")
+        //{
+        //    // If we have already connected to Purchasing ...
+        //    if (IsInitialized())
+        //    {
+        //        // ... we are done here.
+        //        return;
+        //    }
 
-            // Create a builder, first passing in a suite of Unity provided stores.
-            var builder = ConfigurationBuilder.Instance(StandardPurchasingModule.Instance());
+        //    // Create a builder, first passing in a suite of Unity provided stores.
+        //    var builder = ConfigurationBuilder.Instance(StandardPurchasingModule.Instance());
 
-            //TODO:Add all IAP Products here
-            builder.AddProduct(oneBeer, ProductType.NonConsumable);
-            builder.AddProduct(twoBeer, ProductType.NonConsumable);
-            builder.AddProduct(threeBeer, ProductType.NonConsumable);
-            builder.AddProduct(fourBeer, ProductType.NonConsumable);
-            builder.AddProduct(fiveBeer, ProductType.NonConsumable);
+        //    //TODO:Add all IAP Products here
+        //    builder.AddProduct(oneBeer, ProductType.NonConsumable);
+        //    builder.AddProduct(twoBeer, ProductType.NonConsumable);
+        //    builder.AddProduct(threeBeer, ProductType.NonConsumable);
+        //    builder.AddProduct(fourBeer, ProductType.NonConsumable);
+        //    builder.AddProduct(fiveBeer, ProductType.NonConsumable);
 
 
-            // Kick off the remainder of the set-up with an asynchrounous call, passing the configuration 
-            // and this class' instance. Expect a response either in OnInitialized or OnInitializeFailed.
-            UnityPurchasing.Initialize(this, builder);
-        }
+        //    // Kick off the remainder of the set-up with an asynchrounous call, passing the configuration 
+        //    // and this class' instance. Expect a response either in OnInitialized or OnInitializeFailed.
+        //    UnityPurchasing.Initialize(this, builder);
+        //}
     }
 
     private bool IsInitialized()
