@@ -48,14 +48,14 @@ public class ScoreBoard : MonoBehaviour
 
         if (PlatformManager.platform == "ANDROID")
         {
-            //Ad Script
-            if (!IAPManager.hasUserPurchasedVees())
-            {
-                //if (numberOfGames % showNoRewardAdAfter == 0 && !GameManager.hasGameBeenRestarted() && Advertisement.IsReady())//Show ad only if user didnt view ad for restarting
-                //{//Comment Advertisement.IsReady() if iOS
-                //    AdManager.showNoRewardedAd();
-                //}
-            }
+            // //Ad Script
+            // if (!IAPManager.hasUserPurchasedVees())
+            // {
+            //     //if (numberOfGames % showNoRewardAdAfter == 0 && !GameManager.hasGameBeenRestarted() && Advertisement.IsReady())//Show ad only if user didnt view ad for restarting
+            //     //{//Comment Advertisement.IsReady() if iOS
+            //     //    AdManager.showNoRewardedAd();
+            //     //}
+            // }
         }
 
         if (!VolumeManager.getIsMuted())
